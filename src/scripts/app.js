@@ -1,12 +1,14 @@
 /* @flow */
 
 //eslint-disable-next-line
-// import '!style-loader!css-loader!flexboxgrid'; // global CSS styles
+import '!style-loader!css-loader!flexboxgrid'; // global CSS styles
 
 import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
 
+import FormInput from './components/FormInput';
 
+const hello = <div className="box"><span className="span-class">Responsive</span><b>Hello</b> world !!!</div>;
 
 class App extends Component {
     // constructor(props) {
@@ -36,10 +38,12 @@ class App extends Component {
         // console.log('json.number', json.number);
 
         return (
-          <div className="app">
-              Hello world !!!
+          <div className="row">
+            <div className="col-xs-12 col-sm-8 col-md-6 col-lg-4">
+              {hello}
+            </div>
+            <FormInput type="input" id="forminput-id" defaultValue="testInput" />
           </div>
-
         );
     }
 }
