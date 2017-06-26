@@ -1,4 +1,4 @@
-/* @flow */
+// @flow
 
 //eslint-disable-next-line
 import '!style-loader!css-loader!flexboxgrid'; // global CSS styles
@@ -36,13 +36,17 @@ class App extends Component {
     render() {
         // console.log('json', json);
         // console.log('json.number', json.number);
+        const index = Math.floor(Math.random() * 3);
+        console.log('index ', index);
+
+        const type = (['date', 'suggest', 'text', 'input', 'test1', 'test1'])[index];
 
         return (
           <div className="row">
             <div className="col-xs-12 col-sm-8 col-md-6 col-lg-4">
               {hello}
             </div>
-            <FormInput type="input" id="forminput-id" defaultValue="testInput" />
+            <FormInput defaultValue="testInput" />
           </div>
         );
     }
