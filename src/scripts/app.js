@@ -46,7 +46,7 @@ class App extends Component {
             <div className="col-xs-12 col-sm-8 col-md-6 col-lg-4">
               {hello}
             </div>
-            <FormInput defaultValue="testInput" />
+            <FormInput  defaultValue="testInput" />
           </div>
         );
     }

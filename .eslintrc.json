@@ -34,7 +34,8 @@
     "import/no-extraneous-dependencies": ["error", { "devDependencies": true }],
     "no-underscore-dangle": ["error", { "allow": ["foo_", "_bar"], "allowAfterThis": true }],
     "curly": ["error", "multi-or-nest"],
-    "react/jsx-filename-extension": [1, { "extensions": [".js", ".jsx"] }]
+    "react/jsx-filename-extension": [1, { "extensions": [".js", ".jsx"] }],
+    "react/sort-comp": 0
   },
   "settings": {
     "flowtype": {
