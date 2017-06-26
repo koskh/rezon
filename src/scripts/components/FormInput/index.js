@@ -25,7 +25,7 @@ class Input extends React.Component {
     props: InputProps;
     state: InputState;
     static defaultProps: InputDefaultProps = {
-        id: 'xxx-xxx-xx',
+        id: '',
         defaultValue: '',
         children: null
     };
