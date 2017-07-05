@@ -11,9 +11,9 @@ export default {
 
         type: {
             convert(value) {
-                return value;
+                return parseFloat(value);
             },
-            message: 'Неверный формат данных. Разрешено только число.'
+            msg: 'Неверный формат данных. Разрешено только число.'
         },
         inputRules: [
             {

@@ -60,33 +60,39 @@ class FormValidation extends React.Component {
 
 
     onFormChange(nameField: string, valueField: any) {
-        // const convertedValue = this.convertField(nameField, valueField);
+        const convertedValue = this.convertField(
+            nameField,
+            valueField,
+            (name, msgs) => {
+                this.setErrorsFields(name, msgs);
+                return undefined; // return undefined; определем, что возвращ при ошибке конвертации
+            }
+        );
 
-        if (valueField !== undefined) {
-            const validateErrors: Array<string> = this.validateField(nameField, valueField);
+        if (convertedValue !== undefined) {
+            const validateErrors: Array<string> = this.validateField(nameField, convertedValue);
             this.setErrorsFields(nameField, validateErrors);
         }
 
+        const data = {...this.state.data, [nameField]: convertedValue};
+        this.setState({data});
 
-        const data  = { ...this.state.data, [nameField]: valueField };
-        this.setState({ data });
-
-        debugger;
+        // debugger;
     }
 
-    // convertField(nameField: string, valueField: any, options?: {} = {}): any { // конвертация поля
-    //     if (this.props.schema && this.props.schema[nameField] && this.props.schema[nameField].type) {
-    //         const type = this.props.schema[nameField].type;
-    //         const atConverted = type.convert(valueField);
-    //         if (atConverted === undefined || (typeof atConverted === 'number' && isNaN(atConverted))) {
-    //             this.setErrorsFields(nameField, [type.msg]);
-    //             return undefined;
-    //         }
-    //         return atConverted;
-    //     }
-    //
-    //     return valueField;
-    // }
+    convertField(nameField: string, valueField: any, onError: Function): any { // конвертация поля
+        if (this.props.schema && this.props.schema[nameField] && this.props.schema[nameField].type) {
+            const type = this.props.schema[nameField].type;
+            const atConverted = type.convert(valueField);
+            if (atConverted === undefined || (typeof atConverted === 'number' && isNaN(atConverted))) {
+                return onError(nameField, [type.msg]);
+            }
+
+            return atConverted;
+        }
+
+        return valueField;
+    }
 
     validateField(nameField: string, valueField: any, options?: {} = {}): Array<string> { // валидация поля
         const errors = [];
@@ -115,7 +121,7 @@ class FormValidation extends React.Component {
     }
 
     setErrorsFields(nameField: string, errorsField: Array<string>): void {
-        const errorsFields = { ...this.state.errorsFields, [nameField]: errorsField };
+        const errorsFields = {...this.state.errorsFields, [nameField]: errorsField};
         this.setState({errorsFields});
     }
 
@@ -148,7 +154,7 @@ class FormValidation extends React.Component {
     renderChildren(props: any) {
         return React.Children.map(props.children, child => {
             if (child.type === FormGroup)
-                return React.cloneElement(child, { onChange: this.onFormChange });
+                return React.cloneElement(child, {onChange: this.onFormChange});
 
             return child;
         });
@@ -156,9 +162,9 @@ class FormValidation extends React.Component {
 
     render() {
         return (
-          <form>
-            {this.renderChildren(this.props)}
-          </form>
+            <form>
+                {this.renderChildren(this.props)}
+            </form>
         );
     }
 }
