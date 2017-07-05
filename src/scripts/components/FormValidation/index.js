@@ -6,40 +6,43 @@ import FormGroup from '../FormGroup';
 
 export type validationStates = 'success' | 'warning' | 'error' | 'info';
 
+type schema = {
+    [key: string]: {
+        type: {
+            convert: Function,
+            msg: string
+        },
+        inputRules: [{
+            validate: Function,
+            msg: string
+        }]
+    }
+}
+
 type Props = {
-    // type: InputTypes,
-    // id?: string,
-    // options?: any,
-    // defaultValue?: any,
-    // onChange: Function,
-    // validationState?: validationStates,
-    // feedbackText?: string,
-    schema?: {},
+    schema?: schema,
     children?: React.Children
 };
 
 type DefaultProps = {
-    schema: {},
+    schema: schema,
     children: React.Children
 };
 
-// type State = {
-// value: string
-// }
-//
-// function renderChildren(props: any) {
-//     return React.Children.map(props.children, child => {
-//         if (child.type === FormGroup)
-//             return React.cloneElement(child, { name: props.name });
-//
-//         return child;
-//     });
-// }
+type State = {
+    data: {
+        [key: string]: any
+    },
+    errorsFields: {
+        [key: string]: Array<string>
+    }
+};
 
 
 class FormValidation extends React.Component {
     props: Props;
-    // state: State;
+    state: State;
+
     static defaultProps: DefaultProps = {
         schema: {},
         children: null
@@ -47,27 +50,98 @@ class FormValidation extends React.Component {
 
     constructor(props: any) {
         super(props);
-        // this.state = {
-        // value: props.defaultValue
-        // };
+        this.state = {
+            data: {},
+            errorsFields: {}
+        };
 
         (this: any).onFormChange = this.onFormChange.bind(this);
     }
 
 
-    onFormChange(name: string, value: any) {
-        // this.setState({ value: target.value });
-        // this.onChangeParentHandler(this.getValue());
-        console.log('onFormChange name:value =>', name, value);
+    onFormChange(nameField: string, valueField: any) {
+        // const convertedValue = this.convertField(nameField, valueField);
 
-        this.validateField(name, value);
+        if (valueField !== undefined) {
+            const validateErrors: Array<string> = this.validateField(nameField, valueField);
+            this.setErrorsFields(nameField, validateErrors);
+        }
+
+
+        const data  = { ...this.state.data, [nameField]: valueField };
+        this.setState({ data });
+
+        debugger;
     }
 
-    validateField(nameField: string, valueField: any, options?: {} = {}) { // валидация поля
+    // convertField(nameField: string, valueField: any, options?: {} = {}): any { // конвертация поля
+    //     if (this.props.schema && this.props.schema[nameField] && this.props.schema[nameField].type) {
+    //         const type = this.props.schema[nameField].type;
+    //         const atConverted = type.convert(valueField);
+    //         if (atConverted === undefined || (typeof atConverted === 'number' && isNaN(atConverted))) {
+    //             this.setErrorsFields(nameField, [type.msg]);
+    //             return undefined;
+    //         }
+    //         return atConverted;
+    //     }
+    //
+    //     return valueField;
+    // }
+
+    validateField(nameField: string, valueField: any, options?: {} = {}): Array<string> { // валидация поля
+        const errors = [];
+
+        if (!(this.props.schema && this.props.schema[nameField]))
+            return errors;
+
+
+        if (this.props.schema[nameField].inputRules) {
+            const inputRules = this.props.schema[nameField].inputRules;
+
+            for (let i = 0; i < inputRules.length; i++) {
+                const rule = inputRules[i];
+                if (!rule.validate(valueField)) {
+                    errors.push(rule.msg);
+                    break;
+                }
+            }
+
+            // debugger;
+            return errors;
+        }
+
+        // debugger;
+        return errors;
+    }
+
+    setErrorsFields(nameField: string, errorsField: Array<string>): void {
+        const errorsFields = { ...this.state.errorsFields, [nameField]: errorsField };
+        this.setState({errorsFields});
+    }
+
+    setFormErrors(): void {
 
     }
 
-    setFiledState(nameField: string, state: validationStates) {
+    // isValideField(nameField: string, valueField: any, options?: {} = {}): boolean {
+    //     if (!(this.props.schema && this.props.schema[nameField]))
+    //         return true;
+    //
+    //     if (this.props.schema[nameField].required) {
+    //         const isRequired = this.props.schema[nameField].required.reduce((acc, req) => {
+    //             if (req.validate(valueField))
+    //                 acc.push();
+    //         }, []);
+    //
+    //         console.log('isRequired = ', isRequired);
+    //         // debugger;
+    //     }
+    //
+    //
+    //     return true;
+    // }
+
+    setFiledState(nameField: string, state: validationStates): void {
 
     }
 

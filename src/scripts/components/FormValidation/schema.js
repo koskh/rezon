@@ -1,32 +1,38 @@
 export default {
     email: {
-        required: [
+        // required: [
+        //     {
+        //         validate(value) {
+        //             return value.trim().length > 0;
+        //         },
+        //         msg: 'не может быть пустым'
+        //     }
+        // ],
+
+        type: {
+            convert(value) {
+                return value;
+            },
+            message: 'Неверный формат данных. Разрешено только число.'
+        },
+        inputRules: [
             {
                 validate(value) {
-                    return !value.trim().length;
+                    return value.trim().length > 0;
                 },
-                message: 'не может быть пустым'
-            }
-        ],
-
-        // type: {
-        //     convert(value) {
-        //         return extractFloat(value);
-        //     },
-        //     message: 'Неверный формат данных. Разрешено только число.'
-        // },
-        inputRules: [
+                msg: 'не может быть пустым'
+            },
             {
                 validate(value) {
                     return value >= 0 && value <= 100;
                 },
-                message: 'Число должно находиться в интервале 0-100'
+                msg: 'Число должно находиться в интервале 0-100'
             },
             {
                 validate(value) {
                     return value >= 50;
                 },
-                message: 'Число должно быть больше 50'
+                msg: 'Число должно быть больше 50'
             }
         ],
 
@@ -41,14 +47,14 @@ export default {
     },
 
     email2: {
-        required: [
-            {
-                validate(value) {
-                    return !value.trim().length;
-                },
-                message: 'не может быть пустым'
-            }
-        ],
+        // required: [
+        //     {
+        //         validate(value) {
+        //             return value.trim().length > 0;
+        //         },
+        //         msg: 'не может быть пустым'
+        //     }
+        // ],
 
         // type: {
         //     convert(value) {
@@ -59,15 +65,21 @@ export default {
         inputRules: [
             {
                 validate(value) {
+                    return value.trim().length > 0;
+                },
+                msg: 'не может быть пустым'
+            },
+            {
+                validate(value) {
                     return value >= 0 && value <= 100;
                 },
-                message: 'Число должно находиться в интервале 0-100'
+                msg: 'Число должно находиться в интервале 0-100'
             },
             {
                 validate(value) {
                     return value >= 50;
                 },
-                message: 'Число должно быть больше 50'
+                msg: 'Число должно быть больше 50'
             }
         ],
 
