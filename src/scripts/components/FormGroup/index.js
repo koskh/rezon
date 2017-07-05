@@ -76,8 +76,6 @@ class Input extends React.Component {
 
 type InputTypes = 'date' | 'suggest' | 'text' | 'input';
 
-
-
 const stateClasses: { [key: validationStates]: string } = {
     success: 'has-success',
     warning: 'has-warning',

@@ -131,32 +131,21 @@ class FormValidation extends React.Component {
 
     }
 
-    // isValideField(nameField: string, valueField: any, options?: {} = {}): boolean {
-    //     if (!(this.props.schema && this.props.schema[nameField]))
-    //         return true;
+
+    // setFiledState(nameField: string, state: validationStates): void {
     //
-    //     if (this.props.schema[nameField].required) {
-    //         const isRequired = this.props.schema[nameField].required.reduce((acc, req) => {
-    //             if (req.validate(valueField))
-    //                 acc.push();
-    //         }, []);
-    //
-    //         console.log('isRequired = ', isRequired);
-    //         // debugger;
-    //     }
-    //
-    //
-    //     return true;
     // }
 
-    setFiledState(nameField: string, state: validationStates): void {
-
-    }
-
-    renderChildren(props: any) {
+    renderChildren(props: any, state: any) {
         return React.Children.map(props.children, child => {
-            if (child.type === FormGroup)
-                return React.cloneElement(child, { onChange: this.onFormChange });
+            if (child.type === FormGroup) {
+                const name = child.props.name;
+
+                const validationState: validationStates = state.errorsFields[name] ? 'error' : 'info';
+                const feedbackText: string = state.errorsFields[name] && state.errorsFields[name].join(',');
+
+                return React.cloneElement(child, { onChange: this.onFormChange, validationState, feedbackText });
+            }
 
             return child;
         });
@@ -165,7 +154,7 @@ class FormValidation extends React.Component {
     render() {
         return (
           <form>
-            {this.renderChildren(this.props)}
+            {this.renderChildren(this.props, this.state)}
           </form>
         );
     }
