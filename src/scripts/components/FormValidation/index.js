@@ -137,12 +137,19 @@ class FormValidation extends React.Component {
     // }
 
     renderChildren(props: any, state: any) {
+        function getValidationState(nameField: string, formState: any): validationStates {
+            return formState.errorsFields[nameField] && formState.errorsFields[nameField].length > 0 ? 'error' : 'info';
+        }
+        function getFeedbackText(nameField: string, formState: any): string {
+            return formState.errorsFields[nameField] && formState.errorsFields[nameField].length > 0 ? formState.errorsFields[nameField].join(',') : '';
+        }
+
         return React.Children.map(props.children, child => {
             if (child.type === FormGroup) {
                 const name = child.props.name;
 
-                const validationState: validationStates = state.errorsFields[name] ? 'error' : 'info';
-                const feedbackText: string = state.errorsFields[name] && state.errorsFields[name].join(',');
+                const validationState: validationStates = getValidationState(name, state);
+                const feedbackText: string =  getFeedbackText(name, state);
 
                 return React.cloneElement(child, { onChange: this.onFormChange, validationState, feedbackText });
             }
