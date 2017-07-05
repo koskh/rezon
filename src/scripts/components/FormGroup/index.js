@@ -3,6 +3,8 @@
 import React from 'react';
 import classNames from 'classnames';
 
+import type { validationStates } from '../FormValidation';
+
 // import PropTypes from 'prop-types';
 
 //eslint-disable-next-line
@@ -72,26 +74,9 @@ class Input extends React.Component {
 }
 
 
-class TestComponent extends React.Component {
-    render() {
-        return <div>Test Component</div>;
-    }
-}
-
-//
-// const Components: { [key: string]: Function } =
-//     {
-//         date: TestComponent,
-//         suggest: TestComponent,
-//         text: TestComponent,
-//         input: Input
-//     };
-
-
-//
-
 type InputTypes = 'date' | 'suggest' | 'text' | 'input';
-type validationStates = 'success' | 'warning' | 'error' | 'info';
+
+
 
 const stateClasses: { [key: validationStates]: string } = {
     success: 'has-success',
@@ -102,18 +87,20 @@ const stateClasses: { [key: validationStates]: string } = {
 
 type DefaultProps = {
     type: InputTypes,
-    id: string,
+    // id: string,
     onChange: Function
 };
 
 type Props = {
     type: InputTypes,
     id?: string,
+    name?: string,
     options?: any,
     defaultValue?: any,
     onChange: Function,
     validationState?: validationStates,
-    feedbackText?: string
+    feedbackText?: string,
+    onChange?: Function
     // children?: React.Children
 };
 
@@ -127,7 +114,7 @@ class FormGroup extends React.Component {
     state: State;
     static defaultProps: DefaultProps = {
         type: 'input',
-        id: 'xxx-xxx-xx',
+        // id: 'xxx-xxx-xx',
         onChange: () => {
         }
     };
@@ -147,8 +134,9 @@ class FormGroup extends React.Component {
     };
 
     onChange({ target }: SyntheticInputEvent) {
-        this.setState({ value: target.value });
-        this.onChangeParentHandler(this.getValue());
+        // this.setState({ value: target.value });
+        // this.onChangeParentHandler(this.props.name, this.getValue());
+        this.onChangeParentHandler(this.props.name, target.value);
     }
 
     getValue() {
@@ -156,7 +144,7 @@ class FormGroup extends React.Component {
     }
 
     render() {
-        const { type, id, defaultValue, validationState, feedbackText } = this.props;
+        const { type, name, id, defaultValue, validationState, feedbackText } = this.props;
         const validationStateClass: string = (validationState && stateClasses[validationState]) || '';
 
         // return <Comp {...common} />;
