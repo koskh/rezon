@@ -15,6 +15,10 @@ type schema = {
         inputRules?: [{
             validate: Function,
             msg: string
+        }],
+        logicRules?: [{
+            validate: Function,
+            msg: string
         }]
     }
 }
@@ -98,25 +102,33 @@ class FormValidation extends React.Component {
         return valueField;
     }
 
-    validateField(nameField: string, valueField: any, options?: {} = {}): Array<string> { // валидация поля
+    validateField(nameField: string, valueField: any): Array<string> { // валидация поля
         const errors = [];
 
         if (!(this.props.schema && this.props.schema[nameField]))
             return errors;
 
+        const fieldSchema = this.props.schema[nameField];
 
-        if (this.props.schema[nameField].inputRules) {
-            const inputRules = this.props.schema[nameField].inputRules;
-
-            for (let i = 0; i < inputRules.length; i++) {
-                const rule = inputRules[i];
+        if (fieldSchema.inputRules) {
+            for (let i = 0; i < fieldSchema.inputRules.length; i += 1) {
+                const rule = fieldSchema.inputRules[i];
                 if (!rule.validate(valueField)) {
                     errors.push(rule.msg);
-                    break;
+                    return errors;
+                }
+            }
+        }
+
+        if (fieldSchema.logicRules) {
+            for (let i = 0; i < fieldSchema.logicRules.length; i += 1) {
+                const rule = fieldSchema.logicRules[i];
+                if (!rule.validate(this.state.data)) {
+                    errors.push(rule.msg);
+                    return errors;
                 }
             }
 
-            return errors;
         }
 
         return errors;
@@ -127,9 +139,9 @@ class FormValidation extends React.Component {
         this.setState({ errorsFields });
     }
 
-    setFormErrors(): void {
-
-    }
+    // setFormErrors(): void {
+    //
+    // }
 
 
     // setFiledState(nameField: string, state: validationStates): void {
@@ -140,6 +152,7 @@ class FormValidation extends React.Component {
         function getValidationState(nameField: string, formState: any): validationStates {
             return formState.errorsFields[nameField] && formState.errorsFields[nameField].length > 0 ? 'error' : 'info';
         }
+
         function getFeedbackText(nameField: string, formState: any): string {
             return formState.errorsFields[nameField] && formState.errorsFields[nameField].length > 0 ? formState.errorsFields[nameField].join(',') : '';
         }
@@ -149,7 +162,7 @@ class FormValidation extends React.Component {
                 const name = child.props.name;
 
                 const validationState: validationStates = getValidationState(name, state);
-                const feedbackText: string =  getFeedbackText(name, state);
+                const feedbackText: string = getFeedbackText(name, state);
 
                 return React.cloneElement(child, { onChange: this.onFormChange, validationState, feedbackText });
             }

@@ -59,13 +59,13 @@ export default {
             // }
         ],
 
-        // logicRules: [
-        //     {
-        //         validate(attrs) {
-        //             return attrs.name >= attrs.surname;
-        //         },
-        //         message: 'Знечение поля NAME должно быть больше или равно значению поля SURNAME'
-        //     }
-        // ]
+        logicRules: [
+            {
+                validate(attrs) {
+                    return attrs.email === attrs.email2;
+                },
+                msg: 'Знечения полей должны быть равны'
+            }
+        ]
     },
 };
