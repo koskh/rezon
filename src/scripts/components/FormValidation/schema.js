@@ -1,14 +1,5 @@
 export default {
     email: {
-        // required: [
-        //     {
-        //         validate(value) {
-        //             return value.trim().length > 0;
-        //         },
-        //         msg: 'не может быть пустым'
-        //     }
-        // ],
-
         type: {
             convert(value) {
                 return parseFloat(value);
@@ -16,12 +7,13 @@ export default {
             msg: 'Неверный формат данных. Разрешено только число.'
         },
         inputRules: [
-            // {
-            //     validate(value) {
-            //         return value;
-            //     },
-            //     msg: 'не может быть пустым'
-            // },
+            {
+                validate(value) {
+                    return value !== '';
+                },
+                msg: 'Не может быть пустым'
+            },
+
             {
                 validate(value) {
                     return value >= 0 && value <= 100;
@@ -36,25 +28,9 @@ export default {
             }
         ],
 
-        // logicRules: [
-        //     {
-        //         validate(attrs) {
-        //             return attrs.name >= attrs.surname;
-        //         },
-        //         message: 'Знечение поля NAME должно быть больше или равно значению поля SURNAME'
-        //     }
-        // ]
     },
 
     email2: {
-        // required: [
-        //     {
-        //         validate(value) {
-        //             return value.trim().length > 0;
-        //         },
-        //         msg: 'не может быть пустым'
-        //     }
-        // ],
 
         // type: {
         //     convert(value) {

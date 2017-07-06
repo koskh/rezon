@@ -8,11 +8,11 @@ export type validationStates = 'success' | 'warning' | 'error' | 'info';
 
 type schema = {
     [key: string]: {
-        type: {
+        type?: {
             convert: Function,
             msg: string
         },
-        inputRules: [{
+        inputRules?: [{
             validate: Function,
             msg: string
         }]
@@ -60,35 +60,37 @@ class FormValidation extends React.Component {
 
 
     onFormChange(nameField: string, valueField: any) {
-        const ErrorConvertDefaultValue = undefined; // return undefined; определем, что возвращ при ошибке конвертации
+        // для обработки пустого инпута
+        let value: any = valueField.trim();
 
-        const convertedValue = this.convertField(
+        // конверт значения, из текстов в нужн формат
+        const ErrorConvertDefaultValue = undefined; // return undefined; определем, что возвращ при ошибке конвертации
+        value = this.convertField(
             nameField,
-            valueField,
+            value,
             (name, msgs) => {
                 this.setErrorsFields(name, msgs);
                 return ErrorConvertDefaultValue;
             }
         );
 
-        if (convertedValue !== ErrorConvertDefaultValue) {
-            const validateErrors: Array<string> = this.validateField(nameField, convertedValue);
+        if (value !== ErrorConvertDefaultValue) {
+            const validateErrors: Array<string> = this.validateField(nameField, value);
             this.setErrorsFields(nameField, validateErrors);
         }
 
-        const data = { ...this.state.data, [nameField]: convertedValue };
+        const data = { ...this.state.data, [nameField]: value };
         this.setState({ data });
 
         // debugger;
     }
 
     convertField(nameField: string, valueField: any, onError: Function): any { // конвертация поля
-        if (this.props.schema && this.props.schema[nameField] && this.props.schema[nameField].type) {
+        if (valueField !== '' && this.props.schema && this.props.schema[nameField] && this.props.schema[nameField].type) {
             const type = this.props.schema[nameField].type;
             const atConverted = type.convert(valueField);
             if (atConverted === undefined || (typeof atConverted === 'number' && isNaN(atConverted)))
                 return onError(nameField, [type.msg]);
-
 
             return atConverted;
         }
@@ -114,11 +116,9 @@ class FormValidation extends React.Component {
                 }
             }
 
-            // debugger;
             return errors;
         }
 
-        // debugger;
         return errors;
     }
 
