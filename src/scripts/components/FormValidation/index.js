@@ -9,7 +9,7 @@ export type validationStates = 'success' | 'warning' | 'error' | 'info';
 type schema = {
     [key: string]: {
         type?: {
-            convert: Function,
+            convert: (value: string) => any,
             msg: string
         },
         inputRules?: [{
@@ -83,7 +83,7 @@ class FormValidation extends React.Component {
             this.setErrorsFields(nameField, validateErrors);
         }
 
-        const data = { ...this.state.data, [nameField]: value };
+        const data: {[key:string]:any} = { ...this.state.data, [nameField]: value };
         this.setState({ data });
 
         // debugger;
@@ -123,7 +123,7 @@ class FormValidation extends React.Component {
         if (fieldSchema.logicRules) {
             for (let i = 0; i < fieldSchema.logicRules.length; i += 1) {
                 const rule = fieldSchema.logicRules[i];
-                if (!rule.validate(this.state.data)) {
+                if (!rule.validate(valueField, this.state.data)) {
                     errors.push(rule.msg);
                     return errors;
                 }

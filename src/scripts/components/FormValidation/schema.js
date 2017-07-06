@@ -1,8 +1,10 @@
+import extractNumber from '../../utilities/number/extract';
+
 export default {
     email: {
         type: {
             convert(value) {
-                return parseFloat(value);
+                return extractNumber(value);
             },
             msg: 'Неверный формат данных. Разрешено только число.'
         },
@@ -32,16 +34,16 @@ export default {
 
     email2: {
 
-        // type: {
-        //     convert(value) {
-        //         return extractFloat(value);
-        //     },
-        //     message: 'Неверный формат данных. Разрешено только число.'
-        // },
+        type: {
+            convert(value) {
+                return extractNumber(value);
+            },
+            msg: 'Неверный формат данных. Разрешено только число.'
+        },
         inputRules: [
             {
                 validate(value) {
-                    return value.trim().length > 0;
+                    return value !== '';
                 },
                 msg: 'Не может быть пустым'
             },
@@ -61,10 +63,10 @@ export default {
 
         logicRules: [
             {
-                validate(attrs) {
-                    return attrs.email === attrs.email2;
+                validate(value, attrs) {
+                    return value === attrs.email;
                 },
-                msg: 'Знечения полей должны быть равны'
+                msg: 'Знечения полей email и email2 должны быть равны'
             }
         ]
     },
