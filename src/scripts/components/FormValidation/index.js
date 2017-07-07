@@ -35,14 +35,14 @@ type DefaultProps = {
 };
 
 type State = {
-    model: {
-        data: {
+    model: { // содержимое валидационной формы
+        data: { // данные полей
             [key: string]: any
         },
-        inputErrorsFields: {
+        inputErrorsFields: { // ошибки ввода
             [key: string]: Array<string>
         },
-        logicErrorsFields: {
+        logicErrorsFields: { // ошибки зависимых полей
             [key: string]: Array<string>
         }
     }
@@ -73,62 +73,57 @@ class FormValidation extends React.Component {
 
 
     onFormChange(nameField: string, valueField: any) {
-        // текущ ошибки валидации
-        // let inputErrorsFields = this.state.inputErrorsFields;
-        // let logicErrorsFields = this.state.logicErrorsFields;
-        const model = this.state.model;
-
-        // для обработки пустого инпута
-        // let value: any = valueField.trim(); // TODO:?
-        let value = valueField;
+        const model = this.state.model; // текущ сосстояние, обход однонаправленности
 
         // конверт значения, из текстов в нужн формат
-        const ErrorConvertDefaultValue = undefined; // return undefined; определем, что возвращ при ошибке конвертации
-        value = this.convertField(
+        // const ErrorConvertDefaultValue = undefined; // return undefined; определем, что возвращ при ошибке конвертации
+        const convertedValue = this.convertField(
             nameField,
-            value,
-            (name, msgs) => {
-                model.inputErrorsFields = { ...model.inputErrorsFields, [name]: msgs };
-                return ErrorConvertDefaultValue;
-            }
+            valueField,
+            model.inputErrorsFields
         );
-        model.data = { ...model.data, [nameField]: value };
 
 
-        if (value !== ErrorConvertDefaultValue) {
-            const validateInputErrors: Array<string> = this.validateInputRules(nameField, value);
-            model.inputErrorsFields = { ...model.inputErrorsFields, [nameField]: validateInputErrors };
+        model.data = {...model.data, [nameField]: convertedValue};
 
+        if (model.inputErrorsFields[nameField].length === 0) { // удачно сконвертили и получили значение
+            // валидир введен данные
+            const validateInputErrors: Array<string> = this.validateInputRules(nameField, model.data[nameField]);
+            model.inputErrorsFields = {...model.inputErrorsFields, [nameField]: validateInputErrors};
 
-            const e = _.every(model.inputErrorsFields, (val, key) => {
+            // валидац созависим полей
+            // если все поля заполнены без ошибок
+            const e = _.every(model.inputErrorsFields, val => {
                 return val.length === 0;
             });
 
             if (e) {
                 _.each(model.data, (val, key) => {
                     const validateLogicErrors: Array<string> = this.validateLogicRules(key, model.data);
-                    model.logicErrorsFields = { ...model.logicErrorsFields, [key]: validateLogicErrors };
+                    model.logicErrorsFields = {...model.logicErrorsFields, [key]: validateLogicErrors};
                 });
             }
         }
 
-        // debugger;
-
-
-        // const data: { [key: string]: any } = { ...this.state.data, [nameField]: value };
-        this.setState({ model });
+        this.setState({model});
 
         // debugger;
     }
 
-    convertField(nameField: string, valueField: any, onError: Function): any { // конвертация поля
+    convertField(nameField: string, valueField: any, inputErrorsFields: any): any { // конвертация поля
         if (valueField !== '' && this.props.schema && this.props.schema[nameField] && this.props.schema[nameField].type) {
             const type = this.props.schema[nameField].type;
-            const atConverted = type.convert(valueField);
-            if (atConverted === undefined || (typeof atConverted === 'number' && isNaN(atConverted)))
-                return onError(nameField, [type.msg]);
+            const convertedValue = type.convert(valueField);
 
-            return atConverted;
+            if (convertedValue === undefined || (typeof convertedValue === 'number' && isNaN(convertedValue))) {
+                //eslint-disable-next-line
+                inputErrorsFields[nameField] = [type.msg];
+                return undefined;
+            }
+
+            //eslint-disable-next-line
+            inputErrorsFields[nameField] = [];
+            return convertedValue;
         }
 
         return valueField;
@@ -151,16 +146,6 @@ class FormValidation extends React.Component {
                 }
             }
         }
-
-        // if (fieldSchema.logicRules) {
-        //     for (let i = 0; i < fieldSchema.logicRules.length; i += 1) {
-        //         const rule = fieldSchema.logicRules[i];
-        //         if (!rule.validate(valueField, this.state.data)) {
-        //             errors.push(rule.msg);
-        //             return errors;
-        //         }
-        //     }
-        // }
 
         return errors;
     }
@@ -188,41 +173,35 @@ class FormValidation extends React.Component {
     }
 
 
-    // setErrorsFields(nameField: string, errorsField: Array<string>): void {
-    //     const errorsFields = { ...this.state.errorsFields, [nameField]: errorsField };
-    //     this.setState({ errorsFields });
-    // }
+    renderChildren(props: any, model: any) {
+        function getValidationState(nameField: string, formModel: any): validationStates {
+            if (formModel.inputErrorsFields[nameField] && formModel.inputErrorsFields[nameField].length > 0)
+                return 'error';
 
-    // setFormErrors(): void {
-    //
-    // }
+            if (formModel.logicErrorsFields[nameField] && formModel.logicErrorsFields[nameField].length > 0)
+                return 'error';
 
-
-    // setFiledState(nameField: string, state: validationStates): void {
-    //
-    // }
-
-    renderChildren(props: any, state: any) {
-        function getValidationState(nameField: string, formState: any): validationStates {
-            return (formState.model.inputErrorsFields[nameField] && formState.model.inputErrorsFields[nameField].length > 0) ||
-            (formState.model.logicErrorsFields[nameField] && formState.model.logicErrorsFields[nameField].length > 0)
-                ? 'error' : 'info';
+            return 'info';
         }
 
-        function getFeedbackText(nameField: string, formState: any): string {
-            return (formState.model.inputErrorsFields[nameField] && formState.model.inputErrorsFields[nameField].length > 0) ||
-            (formState.model.logicErrorsFields[nameField] && formState.model.logicErrorsFields[nameField].length > 0)
-                ? formState.model.inputErrorsFields[nameField].join(',') || formState.model.logicErrorsFields[nameField].join(',') : '';
+        function getFeedbackText(nameField: string, formModel: any): string {
+            if (formModel.inputErrorsFields[nameField] && formModel.inputErrorsFields[nameField].length > 0)
+                return formModel.inputErrorsFields[nameField].join(',');
+
+            if (formModel.logicErrorsFields[nameField] && formModel.logicErrorsFields[nameField].length > 0)
+                return formModel.logicErrorsFields[nameField].join(',');
+
+            return '';
         }
 
         return React.Children.map(props.children, child => {
             if (child.type === FormGroup) {
-                const name = child.props.name;
+                const name: string = child.props.name;
 
-                const validationState: validationStates = getValidationState(name, state);
-                const feedbackText: string = getFeedbackText(name, state);
+                const validationState: validationStates = getValidationState(name, model);
+                const feedbackText: string = getFeedbackText(name, model);
 
-                return React.cloneElement(child, { onChange: this.onFormChange, validationState, feedbackText });
+                return React.cloneElement(child, {onChange: this.onFormChange, validationState, feedbackText});
             }
 
             return child;
@@ -231,9 +210,9 @@ class FormValidation extends React.Component {
 
     render() {
         return (
-          <form>
-            {this.renderChildren(this.props, this.state)}
-          </form>
+            <form>
+                {this.renderChildren(this.props, this.state.model)}
+            </form>
         );
     }
 }
