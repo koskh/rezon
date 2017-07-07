@@ -1,5 +1,6 @@
 // @flow
 
+import _ from 'lodash';
 import React from 'react';
 // import classNames from 'classnames';
 import FormGroup from '../FormGroup';
@@ -34,11 +35,16 @@ type DefaultProps = {
 };
 
 type State = {
-    data: {
-        [key: string]: any
-    },
-    errorsFields: {
-        [key: string]: Array<string>
+    model: {
+        data: {
+            [key: string]: any
+        },
+        inputErrorsFields: {
+            [key: string]: Array<string>
+        },
+        logicErrorsFields: {
+            [key: string]: Array<string>
+        }
     }
 };
 
@@ -55,8 +61,11 @@ class FormValidation extends React.Component {
     constructor(props: any) {
         super(props);
         this.state = {
-            data: {},
-            errorsFields: {}
+            model: {
+                data: {},
+                inputErrorsFields: {},
+                logicErrorsFields: {},
+            }
         };
 
         (this: any).onFormChange = this.onFormChange.bind(this);
@@ -64,8 +73,14 @@ class FormValidation extends React.Component {
 
 
     onFormChange(nameField: string, valueField: any) {
+        // текущ ошибки валидации
+        // let inputErrorsFields = this.state.inputErrorsFields;
+        // let logicErrorsFields = this.state.logicErrorsFields;
+        const model = this.state.model;
+
         // для обработки пустого инпута
-        let value: any = valueField.trim();
+        // let value: any = valueField.trim(); // TODO:?
+        let value = valueField;
 
         // конверт значения, из текстов в нужн формат
         const ErrorConvertDefaultValue = undefined; // return undefined; определем, что возвращ при ошибке конвертации
@@ -73,18 +88,35 @@ class FormValidation extends React.Component {
             nameField,
             value,
             (name, msgs) => {
-                this.setErrorsFields(name, msgs);
+                model.inputErrorsFields = { ...model.inputErrorsFields, [name]: msgs };
                 return ErrorConvertDefaultValue;
             }
         );
+        model.data = { ...model.data, [nameField]: value };
+
 
         if (value !== ErrorConvertDefaultValue) {
-            const validateErrors: Array<string> = this.validateField(nameField, value);
-            this.setErrorsFields(nameField, validateErrors);
+            const validateInputErrors: Array<string> = this.validateInputRules(nameField, value);
+            model.inputErrorsFields = { ...model.inputErrorsFields, [nameField]: validateInputErrors };
+
+
+            const e = _.every(model.inputErrorsFields, (val, key) => {
+                return val.length === 0;
+            });
+
+            if (e) {
+                _.each(model.data, (val, key) => {
+                    const validateLogicErrors: Array<string> = this.validateLogicRules(key, model.data);
+                    model.logicErrorsFields = { ...model.logicErrorsFields, [key]: validateLogicErrors };
+                });
+            }
         }
 
-        const data: {[key:string]:any} = { ...this.state.data, [nameField]: value };
-        this.setState({ data });
+        // debugger;
+
+
+        // const data: { [key: string]: any } = { ...this.state.data, [nameField]: value };
+        this.setState({ model });
 
         // debugger;
     }
@@ -102,7 +134,7 @@ class FormValidation extends React.Component {
         return valueField;
     }
 
-    validateField(nameField: string, valueField: any): Array<string> { // валидация поля
+    validateInputRules(nameField: string, valueField: any): Array<string> { // валидация вводимых данных
         const errors = [];
 
         if (!(this.props.schema && this.props.schema[nameField]))
@@ -113,31 +145,53 @@ class FormValidation extends React.Component {
         if (fieldSchema.inputRules) {
             for (let i = 0; i < fieldSchema.inputRules.length; i += 1) {
                 const rule = fieldSchema.inputRules[i];
-                if (!rule.validate(valueField)) {
+                if (!rule.validate(valueField, this.state.model.data)) {
                     errors.push(rule.msg);
                     return errors;
                 }
             }
         }
 
+        // if (fieldSchema.logicRules) {
+        //     for (let i = 0; i < fieldSchema.logicRules.length; i += 1) {
+        //         const rule = fieldSchema.logicRules[i];
+        //         if (!rule.validate(valueField, this.state.data)) {
+        //             errors.push(rule.msg);
+        //             return errors;
+        //         }
+        //     }
+        // }
+
+        return errors;
+    }
+
+    // валидация логически зависящих полей, производ после всех валидно введенных полей, по всем полям формы
+    validateLogicRules(nameField: string, currentData: any): Array<string> {
+        const errors = [];
+
+        if (!(this.props.schema && this.props.schema[nameField]))
+            return errors;
+
+        const fieldSchema = this.props.schema[nameField];
+
         if (fieldSchema.logicRules) {
             for (let i = 0; i < fieldSchema.logicRules.length; i += 1) {
                 const rule = fieldSchema.logicRules[i];
-                if (!rule.validate(valueField, this.state.data)) {
+                if (!rule.validate(currentData)) {
                     errors.push(rule.msg);
                     return errors;
                 }
             }
-
         }
 
         return errors;
     }
 
-    setErrorsFields(nameField: string, errorsField: Array<string>): void {
-        const errorsFields = { ...this.state.errorsFields, [nameField]: errorsField };
-        this.setState({ errorsFields });
-    }
+
+    // setErrorsFields(nameField: string, errorsField: Array<string>): void {
+    //     const errorsFields = { ...this.state.errorsFields, [nameField]: errorsField };
+    //     this.setState({ errorsFields });
+    // }
 
     // setFormErrors(): void {
     //
@@ -150,11 +204,15 @@ class FormValidation extends React.Component {
 
     renderChildren(props: any, state: any) {
         function getValidationState(nameField: string, formState: any): validationStates {
-            return formState.errorsFields[nameField] && formState.errorsFields[nameField].length > 0 ? 'error' : 'info';
+            return (formState.model.inputErrorsFields[nameField] && formState.model.inputErrorsFields[nameField].length > 0) ||
+            (formState.model.logicErrorsFields[nameField] && formState.model.logicErrorsFields[nameField].length > 0)
+                ? 'error' : 'info';
         }
 
         function getFeedbackText(nameField: string, formState: any): string {
-            return formState.errorsFields[nameField] && formState.errorsFields[nameField].length > 0 ? formState.errorsFields[nameField].join(',') : '';
+            return (formState.model.inputErrorsFields[nameField] && formState.model.inputErrorsFields[nameField].length > 0) ||
+            (formState.model.logicErrorsFields[nameField] && formState.model.logicErrorsFields[nameField].length > 0)
+                ? formState.model.inputErrorsFields[nameField].join(',') || formState.model.logicErrorsFields[nameField].join(',') : '';
         }
 
         return React.Children.map(props.children, child => {

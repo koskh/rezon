@@ -27,7 +27,13 @@ export default {
                     return value >= 50;
                 },
                 msg: 'Число должно быть больше 50'
-            }
+            },
+            // {
+            //     validate(value, attrs) {
+            //         return value === attrs.email1;
+            //     },
+            //     msg: 'Знечения полей email и email2 должны быть равны'
+            // }
         ],
 
     },
@@ -48,6 +54,12 @@ export default {
                 msg: 'Не может быть пустым'
             },
             // {
+            //     validate(value, attrs) {
+            //         return value === attrs.email;
+            //     },
+            //     msg: 'Знечения полей email2 и email должны быть равны'
+            // }
+            // {
             //     validate(value) {
             //         return value >= 0 && value <= 100;
             //     },
@@ -63,8 +75,8 @@ export default {
 
         logicRules: [
             {
-                validate(value, attrs) {
-                    return value === attrs.email;
+                validate(attrs) {
+                    return attrs.email2 === attrs.email;
                 },
                 msg: 'Знечения полей email и email2 должны быть равны'
             }
