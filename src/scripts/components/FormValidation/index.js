@@ -75,7 +75,6 @@ class FormValidation extends React.Component {
         const model = this.state.model; // текущ сосстояние, обход однонаправленности
 
         // конверт значения, из текстов в нужн формат
-        // const ErrorConvertDefaultValue = undefined; // return undefined; определем, что возвращ при ошибке конвертации
         const convertedValue = this.convertField(
             nameField,
             valueField,
@@ -92,16 +91,13 @@ class FormValidation extends React.Component {
 
             // валидац созависим полей
             // если все поля заполнены без ошибок
-            const e = _.every(model.inputErrorsFields, val => {
-                return val.length === 0;
-            });
-
-            if (e) {
+            if (_.every(model.inputErrorsFields, val => { return val.length === 0; })) {
                 _.each(model.data, (val, key) => {
                     const validateLogicErrors: Array<string> = this.validateLogicRules(key, model.data);
                     model.logicErrorsFields = { ...model.logicErrorsFields, [key]: validateLogicErrors };
                 });
-            }
+            } else
+                model.logicErrorsFields = {}; // приоритет ошибок у невалидного заполнения
         }
 
         this.setState({ model });
