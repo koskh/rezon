@@ -1,6 +1,8 @@
 import React from 'react';
 import { expect } from 'chai';
 import { shallow } from 'enzyme';
+import sinon from 'sinon';
+
 import Dump from '.';
 
 describe('components/dump', () => {
@@ -20,8 +22,16 @@ describe('components/dump', () => {
         const dump = shallow(<Dump>
           <div className="innerClass" />
         </Dump>);
+
         expect(dump.is('.outerClass')).to.equal(true);
         expect(dump.find('.innerClass').length).to.equal(1);
-        expect(dump.find('.dump').length).to.equal(1);
+        expect(dump.find('.dump').exists()).to.equal(true);
+    });
+
+    it('simulates click events', () => {
+        const onDivClick = sinon.spy();
+        const dump = shallow(<Dump onClick={onDivClick}><div /></Dump>);
+        dump.simulate('click');
+        expect(onDivClick.calledOnce).to.equal(true);
     });
 });
