@@ -19,7 +19,7 @@
     "css-loader": "^0.28.0",
     "css-modulesify": "^0.27.2",
     "empty": "^0.10.1",
-    "enzyme": "^2.8.2",
+    "enzyme": "^2.9.1",
     "eslint": "^3.19.0",
     "eslint-config-airbnb": "^15.0.1",
     "eslint-plugin-flowtype": "^2.34.0",
@@ -35,6 +35,7 @@
     "lodash": "^4.17.4",
     "minifyify": "^7.3.3",
     "mocha": "^3.4.2",
+    "mock-css-modules": "^1.0.0",
     "morgan": "^1.8.2",
     "postcss": "^5.2.17",
     "postcss-css-variables": "^0.7.0",
@@ -63,7 +64,7 @@
     "whatwg-fetch": "^1.0.0"
   },
   "scripts": {
-    "test": "mocha --require ignore-styles --compilers js:babel-core/register js/**/*.spec.js --reporter progress",
+    "test": "mocha --require ignore-styles --compilers js:babel-core/register src/**/*.spec.js --reporter progress",
     "webpack-build": "rimraf build/* && webpack --config webpack/webpack.config.js",
     "webpack-watch": "rimraf build/* && webpack --watch  --config webpack/webpack.config.js",
     "server-start": "node server/index.js"
