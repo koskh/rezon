@@ -2,7 +2,7 @@
 
 const regex = /^[+-]?\d+([.,]\d+)?$/;
 
-module.exports = function (value: string): number {
+export default function (value: string): number {
     if (value.length === 0)
         return NaN;
 
@@ -10,4 +10,4 @@ module.exports = function (value: string): number {
         return NaN;
 
     return parseFloat(value.replace(',', '.'));
-};
+}
