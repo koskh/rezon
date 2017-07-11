@@ -1,3 +1,4 @@
+//eslint-disable-next-line
 require('babel-core/register');
 // require('mock-local-storage');
 

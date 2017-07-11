@@ -64,7 +64,7 @@
     "whatwg-fetch": "^1.0.0"
   },
   "scripts": {
-    "test": "mocha --require ignore-styles --compilers js:babel-core/register src/**/*.spec.js --reporter progress",
+    "test": "mocha --require mocha.setup.js src/**/*.spec.js --reporter progress",
     "webpack-build": "rimraf build/* && webpack --config webpack/webpack.config.js",
     "webpack-watch": "rimraf build/* && webpack --watch  --config webpack/webpack.config.js",
     "server-start": "node server/index.js"
