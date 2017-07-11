@@ -15,7 +15,7 @@ import Schema from './components/FormValidation/schema';
 
 import FormGroup from './components/FormGroup';
 
-import Dump from './components/Dump'
+import Dump from './components/Dump';
 
 // const hello = <div className="box"><span className="span-class">Responsive</span><b>Hello</b> world !!!</div>;
 
@@ -43,8 +43,6 @@ class App extends Component {
 
                   <button type="submit" className="btn btn-primary">Submit</button>
                 </FormValidation>
-
-                  <Dump/>
 
               </div>
             </div>

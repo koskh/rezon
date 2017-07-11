@@ -1,16 +1,30 @@
+// @flow
+
 import React from 'react';
-import PropTypes from 'prop-types';
 
 import styles from './index.pcss';
 
-const Dump = props => {
+type Props = {
+    name?: string,
+    children?: React.Children
+}
+
+type DefaultProps = {
+    name: ?string,
+    children: React.Children
+};
+
+const defaultProps: DefaultProps = {
+    name: null,
+    children: null
+};
+
+const Dump = (props: Props) => {
     return (
-      <div className={styles.dump}>{ props.children }</div>
+      <div className={styles.dump} data-name={props.name}>{ props.children }</div>
     );
 };
 
-Dump.propTypes = {
-    children: PropTypes.node.isRequired
-};
+Dump.defaultProps = defaultProps;
 
 export default Dump;
