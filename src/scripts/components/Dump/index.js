@@ -21,7 +21,11 @@ const defaultProps: DefaultProps = {
 
 const Dump = (props: Props) => {
     return (
-      <div className={styles.dump} data-name={props.name}>{ props.children }</div>
+      <div className="outerClass" data-name={props.name}>
+        <div className={styles.dump} >
+          { props.children }
+        </div>
+      </div>
     );
 };
 

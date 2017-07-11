@@ -44,6 +44,8 @@ class App extends Component {
                   <button type="submit" className="btn btn-primary">Submit</button>
                 </FormValidation>
 
+                  <Dump><div className="innerClass" /></Dump>
+
               </div>
             </div>
           </div>
