@@ -1,11 +1,13 @@
 // @flow
 
 import _ from 'lodash';
+
 import React from 'react';
 // import classNames from 'classnames';
+
 import FormGroup from '../FormGroup';
 
-export type validationStates = 'success' | 'warning' | 'error' | 'info';
+export type validationStates = 'success' | 'warning' | 'error' | 'info' | 'stateless';
 
 type schema = {
     [key: string]: {
@@ -91,7 +93,9 @@ class FormValidation extends React.Component {
 
             // валидац созависим полей
             // если все поля заполнены без ошибок
-            if (_.every(model.inputErrorsFields, val => { return val.length === 0; })) {
+            if (_.every(model.inputErrorsFields, val => {
+                return val.length === 0;
+            })) {
                 _.each(model.data, (val, key) => {
                     const validateLogicErrors: Array<string> = this.validateLogicRules(key, model.data);
                     model.logicErrorsFields = { ...model.logicErrorsFields, [key]: validateLogicErrors };

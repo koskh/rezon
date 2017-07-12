@@ -1,106 +1,58 @@
 // @flow
 
+/*
+* Компонент стандартной "строчки ввода" в форме
+* строчки ввода = заголовок + какой то тип инпута
+* validationState - статусы раскрашивания в соответсвии с bootstrap4
+* feedbackText - текст подсказки, ошибки, и т.д.
+*/
+
+// import _ from 'lodash';
+
 import React from 'react';
 import classNames from 'classnames';
 
+import Input from '../Input';
+
 import type { validationStates } from '../FormValidation';
-
-// import PropTypes from 'prop-types';
-
-//eslint-disable-next-line
-import bsClasses from 'bootstrap/dist/css/bootstrap.css';
-
-type InputProps = {
-    id?: string,
-    placeholder?: string,
-    defaultValue?: string,
-    onChange: Function
-    // children?: React.Children
-};
-
-type InputDefaultProps = {
-    id: string,
-    placeholder: string,
-    defaultValue: any,
-    onChange: Function
-    // children?: React.Children
-};
-//
-type InputState = {
-    value: string
-};
-
-
-class Input extends React.Component {
-    props: InputProps;
-    // state: InputState = {
-    //     value: 'test'
-    // };
-
-    static defaultProps: InputDefaultProps = {
-        id: '',
-        placeholder: '',
-        defaultValue: '',
-        onChange: () => {
-        },
-        children: null
-    };
-
-    // constructor(props) {
-    //     super(props);
-    //     // this.state = {
-    //     //     value: 'test'
-    //     // };
-    //
-    //     // (this: any).onChangeValueHandler = this.onChangeValueHandler.bind(this);
-    // }
-
-
-    // onChangeValueHandler({ target }: SyntheticInputEvent) {
-    //     this.setState({ value: target.value });
-    // }
-
-    // getValue(): string {
-    //     return this.state.value;
-    // }
-
-    render() {
-        const { id, defaultValue, placeholder, onChange } = this.props;
-
-        return (
-          <input id={id} className="form-control" defaultValue={defaultValue} placeholder={placeholder} onChange={onChange} />
-        );
-    }
-}
 
 
 type InputTypes = 'date' | 'suggest' | 'text' | 'input';
 
+// классы состояния formGroup, в соотв с bs4
 const stateClasses: { [key: validationStates]: string } = {
     success: 'has-success',
     warning: 'has-warning',
     error: 'has-danger',
-    info: 'has-info'
-};
-
-type DefaultProps = {
-    type: InputTypes,
-    // id: string,
-    onChange: Function
+    info: 'has-info',
+    stateless: ''
 };
 
 type Props = {
-    type: InputTypes,
     id?: string,
+    type: InputTypes, // тип поля ввода
     name?: string,
     options?: any,
     defaultValue?: any,
     onChange: Function,
-    validationState?: validationStates,
-    feedbackText?: string,
+    validationState?: validationStates, // css класс раскрашив поля ввода
+    feedbackText?: string,  // текст ошибки, подсказки, инфо и тд.
     onChange?: Function
     // children?: React.Children
 };
+
+// type DefaultProps = {
+//     id: string,
+//     type: InputTypes,
+//     onChange: Function,
+//     name: string,
+//     options: any,
+//     defaultValue: any,
+//     validationState: validationStates,
+//     feedbackText: string,
+//     onChange: Function,
+// };
+
 
 type State = {
     value: string
@@ -110,11 +62,17 @@ type State = {
 class FormGroup extends React.Component {
     props: Props;
     state: State;
-    static defaultProps: DefaultProps = {
+    static defaultProps: Props = {
+        id: 'xxx-xxx-xx',
         type: 'input',
-        // id: 'xxx-xxx-xx',
+        name: '',
+        options: null,
+        defaultValue: null,
+        validationState: 'stateless',
+        feedbackText: '',
         onChange: () => {
-        }
+        },
+        // children: null
     };
 
     constructor(props: any) {
@@ -123,26 +81,26 @@ class FormGroup extends React.Component {
             value: props.defaultValue
         };
 
-        this.onChangeParentHandler = props.onChange;
+        this.onChangeParentsHandler = props.onChange;
 
         (this: any).onChange = this.onChange.bind(this);
     }
 
-    onChangeParentHandler: Function = () => {
+    onChangeParentsHandler: Function = () => {
     };
 
     onChange({ target }: SyntheticInputEvent) {
+        this.onChangeParentsHandler(this.props.name, target.value);
         // this.setState({ value: target.value });
-        // this.onChangeParentHandler(this.props.name, this.getValue());
-        this.onChangeParentHandler(this.props.name, target.value);
     }
 
-    getValue() {
-        return this.state.value;
-    }
+    // getValue() {
+    //     return this.state.value;
+    // }
 
     render() {
-        const { type, name, id, defaultValue, validationState, feedbackText } = this.props;
+        const { id, type, name, defaultValue, validationState, feedbackText } = this.props;
+
         const validationStateClass: string = (validationState && stateClasses[validationState]) || '';
 
         // return <Comp {...common} />;

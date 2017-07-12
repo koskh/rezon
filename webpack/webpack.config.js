@@ -1,5 +1,5 @@
 const path = require('path');
-const webpack = require("webpack");
+const webpack = require('webpack');
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 
@@ -66,7 +66,7 @@ module.exports = {
         ]
     },
 
-    devtool: "source-map",
+    devtool: 'source-map',
 
     plugins: [
         new HtmlWebpackPlugin({
@@ -74,11 +74,28 @@ module.exports = {
             favicon: path.join(__dirname, '../src/media', 'favicon.ico'),
             hash: true,
         }),
+        // new webpack.optimize.CommonsChunkPlugin({
+        //     children: true,
+        //     async: true,
+        // }),
         // new webpack.optimize.OccurenceOrderPlugin(),
-        // new webpack.HotModuleReplacementPlugin(),
+        // new webpack.optimize.UglifyJsPlugin({
+        //     beautify: false,
+        //     comments: false,
+        //     compress: {
+        //         sequences     : true,
+        //         booleans      : true,
+        //         loops         : true,
+        //         unused      : true,
+        //         warnings    : false,
+        //         drop_console: true,
+        //         unsafe      : true
+        //     }
+        // }),
+        // // new webpack.HotModuleReplacementPlugin(),
         // new webpack.NoErrorsPlugin(),
-        new ExtractTextPlugin({filename: "app.css", allChunks: true}),
-        new webpack.BannerPlugin("Copyright ____ 2017.  Released under ____ license. " + (new Date()).toString()),
+        new ExtractTextPlugin({ filename: 'app.css', allChunks: true }),
+        new webpack.BannerPlugin(`Copyright ____ 2017.  Released under ____ license. ${(new Date()).toString()}`),
 
     ]
 

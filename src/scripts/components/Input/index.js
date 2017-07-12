@@ -5,7 +5,7 @@ import classNames from 'classnames';
 
 
 type Props = {
-    // id?: string,
+    id?: string,
     className?: string,
     placeholder?: string,
     defaultValue?: string,
@@ -13,7 +13,7 @@ type Props = {
 };
 
 type DefaultProps = {
-    // id: string,
+    id: string,
     className: string,
     placeholder: string,
     defaultValue: string,
@@ -25,7 +25,7 @@ class Input extends React.Component {
     props: Props;
 
     static defaultProps: DefaultProps = {
-        // id: '',
+        id: '',
         className: '',
         placeholder: '',
         defaultValue: '',
@@ -34,10 +34,10 @@ class Input extends React.Component {
     };
 
     render() {
-        const { className, defaultValue, placeholder, onChange } = this.props;
+        const { id, className, defaultValue, placeholder, onChange } = this.props;
 
         return (
-          <input className={classNames('form-control', className)} defaultValue={defaultValue} placeholder={placeholder} onChange={onChange} />
+          <input id={id} className={classNames('form-control', className)} defaultValue={defaultValue} placeholder={placeholder} onChange={onChange} />
         );
     }
 }
