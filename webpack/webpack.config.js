@@ -39,7 +39,7 @@ module.exports = {
 
 
             {
-                test: /(bootstrap|bootstrap-reboot|bootstrap-grid)\.(css)$/,
+                test: /((bootstrap).)*\.(css)$/,
                 use: extractBootstrap.extract({
                     fallback: 'style-loader',
                     use: {
@@ -56,7 +56,7 @@ module.exports = {
             },
 
             {
-                test: /^((?!bootstrap|bootstrap-reboot|bootstrap-grid).)*\.(css|pcss)$/,
+                test: /^((?!bootstrap).)*\.(css|pcss)$/,
                 // use: [
                 //     'style-loader',
                 //     // 'css-loader'
