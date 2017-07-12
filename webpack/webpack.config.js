@@ -5,13 +5,18 @@ const HtmlWebpackPlugin = require('html-webpack-plugin');
 
 module.exports = {
     entry: {
-        index: path.join(__dirname, '../src/scripts/app.js')
+        index: path.join(__dirname, '../src/scripts/app.js'),
+        // another: path.join(__dirname, '../src/scripts/another-module.js'),
+        react: [
+            'react', 'react-dom'
+        ],
+        lodash: 'lodash'
     },
 
     output: {
         path: path.resolve('./', 'build'),
         publicPath: '/',
-        filename: 'app.js'
+        filename: '[name].js'
     },
 
     module: {
@@ -74,10 +79,11 @@ module.exports = {
             favicon: path.join(__dirname, '../src/media', 'favicon.ico'),
             hash: true,
         }),
-        // new webpack.optimize.CommonsChunkPlugin({
-        //     children: true,
-        //     async: true,
-        // }),
+        new webpack.optimize.CommonsChunkPlugin({
+            name: ['react', 'lodash']
+            // children: true,
+            // async: true,
+        }),
         // new webpack.optimize.OccurenceOrderPlugin(),
         // new webpack.optimize.UglifyJsPlugin({
         //     beautify: false,
@@ -92,7 +98,7 @@ module.exports = {
         //         unsafe      : true
         //     }
         // }),
-        // // new webpack.HotModuleReplacementPlugin(),
+        // new webpack.HotModuleReplacementPlugin(),
         // new webpack.NoErrorsPlugin(),
         new ExtractTextPlugin({ filename: 'app.css', allChunks: true }),
         new webpack.BannerPlugin(`Copyright ____ 2017.  Released under ____ license. ${(new Date()).toString()}`),
