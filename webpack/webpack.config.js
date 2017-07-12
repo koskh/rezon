@@ -3,6 +3,8 @@ const webpack = require('webpack');
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 
+const extractBootstrap = new ExtractTextPlugin({ filename: 'bootstrap.css', allChunks: true });
+
 module.exports = {
     entry: {
         index: path.join(__dirname, '../src/scripts/index.js'),
@@ -38,7 +40,7 @@ module.exports = {
 
             {
                 test: /(bootstrap|bootstrap-reboot|bootstrap-grid)\.(css)$/,
-                use: ExtractTextPlugin.extract({
+                use: extractBootstrap.extract({
                     fallback: 'style-loader',
                     use: {
                         loader: 'css-loader',
@@ -120,6 +122,7 @@ module.exports = {
         // }),
         // new webpack.HotModuleReplacementPlugin(),
         // new webpack.NoErrorsPlugin(),
+        extractBootstrap,
         new ExtractTextPlugin({ filename: '[name].css', allChunks: true }),
         new webpack.BannerPlugin(`Copyright ____ 2017.  Released under ____ license. ${(new Date()).toString()}`),
 
