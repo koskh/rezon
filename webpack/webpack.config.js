@@ -5,8 +5,7 @@ const HtmlWebpackPlugin = require('html-webpack-plugin');
 
 module.exports = {
     entry: {
-        index: path.join(__dirname, '../src/scripts/app.js'),
-        // another: path.join(__dirname, '../src/scripts/another-module.js'),
+        index: path.join(__dirname, '../src/scripts/index.js'),
         react: [
             'react', 'react-dom'
         ],
@@ -36,8 +35,26 @@ module.exports = {
             //     use:'file-loader'
             // },
 
+
             {
-                test: /\.(css|pcss)$/,
+                test: /(bootstrap|bootstrap-reboot|bootstrap-grid)\.(css)$/,
+                use: ExtractTextPlugin.extract({
+                    fallback: 'style-loader',
+                    use: {
+                        loader: 'css-loader',
+                        options: {
+                            // modules: true,
+                            // localIdentName: '[path][name]__[local]--[hash:base64:5]',
+                            sourceMap: true,
+                            importLoaders: 1,
+                            // minimize: true
+                        }
+                    }
+                })
+            },
+
+            {
+                test: /^((?!bootstrap|bootstrap-reboot|bootstrap-grid).)*\.(css|pcss)$/,
                 // use: [
                 //     'style-loader',
                 //     // 'css-loader'
@@ -61,13 +78,16 @@ module.exports = {
                             modules: true,
                             localIdentName: '[path][name]__[local]--[hash:base64:5]',
                             sourceMap: true,
-                            importLoaders: 1
+                            importLoaders: 1,
+                            // minimize: true
                         }
                     },
                         'postcss-loader'
                     ]
                 })
             },
+
+
         ]
     },
 
@@ -100,7 +120,7 @@ module.exports = {
         // }),
         // new webpack.HotModuleReplacementPlugin(),
         // new webpack.NoErrorsPlugin(),
-        new ExtractTextPlugin({ filename: 'app.css', allChunks: true }),
+        new ExtractTextPlugin({ filename: '[name].css', allChunks: true }),
         new webpack.BannerPlugin(`Copyright ____ 2017.  Released under ____ license. ${(new Date()).toString()}`),
 
     ]

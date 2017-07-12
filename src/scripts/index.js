@@ -5,7 +5,9 @@
 //eslint-disable-next-line
 // import '!style-loader!css-loader!bootstrap/dist/css/bootstrap-grid.css'; // global CSS styles
 //eslint-disable-next-line
-import '!style-loader!css-loader!bootstrap/dist/css/bootstrap.css'; // global CSS styles
+// import '!style-loader!css-loader!bootstrap/dist/css/bootstrap.css'; // global CSS styles
+
+import 'bootstrap/dist/css/bootstrap.css';
 
 import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
@@ -44,7 +46,7 @@ class App extends Component {
                   <button type="submit" className="btn btn-primary">Submit</button>
                 </FormValidation>
 
-
+                <Dump />
               </div>
             </div>
           </div>
