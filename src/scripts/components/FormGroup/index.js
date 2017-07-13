@@ -1,13 +1,13 @@
 // @flow
 
 /*
-* Компонент стандартной "строчки ввода" в форме
-* строчки ввода = заголовок + какой то тип инпута
-* validationState - статусы раскрашивания в соответсвии с bootstrap4
-* feedbackText - текст подсказки, ошибки, и т.д.
-*/
+ * Компонент стандартной "строчки ввода" в форме
+ * строчки ввода = заголовок + какой то тип инпута
+ * validationState - статусы раскрашивания в соответсвии с bootstrap4
+ * feedbackText - текст подсказки, ошибки, и т.д.
+ */
 
-// import _ from 'lodash';
+import _ from 'lodash';
 
 import React from 'react';
 import classNames from 'classnames';
@@ -26,6 +26,13 @@ const stateClasses: { [key: validationStates]: string } = {
     error: 'has-danger',
     info: 'has-info',
     stateless: ''
+};
+
+const Components: { [key: InputTypes]: ReactClass<any> } = {
+    // date: null,
+    // suggest: null,
+    // text: null,
+    input: Input
 };
 
 type Props = {
@@ -63,7 +70,7 @@ class FormGroup extends React.Component {
     props: Props;
     state: State;
     static defaultProps: Props = {
-        id: 'xxx-xxx-xx',
+        id: '',
         type: 'input',
         name: '',
         options: null,
@@ -81,16 +88,12 @@ class FormGroup extends React.Component {
             value: props.defaultValue
         };
 
-        this.onChangeParentsHandler = props.onChange;
-
         (this: any).onChange = this.onChange.bind(this);
     }
 
-    onChangeParentsHandler: Function = () => {
-    };
 
     onChange({ target }: SyntheticInputEvent) {
-        this.onChangeParentsHandler(this.props.name, target.value);
+        this.props.onChange && this.props.onChange(this.props.name, target.value);
         // this.setState({ value: target.value });
     }
 
@@ -98,17 +101,24 @@ class FormGroup extends React.Component {
     //     return this.state.value;
     // }
 
-    render() {
+    render(): React.Element<any> {
         const { id, type, name, defaultValue, validationState, feedbackText } = this.props;
 
         const validationStateClass: string = (validationState && stateClasses[validationState]) || '';
 
-        // return <Comp {...common} />;
+        const Comp: ReactClass<any> = Components[type];
+        if (Comp === undefined)
+            throw new Error('FormGroup need known type from InputTypes');
+
         return (
           <div className={classNames('form-group', 'row', validationStateClass)}>
             <label htmlFor={id} className="col-sm-2 col-form-label">Email address</label>
             <div className="col-sm-10">
-              <Input id={id} defaultValue={defaultValue} placeholder="Placeholder...." onChange={this.onChange} />
+              {
+                Comp && <Comp id={id} name={name} defaultValue={defaultValue} placeholder="Placeholder...." onChange={this.onChange} />
+              }
+
+
               <div className="form-control-feedback">{feedbackText}</div>
               <small className="form-text text-muted">We will never share your email with anyone else.</small>
             </div>

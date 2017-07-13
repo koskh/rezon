@@ -7,13 +7,16 @@ import FormGroup from '.';
 
 describe('components/FormGroup', () => {
     it('renders without errors', () => {
-        expect(shallow(<Input />)).to.have.length(1);
+        expect(shallow(<FormGroup />)).to.have.length(1);
     });
 
-    // it('contains spec with an expectation', () => {
-    //     expect(shallow(<Input />).is('.form-control')).to.equal(true);
-    //     expect(shallow(<Input className="form-control-2" />).is('.form-control.form-control-2')).to.equal(true);
-    // });
+    it('throw new Error if hasnt right type ', () => {
+        expect(() => { shallow(<FormGroup type="abrakadabra" />); }).to.throw();
+    });
+
+    it('validationState set classes in right places', () => {
+
+    });
     //
     // it('simulates change events', () => {
     //     const onChange = sinon.spy();

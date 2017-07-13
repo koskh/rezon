@@ -1,12 +1,5 @@
 // @flow
 
-//eslint-disable-next-line
-// import '!style-loader!css-loader!bootstrap/dist/css/bootstrap-reboot.css'; // global CSS styles
-//eslint-disable-next-line
-// import '!style-loader!css-loader!bootstrap/dist/css/bootstrap-grid.css'; // global CSS styles
-//eslint-disable-next-line
-// import '!style-loader!css-loader!bootstrap/dist/css/bootstrap.css'; // global CSS styles
-
 import 'bootstrap/dist/css/bootstrap.css';
 
 import React, { Component } from 'react';
@@ -17,18 +10,18 @@ import Schema from './components/FormValidation/schema';
 
 import FormGroup from './components/FormGroup';
 
-import Dump from './components/Dump';
+// import Dump from './components/Dump';
 
 // const hello = <div className="box"><span className="span-class">Responsive</span><b>Hello</b> world !!!</div>;
 
 
 class App extends Component {
 
-    constructor(props) {
-        super(props);
-        // (this: any).onBtnClick = this.onBtnClick.bind(this);
-        // (this: any).onFormChange = this.onFormChange.bind(this);
-    }
+    // constructor(props) {
+    //     super(props);
+    //     // (this: any).onBtnClick = this.onBtnClick.bind(this);
+    //     // (this: any).onFormChange = this.onFormChange.bind(this);
+    // }
 
 
     render() {
@@ -38,7 +31,7 @@ class App extends Component {
               <div className="col">
 
                 <FormValidation schema={Schema}>
-                  <FormGroup defaultValue="testInput" name="email" />
+                  <FormGroup type="input" defaultValue="testInput" name="email" />
                   <FormGroup defaultValue="22222 Input" name="email2" />
 
                   <div className="form-control-feedback">feedback FormValidation Text</div>
@@ -46,7 +39,6 @@ class App extends Component {
                   <button type="submit" className="btn btn-primary">Submit</button>
                 </FormValidation>
 
-                <Dump />
               </div>
             </div>
           </div>
