@@ -3,7 +3,6 @@
 /*
  * Компонент стандартной "строчки ввода" в форме
  * строчки ввода = заголовок + какой то тип инпута
- * Components - возможн компоненты ввода данных
  * validationState - статусы раскрашивания в соответсвии с bootstrap4
  * feedbackText - текст подсказки, ошибки, и т.д.
  */
@@ -11,7 +10,10 @@
 import React from 'react';
 import classNames from 'classnames';
 
-import { stateClasses, Components } from './shared'; // классы состояния formGroup, в соотв с bs4
+import {
+        stateClasses, // классы состояния formGroup, в соотв с bs4 :validationStates
+        Components // возможн компоненты ввода данных :InputTypes
+    } from './shared';
 
 import type { validationStates } from '../FormValidation';
 import type { InputTypes } from './shared';
@@ -19,7 +21,7 @@ import type { InputTypes } from './shared';
 
 type Props = {
     id?: string,
-    type: InputTypes, // тип поля ввода
+    type: InputTypes, // тип поля ввода, т.к. есть в defaultProps, Flow позволяет не передав
     name?: ?string,
     options?: any,
     defaultValue?: any,
@@ -29,18 +31,6 @@ type Props = {
     onChange?: Function
     // children?: React.Children
 };
-
-// type DefaultProps = {
-//     id: string,
-//     type: InputTypes,
-//     onChange: Function,
-//     name: string,
-//     options: any,
-//     defaultValue: any,
-//     validationState: validationStates,
-//     feedbackText: string,
-//     onChange: Function,
-// };
 
 
 // type State = {
@@ -61,7 +51,6 @@ class FormGroup extends React.Component {
         feedbackText: null,
         onChange: () => {
         },
-        // children: null
     };
 
     constructor(props: any) {
@@ -70,11 +59,14 @@ class FormGroup extends React.Component {
         //     value: props.defaultValue
         // };
 
-        (this: any).onChange = this.onChange.bind(this);
+        // (this: any).onChange = this.onChange.bind(this);
     }
 
+    onTest: () => {
 
-    onChange({ target }: SyntheticInputEvent) {
+    }
+
+    onChange = ({ target }: SyntheticInputEvent) => {
         this.props.onChange && this.props.onChange(this.props.name, target.value);
         // this.setState({ value: target.value });
     }
@@ -98,8 +90,8 @@ class FormGroup extends React.Component {
             <div className="col-sm-10">
 
               {
-                Comp && <Comp id={id} name={name} defaultValue={defaultValue} placeholder="Placeholder...." onChange={this.onChange} />
-              }
+                        Comp && <Comp id={id} name={name} defaultValue={defaultValue} placeholder="Placeholder...." onChange={this.onChange} />
+                    }
 
               <div className="form-control-feedback">{feedbackText}</div>
               <small className="form-text text-muted">We will never share your email with anyone else.</small>

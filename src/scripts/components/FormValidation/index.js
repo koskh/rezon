@@ -68,12 +68,10 @@ class FormValidation extends React.Component {
                 logicErrorsFields: {},
             }
         };
-
-        (this: any).onFormChange = this.onFormChange.bind(this);
     }
 
 
-    onFormChange(nameField: string, valueField: any) {
+    onFormChange = (nameField: string, valueField: any) => {
         const model = this.state.model; // текущ сосстояние, обход однонаправленности
 
         // конверт значения, из текстов в нужн формат
