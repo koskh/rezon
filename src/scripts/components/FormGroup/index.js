@@ -8,8 +8,6 @@
  * feedbackText - текст подсказки, ошибки, и т.д.
  */
 
-import _ from 'lodash';
-
 import React from 'react';
 import classNames from 'classnames';
 
