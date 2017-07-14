@@ -7,7 +7,7 @@ import React from 'react';
 
 import FormGroup from '../FormGroup';
 
-export type validationStates = 'success' | 'warning' | 'error' | 'info' | 'stateless';
+export type validationStates = 'success' | 'warning' | 'error' | 'info' | 'default';
 
 type schema = {
     [key: string]: {

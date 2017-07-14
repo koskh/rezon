@@ -14,19 +14,11 @@ import classNames from 'classnames';
 
 import Input from '../Input';
 
+import { stateClasses } from './shared'; // классы состояния formGroup, в соотв с bs4
+
 import type { validationStates } from '../FormValidation';
+import type { InputTypes } from './shared';
 
-
-type InputTypes = 'date' | 'suggest' | 'text' | 'input';
-
-// классы состояния formGroup, в соотв с bs4
-const stateClasses: { [key: validationStates]: string } = {
-    success: 'has-success',
-    warning: 'has-warning',
-    error: 'has-danger',
-    info: 'has-info',
-    stateless: ''
-};
 
 const Components: { [key: InputTypes]: ReactClass<any> } = {
     // date: null,
@@ -38,12 +30,12 @@ const Components: { [key: InputTypes]: ReactClass<any> } = {
 type Props = {
     id?: string,
     type: InputTypes, // тип поля ввода
-    name?: string,
+    name?: ?string,
     options?: any,
     defaultValue?: any,
     onChange: Function,
-    validationState?: validationStates, // css класс раскрашив поля ввода
-    feedbackText?: string,  // текст ошибки, подсказки, инфо и тд.
+    validationState?: ?validationStates, // css класс раскрашив поля ввода
+    feedbackText?: ?string,  // текст ошибки, подсказки, инфо и тд.
     onChange?: Function
     // children?: React.Children
 };
@@ -61,22 +53,22 @@ type Props = {
 // };
 
 
-type State = {
-    value: string
-}
+// type State = {
+//     value: string
+// }
 
 
 class FormGroup extends React.Component {
     props: Props;
-    state: State;
+    // state: State;
     static defaultProps: Props = {
         id: '',
         type: 'input',
-        name: '',
+        name: null,
         options: null,
         defaultValue: null,
-        validationState: 'stateless',
-        feedbackText: '',
+        validationState: null,
+        feedbackText: null,
         onChange: () => {
         },
         // children: null
@@ -84,9 +76,9 @@ class FormGroup extends React.Component {
 
     constructor(props: any) {
         super(props);
-        this.state = {
-            value: props.defaultValue
-        };
+        // this.state = {
+        //     value: props.defaultValue
+        // };
 
         (this: any).onChange = this.onChange.bind(this);
     }
