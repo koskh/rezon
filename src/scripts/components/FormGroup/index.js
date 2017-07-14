@@ -106,10 +106,10 @@ class FormGroup extends React.Component {
           <div className={classNames('form-group', 'row', validationStateClass)}>
             <label htmlFor={id} className="col-sm-2 col-form-label">Email address</label>
             <div className="col-sm-10">
+
               {
                 Comp && <Comp id={id} name={name} defaultValue={defaultValue} placeholder="Placeholder...." onChange={this.onChange} />
               }
-
 
               <div className="form-control-feedback">{feedbackText}</div>
               <small className="form-text text-muted">We will never share your email with anyone else.</small>

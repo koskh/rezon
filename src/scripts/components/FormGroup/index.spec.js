@@ -8,6 +8,8 @@ import { stateClasses } from './shared';
 
 import FormGroup from '.';
 
+import Input from '../Input';
+
 describe('components/FormGroup: common', () => {
     it('default renders without errors', () => {
         expect(shallow(<FormGroup />)).to.have.length(1);
@@ -17,7 +19,6 @@ describe('components/FormGroup: common', () => {
         _.each(stateClasses, (v, k) => {
             expect(shallow(<FormGroup validationState={k} />).find(`.form-group.${v}`), `stateClass: ${k} -> "${v}"`).to.have.length(1);
         });
-        // expect(shallow(<FormGroup validationState={v} feedbackText="abrakadabra" />)).to.have.length(1);
     });
 
     it('validationState has not found ', () => {
@@ -34,7 +35,12 @@ describe('components/FormGroup: common', () => {
 });
 
 describe('components/FormGroup: children', () => {
-    it('throw new Error if has not right type children ', () => {
+    it('renders Input as default ', () => {
+        expect(shallow(<FormGroup />)).to.have.length(1);
+        expect(shallow(<FormGroup />).find(Input)).to.have.length(1);
+    });
+
+    it('throw new Error if has not right type children', () => {
         expect(() => {
             shallow(<FormGroup type="abrakadabra" />);
         }).to.throw();
