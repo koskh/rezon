@@ -25,9 +25,6 @@ describe('components/FormGroup: common', () => {
         expect(shallow(<FormGroup validationState="abrakadabra" />)).to.have.length(1);
     });
 
-    it('validationState has not found ', () => {
-        expect(shallow(<FormGroup validationState="abrakadabra" />)).to.have.length(1);
-    });
 
     it('render feedbackText ', () => {
         expect(shallow(<FormGroup feedbackText="abrakadabra" />).contains(<div className="form-control-feedback">abrakadabra</div>)).to.equal(true);

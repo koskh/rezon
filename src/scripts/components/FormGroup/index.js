@@ -12,20 +12,20 @@ import _ from 'lodash';
 import React from 'react';
 import classNames from 'classnames';
 
-import Input from '../Input';
 
-import { stateClasses } from './shared'; // классы состояния formGroup, в соотв с bs4
+
+import { stateClasses, Components } from './shared'; // классы состояния formGroup, в соотв с bs4
 
 import type { validationStates } from '../FormValidation';
 import type { InputTypes } from './shared';
 
 
-const Components: { [key: InputTypes]: ReactClass<any> } = {
-    // date: null,
-    // suggest: null,
-    // text: null,
-    input: Input
-};
+// const Components: { [key: InputTypes]: ReactClass<any> } = {
+//     // date: null,
+//     // suggest: null,
+//     // text: null,
+//     input: Input
+// };
 
 type Props = {
     id?: string,
