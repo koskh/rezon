@@ -3,6 +3,7 @@
 /*
  * Компонент стандартной "строчки ввода" в форме
  * строчки ввода = заголовок + какой то тип инпута
+ * Components - возможн компоненты ввода данных
  * validationState - статусы раскрашивания в соответсвии с bootstrap4
  * feedbackText - текст подсказки, ошибки, и т.д.
  */
@@ -12,20 +13,11 @@ import _ from 'lodash';
 import React from 'react';
 import classNames from 'classnames';
 
-
-
 import { stateClasses, Components } from './shared'; // классы состояния formGroup, в соотв с bs4
 
 import type { validationStates } from '../FormValidation';
 import type { InputTypes } from './shared';
 
-
-// const Components: { [key: InputTypes]: ReactClass<any> } = {
-//     // date: null,
-//     // suggest: null,
-//     // text: null,
-//     input: Input
-// };
 
 type Props = {
     id?: string,

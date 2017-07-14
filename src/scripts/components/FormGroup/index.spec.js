@@ -4,11 +4,9 @@ import { expect } from 'chai';
 import { shallow } from 'enzyme';
 import sinon from 'sinon';
 
-import { stateClasses } from './shared';
+import { stateClasses, Components } from './shared';
 
 import FormGroup from '.';
-
-import Input from '../Input';
 
 describe('components/FormGroup: common', () => {
     it('default renders without errors', () => {
@@ -34,7 +32,7 @@ describe('components/FormGroup: common', () => {
 describe('components/FormGroup: children', () => {
     it('renders Input as default ', () => {
         expect(shallow(<FormGroup />)).to.have.length(1);
-        expect(shallow(<FormGroup />).find(Input)).to.have.length(1);
+        expect(shallow(<FormGroup />).find(Components.input)).to.have.length(1);
     });
 
     it('throw new Error if has not right type children', () => {

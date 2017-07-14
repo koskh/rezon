@@ -13,8 +13,6 @@ export const stateClasses: { [key: validationStates]: string } = { // CSS цве
     info: 'has-info'
 };
 
-
-
 export const Components: { [key: InputTypes]: ReactClass<any> } = { // возможн компоненты ввода данных
     // date: null,
     // suggest: null,
