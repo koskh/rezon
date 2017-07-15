@@ -58,12 +58,6 @@ class FormGroup extends React.Component {
         // this.state = {
         //     value: props.defaultValue
         // };
-
-        // (this: any).onChange = this.onChange.bind(this);
-    }
-
-    onTest: () => {
-
     }
 
     onChange = ({ target }: SyntheticInputEvent) => {
