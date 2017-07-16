@@ -2,11 +2,12 @@
 module.exports = {
     plugins: [
         require('postcss-smart-import')({ /* ...options */ }),
-        // require('precss')({ /* ...options */ }),
+        require('precss')({ /* ...options */ }),
         require('postcss-mixins')({ /* ...options */ }),
         require('postcss-simple-vars')({ /* ...options */ }),
         require('postcss-nested')({ /* ...options */ }),
         require('postcss-utilities')({ /* ...options */ }),
+        require('postcss-inline-svg')({ /* ...options */ }),
         require('autoprefixer')({ /* ...options */ }),
     ]
 }
