@@ -16,8 +16,8 @@ import {
     } from './shared';
 
 import type { validationStates } from '../FormValidation';
-import type { InputTypes } from './shared';
 
+export type InputTypes = 'date' | 'suggest' | 'text' | 'input';
 
 type Props = {
     id?: string,
@@ -53,12 +53,12 @@ class FormGroup extends React.Component {
         },
     };
 
-    constructor(props: any) {
-        super(props);
+    // constructor(props: any) {
+    //     super(props);
         // this.state = {
         //     value: props.defaultValue
         // };
-    }
+    // }
 
     onChange = ({ target }: SyntheticInputEvent) => {
         this.props.onChange && this.props.onChange(this.props.name, target.value);
@@ -83,9 +83,7 @@ class FormGroup extends React.Component {
             <label htmlFor={id} className="col-sm-2 col-form-label">Email address</label>
             <div className="col-sm-10">
 
-              {
-                        Comp && <Comp id={id} name={name} defaultValue={defaultValue} placeholder="Placeholder...." onChange={this.onChange} />
-                    }
+              { Comp && <Comp id={id} name={name} defaultValue={defaultValue} placeholder="Placeholder...." onChange={this.onChange} /> }
 
               <div className="form-control-feedback">{feedbackText}</div>
               <small className="form-text text-muted">We will never share your email with anyone else.</small>

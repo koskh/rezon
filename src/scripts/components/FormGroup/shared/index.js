@@ -4,7 +4,7 @@ import Input from '../../Input';
 
 import type { validationStates } from '../../FormValidation';
 
-export type InputTypes = 'date' | 'suggest' | 'text' | 'input';
+import type { InputTypes } from '../';
 
 export const stateClasses: { [key: validationStates]: string } = { // CSS цветных статусов
     success: 'has-success',
