@@ -4,6 +4,7 @@ const ExtractTextPlugin = require('extract-text-webpack-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 
 const extractBootstrap = new ExtractTextPlugin({ filename: 'bootstrap.css', allChunks: true });
+// const extractGlobalApplicationStyles = new ExtractTextPlugin({ filename: 'global.css', allChunks: true });
 
 module.exports = {
     entry: {
@@ -39,14 +40,12 @@ module.exports = {
 
 
             {
-                test: /((bootstrap).)*\.(css)$/,
+                test: /bootstrap\.css$/,
                 use: extractBootstrap.extract({
                     fallback: 'style-loader',
                     use: {
                         loader: 'css-loader',
                         options: {
-                            // modules: true,
-                            // localIdentName: '[path][name]__[local]--[hash:base64:5]',
                             sourceMap: true,
                             importLoaders: 1,
                             // minimize: true
@@ -56,7 +55,24 @@ module.exports = {
             },
 
             {
-                test: /^((?!bootstrap).)*\.(css|pcss)$/,
+                test: /global\.(css|pcss)$/,
+                use: ExtractTextPlugin.extract({
+                    fallback: 'style-loader',
+                    use: [{
+                        loader: 'css-loader',
+                        options: {
+                            sourceMap: true,
+                            importLoaders: 1,
+                            // minimize: true
+                        }
+                    },
+                        'postcss-loader'
+                    ]
+                })
+            },
+
+            {
+                test: /index\.(css|pcss)$/,
                 // use: [
                 //     'style-loader',
                 //     // 'css-loader'

@@ -7,10 +7,8 @@ const LoginLayout = props => {
                 login header
         </header>
 
-        <main className="login-layout-content">
-          <div className="container">
-            { props.children }
-          </div>
+        <main className="container">
+          Login Form
         </main>
 
         <footer>

@@ -28,6 +28,10 @@ const publicPath = path.resolve(__dirname, '../build');
 
 app.use(express.static(publicPath));
 
+app.get('*', function (request, response){
+    response.sendFile(path.resolve(publicPath, 'index.html'));
+})
+
 app.listen(port, err => {
     if (err) {
         console.log(err);

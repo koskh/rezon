@@ -9,7 +9,7 @@ export default class Home extends React.Component {
     render() {
         return (
           <article>
-            <h1>Главная страница приложения</h1>
+            <h1> HOME. Главная страница приложения</h1>
             <p>Главная страница приложения. .Главная страница приложения. Главная страница приложения.</p>
           </article>
         );

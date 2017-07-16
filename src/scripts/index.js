@@ -1,28 +1,22 @@
-// @flow
+import React from 'react';
+import ReactDOM from 'react-dom';
+import { BrowserRouter, Route, Switch } from 'react-router-dom';
 
 import 'bootstrap/dist/css/bootstrap.css';
-
-import React, { Component } from 'react';
-import ReactDOM from 'react-dom';
-import {BrowserRouter, Route, IndexRoute, browserHistory } from 'react-router';
+import '../styles/global.pcss';
 
 import DefaultLayout from './layouts/Default';
 import LoginLayout from './layouts/Login';
 
-import Home from './features/Home';
-import Login from './features/Login';
-import NotFound from './features/NotFound';
-import FormSample from './features/FormValidationSample';
-
 
 ReactDOM.render(
-  <Router history={browserHistory}>
-    <Route path="/" component={DefaultLayout}>
-      <IndexRoute component={Home} />
-      <Route path="home" component={Home} />
-      <Route path="form-sample" component={FormSample} />
-      <Route path="404" component={NotFound} />
-    </Route>
-  </Router>
+  <BrowserRouter >
+    <main>
+      <Switch>
+        <Route path="/login" component={LoginLayout} />
+        <Route path="/" component={DefaultLayout} />
+      </Switch>
+    </main>
+  </BrowserRouter>
     , document.getElementById('root'));
 
