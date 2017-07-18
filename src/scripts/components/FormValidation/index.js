@@ -11,15 +11,15 @@ export type validationStates = 'success' | 'warning' | 'error' | 'info' | 'defau
 
 type schema = {
     [key: string]: {
-        type?: {
+        type?: { // приведение получаемого значения к требуемому типу
             convert: (value: string) => any,
             msg: string
         },
-        inputRules?: [{
+        inputRules?: [{ // валидация ввода
             validate: Function,
             msg: string
         }],
-        logicRules?: [{
+        logicRules?: [{ // валидация логики (валидность относительно других полей)
             validate: Function,
             msg: string
         }]
@@ -31,13 +31,13 @@ type Props = {
     children?: React.Children
 };
 
-type DefaultProps = {
-    schema: schema,
-    children: React.Children
-};
+// type DefaultProps = {
+//     schema: schema,
+//     children: React.Children
+// };
 
-type DataFields = { [key: string]: any };
-type ErrorsFields = { [key: string]: Array<string> };
+type DataFields = { [key: string]: any }; // значения полей формы
+type ErrorsFields = { [key: string]: Array<string> }; // ошибки формы
 type FormModel = { // содержимое валидационной формы
     data: DataFields, // данные полей
     inputErrorsFields: ErrorsFields, // ошибки ввода
@@ -54,7 +54,7 @@ class FormValidation extends React.Component {
     props: Props;
     state: State;
 
-    static defaultProps: DefaultProps = {
+    static defaultProps: Props = {
         schema: {},
         children: null
     };

@@ -10,7 +10,7 @@ module.exports = {
     entry: {
         index: path.join(__dirname, '../src/scripts/index.js'),
         react: [
-            'react', 'react-dom'
+            'react', 'react-dom', 'react-router-dom'
         ],
         lodash: 'lodash'
     },

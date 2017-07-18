@@ -12,7 +12,7 @@ import FormValidation from '.';
 // const NodeName = 'NodeName';
 // const ComponentValue = 'Value';
 // const WrongValidationState = 'abrakadabra';
-// const WrongType = 'abrakadabra';
+const WrongType = 'abrakadabra';
 // const DefaultComponent = Components.input;
 //
 describe('components/FormValidation: Component', () => {
