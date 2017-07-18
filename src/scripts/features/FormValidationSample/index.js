@@ -1,5 +1,11 @@
+// @flow
+
 import React from 'react';
-// import Header from '../../components/page-header';
+
+import FormValidation from '../../components/FormValidation';
+import FormGroup from '../../components/FormGroup';
+
+import Schema from './schema';
 
 export default class Home extends React.Component {
     componentWillMount() {
@@ -8,10 +14,21 @@ export default class Home extends React.Component {
 
     render() {
         return (
-            <article>
-                <h1>FormValidationSample · Пример валидационной формы</h1>
-                <p>FormValidationSample · Пример валидационной формы</p>
-            </article>
+          <article>
+            <h1>FormValidationSample · Пример валидационной формы</h1>
+
+            <FormValidation schema={Schema}>
+
+              <FormGroup defaultValue="testInput" name="email" type="input" />
+              <FormGroup defaultValue="22222 Input" name="email2" />
+
+              <div className="form-control-feedback">feedback FormValidation Text</div>
+
+              <button type="submit" className="btn btn-primary">Submit</button>
+
+            </FormValidation>
+
+          </article>
         );
     }
 }
