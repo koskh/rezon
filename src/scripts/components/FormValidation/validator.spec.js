@@ -42,12 +42,12 @@ const schema_fixture = {
     },
 
     field2: {
-        type: {
-            convert(value) {
-                return extract(value);
-            },
-            msg: 'Неверный формат данных. Разрешено только число.'
-        },
+        // type: {
+        //     convert(value) {
+        //         return extract(value);
+        //     },
+        //     msg: 'Неверный формат данных. Разрешено только число.'
+        // },
         inputRules: [
             {
                 validate(value) {
@@ -72,6 +72,8 @@ const nameField = 'field1';
 const emptyString = '';
 const numberString = '123';
 const mixedString = '123crt';
+
+const fieldWithoutType = 'field2';
 //
 describe('components/FormValidation/Validator: ConvertField', () => {
     it('default returns "empty" result object', () => {
@@ -89,8 +91,13 @@ describe('components/FormValidation/Validator: ConvertField', () => {
     it('can converts by schema.type.convert', () => {
         expect(convertField(nameField, numberString, schema_fixture)).to.eql({ result: 123, errors: [] });
     });
+
     it('If can\'t converts by schema.type.convert return {result: undefined, errors:[...]}', () => {
         expect(convertField(nameField, mixedString, schema_fixture)).to.eql({ result: undefined, errors: [schema_fixture[nameField].type.msg] });
+    });
+
+    it('not converted if hasn\'t type for field', () => {
+        expect(convertField(fieldWithoutType, mixedString, schema_fixture)).to.eql({ result: mixedString, errors: [] });
     });
 });
 
