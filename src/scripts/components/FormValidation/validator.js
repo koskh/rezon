@@ -8,10 +8,13 @@ import type { DataFields, ErrorsFields, FormModel, Schema } from './';
 export type validatorResultObject = { result: any, errors: Array<string> };
 
 // конвертация поля
-export function convertField(nameField: string, valueField: any, schema: Schema = {}): validatorResultObject {
+export function convertField(nameField: string, valueField: any, schema: Schema): validatorResultObject {
     //eslint-disable-next-line
     let result = undefined;
     let errors = [];
+
+    if (schema === undefined)
+        throw new Error('Validator.convertField need schema');
 
     if (valueField !== '' && schema[nameField] && schema[nameField].type) {
         const type = schema[nameField].type;
@@ -28,9 +31,12 @@ export function convertField(nameField: string, valueField: any, schema: Schema 
     return { result, errors };
 }
 
-export function validateInputRules(nameField: string, valueField: any, schema: Schema = {}): validatorResultObject {
+export function validateInputRules(nameField: string, valueField: any, schema: Schema): validatorResultObject {
     let result = true;
     let errors = [];
+
+    if (schema === undefined)
+        throw new Error('Validator.validateInputRules need schema');
 
     if (schema[nameField] && schema[nameField].inputRules) {
         const rules = schema[nameField].inputRules;
@@ -40,6 +46,28 @@ export function validateInputRules(nameField: string, valueField: any, schema: S
                 result = false;
                 errors = [rule.msg];
                 break;
+            }
+        }
+    }
+
+    return { result, errors };
+}
+
+
+export function validateLogicRules(nameField: string, attributes: any, schema: Schema): validatorResultObject {
+    let result = true;
+    const errors = [];
+
+    if (schema === undefined)
+        throw new Error('Validator.validateLogicRules need schema');
+
+    if (schema[nameField] && schema[nameField].logicRules) {
+        const rules = schema[nameField].logicRules;
+        for (let i = 0; i < rules.length; i += 1) {
+            const rule = rules[i];
+            if (!rule.validate(attributes)) {
+                result = false;
+                errors.push(rule.msg);
             }
         }
     }

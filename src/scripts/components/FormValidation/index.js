@@ -7,10 +7,8 @@ import React from 'react';
 
 import FormGroup from '../FormGroup';
 
-import { convertField, validateInputRules } from './validator';
+import { convertField, validateInputRules, validateLogicRules } from './validator';
 import type { validatorResultObject } from './validator';
-
-import schema from '../../features/FormValidationSample/schema';
 
 export type validationStates = 'success' | 'warning' | 'error' | 'info' | 'default';
 export type Schema = {
@@ -76,12 +74,13 @@ class FormValidation extends React.Component {
 
 
     onFormChange = (nameField: string, valueField: any) => {
+        const schema = this.props.schema;
         let { data, inputErrorsFields, logicErrorsFields } = this.state.model; // текущ сосстояние, обход однонаправленности
 
         const converted: validatorResultObject = convertField(nameField, valueField, schema); // конверт значения в нужн формат
 
         data = { ...data, [nameField]: converted.result };
-        inputErrorsFields = {...inputErrorsFields, [nameField]: converted.errors};
+        inputErrorsFields = { ...inputErrorsFields, [nameField]: converted.errors };
 
         if (converted.errors.length === 0) { // удачно сконвертили и получили значение
             // валидир введен данные
@@ -93,61 +92,15 @@ class FormValidation extends React.Component {
             if (_.every(inputErrorsFields, val => {
                 return val.length === 0;
             })) {
-                _.each(data, (val, key) => {
-                    const validateLogicErrors: Array<string> = this.validateLogicRules(key, data);
-                    logicErrorsFields = { ...logicErrorsFields, [key]: validateLogicErrors };
+                _.each(data, (valueFld, nameFld) => {
+                    const logicValidated: validatorResultObject = validateLogicRules(nameFld, data, schema);
+                    logicErrorsFields = { ...logicErrorsFields, [nameFld]: logicValidated.errors };
                 });
             } else
                 logicErrorsFields = {}; // приоритет ошибок у невалидного заполнения
         }
 
-        // debugger;
-
         this.setState({ model: { data, inputErrorsFields, logicErrorsFields } });
-    }
-
-
-    // validateInputRules(nameField: string, valueField: any): Array<string> { // валидация вводимых данных
-    //     const errors = [];
-    //
-    //     if (!(this.props.schema && this.props.schema[nameField]))
-    //         return errors;
-    //
-    //     const fieldSchema = this.props.schema[nameField];
-    //
-    //     if (fieldSchema.inputRules) {
-    //         for (let i = 0; i < fieldSchema.inputRules.length; i += 1) {
-    //             const rule = fieldSchema.inputRules[i];
-    //             if (!rule.validate(valueField, this.state.model.data)) {
-    //                 errors.push(rule.msg);
-    //                 return errors;
-    //             }
-    //         }
-    //     }
-    //
-    //     return errors;
-    // }
-
-    // валидация логически зависящих полей, производ после всех валидно введенных полей, по всем полям формы
-    validateLogicRules(nameField: string, currentData: DataFields): Array<string> {
-        const errors = [];
-
-        if (!(this.props.schema && this.props.schema[nameField]))
-            return errors;
-
-        const fieldSchema = this.props.schema[nameField];
-
-        if (fieldSchema.logicRules) {
-            for (let i = 0; i < fieldSchema.logicRules.length; i += 1) {
-                const rule = fieldSchema.logicRules[i];
-                if (!rule.validate(currentData)) {
-                    errors.push(rule.msg);
-                    return errors;
-                }
-            }
-        }
-
-        return errors;
     }
 
 
