@@ -1,10 +1,14 @@
-import extractNumber from '../../utilities/number/extract';
+// @flow
+import { extract } from '../../utilities/number';
 
-export default {
+// types
+import type { Schema } from '../../components/FormValidation';
+
+const schema: Schema = {
     email: {
         type: {
             convert(value) {
-                return extractNumber(value);
+                return extract(value);
             },
             msg: 'Неверный формат данных. Разрешено только число.'
         },
@@ -42,7 +46,7 @@ export default {
 
         type: {
             convert(value) {
-                return extractNumber(value);
+                return extract(value);
             },
             msg: 'Неверный формат данных. Разрешено только число.'
         },
@@ -83,3 +87,5 @@ export default {
         ]
     },
 };
+
+export default schema;

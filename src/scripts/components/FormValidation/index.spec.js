@@ -3,10 +3,73 @@ import React from 'react';
 import { expect } from 'chai';
 import { shallow } from 'enzyme';
 import sinon from 'sinon';
-//
-// import { stateClasses, Components } from './shared';
-//
+
 import FormValidation from '.';
+
+// import {extract} from '../../utilities/';
+
+const schema_fixture= {
+    email: {
+        type: {
+            convert(value) {
+                return number.extract(value);
+            },
+            msg: 'Неверный формат данных. Разрешено только число.'
+        },
+        inputRules: [
+            {
+                validate(value) {
+                    return value !== '';
+                },
+                msg: 'Не может быть пустым'
+            },
+
+            {
+                validate(value) {
+                    return value >= 0 && value <= 100;
+                },
+                msg: 'Число должно находиться в интервале 0-100'
+            },
+            {
+                validate(value) {
+                    return value >= 50;
+                },
+                msg: 'Число должно быть больше 50'
+            },
+
+        ],
+
+    },
+
+    email2: {
+
+        type: {
+            convert(value) {
+                return extractNumber(value);
+            },
+            msg: 'Неверный формат данных. Разрешено только число.'
+        },
+        inputRules: [
+            {
+                validate(value) {
+                    return value !== '';
+                },
+                msg: 'Не может быть пустым'
+            },
+        ],
+
+        logicRules: [
+            {
+                validate(attrs) {
+                    return attrs.email2 === attrs.email;
+                },
+                msg: 'Знечения полей email и email2 должны быть равны'
+            }
+        ]
+    },
+};
+
+
 
 //
 // const NodeName = 'NodeName';

@@ -9,25 +9,25 @@ import FormGroup from '../FormGroup';
 
 export type validationStates = 'success' | 'warning' | 'error' | 'info' | 'default';
 
-type schema = {
+export type Schema = {
     [key: string]: {
         type?: { // приведение получаемого значения к требуемому типу
             convert: (value: string) => any,
             msg: string
         },
-        inputRules?: [{ // валидация ввода
-            validate: Function,
+        inputRules?: Array<{ // валидация ввода
+            validate: (value: any) => boolean,
             msg: string
-        }],
-        logicRules?: [{ // валидация логики (валидность относительно других полей)
-            validate: Function,
+        }>,
+        logicRules?: Array<{ // валидация логики (валидность относительно других полей)
+            validate: (attrs: any) => boolean,
             msg: string
-        }]
+        }>
     }
 }
 
 type Props = {
-    schema?: schema,
+    schema?: Schema,
     children?: React.Children
 };
 
