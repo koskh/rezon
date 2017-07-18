@@ -5,14 +5,15 @@ import { shallow } from 'enzyme';
 import sinon from 'sinon';
 
 import FormValidation from '.';
+import FormGroup from '../FormGroup';
 
-// import {extract} from '../../utilities/';
+import { extract } from '../../utilities/number';
 
-const schema_fixture= {
-    email: {
+const schema_fixture = {
+    field1: {
         type: {
             convert(value) {
-                return number.extract(value);
+                return extract(value);
             },
             msg: 'Неверный формат данных. Разрешено только число.'
         },
@@ -41,11 +42,10 @@ const schema_fixture= {
 
     },
 
-    email2: {
-
+    field2: {
         type: {
             convert(value) {
-                return extractNumber(value);
+                return extract(value);
             },
             msg: 'Неверный формат данных. Разрешено только число.'
         },
@@ -70,34 +70,26 @@ const schema_fixture= {
 };
 
 
-
 //
 // const NodeName = 'NodeName';
 // const ComponentValue = 'Value';
 // const WrongValidationState = 'abrakadabra';
-const WrongType = 'abrakadabra';
+// const WrongType = 'abrakadabra';
 // const DefaultComponent = Components.input;
 //
 describe('components/FormValidation: Component', () => {
     it('default renders without errors', () => {
         expect(shallow(<FormValidation />)).to.have.length(1);
     });
-
-    // it('validationState set classes in right places', () => {
-    //     _.each(stateClasses, (v, k) => {
-    //         expect(shallow(<FormGroup validationState={k} />).find(`.form-group.${v}`), `stateClass: ${k} -> "${v}"`).to.have.length(1);
-    //     });
-    // });
-    //
-    // it('unknown validationState is not rendered', () => {
-    //     expect(shallow(<FormGroup validationState={WrongValidationState} />).find(`.form-group.${WrongValidationState}`)).to.have.length(0);
-    // });
-    //
-    //
-    // it('feedbackText is rendered', () => {
-    //     expect(shallow(<FormGroup feedbackText="feedbackText" />).contains(<div className="form-control-feedback">feedbackText</div>)).to.equal(true);
-    // });
 });
+
+describe('components/FormValidation: Validation', () => {
+    it('default renders without errors', () => {
+        expect(shallow(<FormValidation />)).to.have.length(1);
+    });
+});
+
+
 //
 // describe('components/FormGroup: children', () => {
 //     it('renders Input as default ', () => {

@@ -6,9 +6,10 @@ import React from 'react';
 // import classNames from 'classnames';
 
 import FormGroup from '../FormGroup';
+import { convertField } from './validator';
+import schema from '../../features/FormValidationSample/schema';
 
 export type validationStates = 'success' | 'warning' | 'error' | 'info' | 'default';
-
 export type Schema = {
     [key: string]: {
         type?: { // приведение получаемого значения к требуемому типу
@@ -36,9 +37,9 @@ type Props = {
 //     children: React.Children
 // };
 
-type DataFields = { [key: string]: any }; // значения полей формы
-type ErrorsFields = { [key: string]: Array<string> }; // ошибки формы
-type FormModel = { // содержимое валидационной формы
+export type DataFields = { [key: string]: any }; // значения полей формы
+export type ErrorsFields = { [key: string]: Array<string> }; // ошибки формы
+export type FormModel = { // содержимое валидационной формы
     data: DataFields, // данные полей
     inputErrorsFields: ErrorsFields, // ошибки ввода
     logicErrorsFields: ErrorsFields // ошибки зависимых полей
@@ -75,14 +76,15 @@ class FormValidation extends React.Component {
         const model = this.state.model; // текущ сосстояние, обход однонаправленности
 
         // конверт значения, из текстов в нужн формат
-        const convertedValue = this.convertField(
+        const converted = convertField(
             nameField,
             valueField,
-            model.inputErrorsFields // куда складывать ошибки конвертации
+            schema
         );
 
 
-        model.data = { ...model.data, [nameField]: convertedValue };
+
+        model.data = { ...model.data, [nameField]: converted.result };
 
         if (model.inputErrorsFields[nameField].length === 0) { // удачно сконвертили и получили значение
             // валидир введен данные
@@ -105,26 +107,26 @@ class FormValidation extends React.Component {
         this.setState({ model });
     }
 
-    convertField(nameField: string, valueField: any, inputErrorsFields: ErrorsFields): any { // конвертация поля
-        if (valueField !== '' && this.props.schema && this.props.schema[nameField] && this.props.schema[nameField].type) {
-            const type = this.props.schema[nameField].type;
-            const convertedValue = type.convert(valueField);
-
-            if (convertedValue === undefined || (typeof convertedValue === 'number' && isNaN(convertedValue))) {
-                //eslint-disable-next-line
-                inputErrorsFields[nameField] = [type.msg];
-                return undefined;
-            }
-
-            //eslint-disable-next-line
-            inputErrorsFields[nameField] = [];
-            return convertedValue;
-        }
-
-        //eslint-disable-next-line
-        inputErrorsFields[nameField] = [];
-        return valueField;
-    }
+    // convertField(nameField: string, valueField: any, inputErrorsFields: ErrorsFields): any { // конвертация поля
+    //     if (valueField !== '' && this.props.schema && this.props.schema[nameField] && this.props.schema[nameField].type) {
+    //         const type = this.props.schema[nameField].type;
+    //         const convertedValue = type.convert(valueField);
+    //
+    //         if (convertedValue === undefined || (typeof convertedValue === 'number' && isNaN(convertedValue))) {
+    //             //eslint-disable-next-line
+    //             inputErrorsFields[nameField] = [type.msg];
+    //             return undefined;
+    //         }
+    //
+    //         //eslint-disable-next-line
+    //         inputErrorsFields[nameField] = [];
+    //         return convertedValue;
+    //     }
+    //
+    //     //eslint-disable-next-line
+    //     inputErrorsFields[nameField] = [];
+    //     return valueField;
+    // }
 
     validateInputRules(nameField: string, valueField: any): Array<string> { // валидация вводимых данных
         const errors = [];
