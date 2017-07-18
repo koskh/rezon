@@ -205,19 +205,9 @@ describe('components/FormValidation/Validator: validateLogicRules', () => {
     });
 
     it('Model is valid by input, but its invalidate by logic', () => {
-        expect(validateLogicRules(firstField, notValidModel, schema).result).to.equal(true);
-        expect(validateLogicRules(firstField, notValidModel, schema).errors.length).equal(0);
-
-        expect(validateLogicRules(fieldHasLogic, notValidModel, schema).result).to.equal(false);
-        expect(validateLogicRules(fieldHasLogic, notValidModel, schema).errors.length).not.equal(0);
-
-        expect(validateLogicRules(fieldWithoutAllRules, notValidModel, schema).result).to.equal(true);
-        expect(validateLogicRules(fieldWithoutAllRules, notValidModel, schema).errors.length).equal(0);
-    });
-
-
-    it('validate all attributes in not valid model by scheme and return one logic', () => {
+        expect(validateLogicRules(firstField, validModel, schema)).to.eql({ result: true, errors: [] });
         expect(validateLogicRules(fieldHasLogic, notValidModel, schema)).to.eql({ result: false, errors: [schema[fieldHasLogic].logicRules[0].msg] });
+        expect(validateLogicRules(fieldWithoutAllRules, validModel, schema)).to.eql({ result: true, errors: [] });
     });
 
     it('validate all attributes in not valid model by scheme and return all logic errors', () => {
@@ -235,13 +225,9 @@ describe('components/FormValidation/Validator: validateLogicRules', () => {
     });
 
     it('validate all attributes in valid model by scheme ', () => {
-        expect(validateLogicRules(firstField, validModel, schema).result).to.equal(true);
-        expect(validateLogicRules(firstField, validModel, schema).errors.length).equal(0);
-        expect(validateLogicRules(fieldHasLogic, validModel, schema).result).to.equal(true);
-        expect(validateLogicRules(fieldHasLogic, validModel, schema).errors.length).equal(0);
-        expect(validateLogicRules(fieldWithoutAllRules, validModel, schema).result).to.equal(true);
-        expect(validateLogicRules(fieldWithoutAllRules, validModel, schema).errors.length).equal(0);
-
+        expect(validateLogicRules(firstField, validModel, schema)).to.eql({ result: true, errors: [] });
+        expect(validateLogicRules(fieldHasLogic, validModel, schema)).to.eql({ result: true, errors: [] });
+        expect(validateLogicRules(fieldWithoutAllRules, validModel, schema)).to.eql({ result: true, errors: [] });
         expect(validateLogicRules(fieldHasLogic, validModel, schema)).to.eql({ result: true, errors: [] });
     });
 });

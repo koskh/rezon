@@ -11,12 +11,6 @@ import type { ValidatorResultObject } from './validator/validator';
 import type { Schema } from './validator/schema';
 export type validationStates = 'success' | 'warning' | 'error' | 'info' | 'default';
 
-type Props = {
-    schema: Schema,
-    children: React.Children
-};
-
-
 export type DataFields = { [key: string]: any }; // значения полей формы
 export type ErrorsFields = { [key: string]: Array<string> }; // ошибки формы
 export type FormModel = { // содержимое валидационной формы
@@ -25,6 +19,10 @@ export type FormModel = { // содержимое валидационной ф�
     logicErrorsFields: ErrorsFields // ошибки зависимых полей
 }
 
+type Props = {
+    schema: Schema,
+    children: React.Children
+};
 
 type State = {
     model: FormModel
