@@ -4,12 +4,12 @@
 *  Получает на вход имя поля, значение, валидирует по переданной схеме.
 */
 
-import type { Schema } from './';
+import type { Schema } from './schema';
 
-export type validatorResultObject = { result: any, errors: Array<string> };
+export type ValidatorResultObject = { result: any, errors: Array<string> };
 
 // конвертация поля
-export function convertField(nameField: string, valueField: any, schema: Schema): validatorResultObject {
+export function convertField(nameField: string, valueField: any, schema: Schema): ValidatorResultObject {
     //eslint-disable-next-line
     let result = undefined;
     let errors = [];
@@ -33,7 +33,7 @@ export function convertField(nameField: string, valueField: any, schema: Schema)
 }
 
 // валидаця ввода
-export function validateInputRules(nameField: string, valueField: any, schema: Schema): validatorResultObject {
+export function validateInputRules(nameField: string, valueField: any, schema: Schema): ValidatorResultObject {
     let result = true;
     let errors = [];
 
@@ -56,7 +56,7 @@ export function validateInputRules(nameField: string, valueField: any, schema: S
 }
 
 // валидация созависимых полей
-export function validateLogicRules(nameField: string, attributes: any, schema: Schema): validatorResultObject {
+export function validateLogicRules(nameField: string, attributes: any, schema: Schema): ValidatorResultObject {
     let result = true;
     const errors = [];
 

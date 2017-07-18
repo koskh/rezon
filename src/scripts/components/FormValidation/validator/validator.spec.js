@@ -4,7 +4,7 @@ import { expect } from 'chai';
 // import { shallow } from 'enzyme';
 import sinon from 'sinon';
 
-import { extract } from '../../utilities/number';
+import { extract } from '../../../utilities/number/index';
 
 import { convertField, validateInputRules, validateLogicRules } from './validator';
 
