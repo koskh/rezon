@@ -3,7 +3,8 @@
 /* Валидатор.
 *  Получает на вход имя поля, значение, валидирует по переданной схеме.
 */
-import type { DataFields, ErrorsFields, FormModel, Schema } from './';
+
+import type { Schema } from './';
 
 export type validatorResultObject = { result: any, errors: Array<string> };
 
@@ -31,6 +32,7 @@ export function convertField(nameField: string, valueField: any, schema: Schema)
     return { result, errors };
 }
 
+// валидаця ввода
 export function validateInputRules(nameField: string, valueField: any, schema: Schema): validatorResultObject {
     let result = true;
     let errors = [];
@@ -53,7 +55,7 @@ export function validateInputRules(nameField: string, valueField: any, schema: S
     return { result, errors };
 }
 
-
+// валидация созависимых полей
 export function validateLogicRules(nameField: string, attributes: any, schema: Schema): validatorResultObject {
     let result = true;
     const errors = [];

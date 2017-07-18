@@ -29,14 +29,10 @@ export type Schema = {
 }
 
 type Props = {
-    schema?: Schema,
-    children?: React.Children
+    schema: Schema,
+    children: React.Children
 };
 
-// type DefaultProps = {
-//     schema: schema,
-//     children: React.Children
-// };
 
 export type DataFields = { [key: string]: any }; // значения полей формы
 export type ErrorsFields = { [key: string]: Array<string> }; // ошибки формы
