@@ -7,7 +7,8 @@ module.exports = {
         require('postcss-simple-vars')({ /* ...options */ }),
         require('postcss-nested')({ /* ...options */ }),
         require('postcss-utilities')({ /* ...options */ }),
-        require('postcss-inline-svg')({ /* ...options */ }),
+        require('postcss-inline-svg')({}),
+        require('postcss-svgo')({}),
         require('autoprefixer')({ /* ...options */ }),
     ]
 }
