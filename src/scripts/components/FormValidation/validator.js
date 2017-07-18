@@ -5,8 +5,10 @@
 */
 import type { DataFields, ErrorsFields, FormModel, Schema } from './';
 
+export type validatorResultObject = {result: any, errors: Array<string>};
+
 // конвертация поля
-export function convertField(nameField: string , valueField: any , schema: Schema = {}): {result: any, errors: Array<string>} {
+export function convertField(nameField: string , valueField: any , schema: Schema = {}): validatorResultObject {
     let result;
     let errors = [];
 

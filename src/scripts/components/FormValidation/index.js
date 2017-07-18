@@ -6,7 +6,10 @@ import React from 'react';
 // import classNames from 'classnames';
 
 import FormGroup from '../FormGroup';
+
 import { convertField } from './validator';
+import type { validatorResultObject } from './validator';
+
 import schema from '../../features/FormValidationSample/schema';
 
 export type validationStates = 'success' | 'warning' | 'error' | 'info' | 'default';
@@ -73,38 +76,34 @@ class FormValidation extends React.Component {
 
 
     onFormChange = (nameField: string, valueField: any) => {
-        const model = this.state.model; // текущ сосстояние, обход однонаправленности
+        let { data, inputErrorsFields, logicErrorsFields } = this.state.model; // текущ сосстояние, обход однонаправленности
 
-        // конверт значения, из текстов в нужн формат
-        const converted = convertField(
-            nameField,
-            valueField,
-            schema
-        );
+        const converted: validatorResultObject = convertField(nameField, valueField, schema); // конверт значения в нужн формат
 
+        data = { ...data, [nameField]: converted.result };
+        inputErrorsFields = {...inputErrorsFields, [nameField]: converted.errors}
 
-
-        model.data = { ...model.data, [nameField]: converted.result };
-
-        if (model.inputErrorsFields[nameField].length === 0) { // удачно сконвертили и получили значение
+        if (converted.errors.length === 0) { // удачно сконвертили и получили значение
             // валидир введен данные
-            const validateInputErrors: Array<string> = this.validateInputRules(nameField, model.data[nameField]);
-            model.inputErrorsFields = { ...model.inputErrorsFields, [nameField]: validateInputErrors };
+            const validateInputErrors: Array<string> = this.validateInputRules(nameField, data[nameField]);
+            inputErrorsFields = { ...inputErrorsFields, [nameField]: validateInputErrors };
 
             // валидац созависим полей
             // если все поля заполнены без ошибок
-            if (_.every(model.inputErrorsFields, val => {
+            if (_.every(inputErrorsFields, val => {
                 return val.length === 0;
             })) {
-                _.each(model.data, (val, key) => {
-                    const validateLogicErrors: Array<string> = this.validateLogicRules(key, model.data);
-                    model.logicErrorsFields = { ...model.logicErrorsFields, [key]: validateLogicErrors };
+                _.each(data, (val, key) => {
+                    const validateLogicErrors: Array<string> = this.validateLogicRules(key, data);
+                    logicErrorsFields = { ...logicErrorsFields, [key]: validateLogicErrors };
                 });
             } else
-                model.logicErrorsFields = {}; // приоритет ошибок у невалидного заполнения
+                logicErrorsFields = {}; // приоритет ошибок у невалидного заполнения
         }
 
-        this.setState({ model });
+        // debugger;
+
+        this.setState({ model: { data, inputErrorsFields, logicErrorsFields } });
     }
 
     // convertField(nameField: string, valueField: any, inputErrorsFields: ErrorsFields): any { // конвертация поля
