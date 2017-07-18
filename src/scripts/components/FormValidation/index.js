@@ -7,7 +7,7 @@ import React from 'react';
 
 import FormGroup from '../FormGroup';
 
-import { convertField } from './validator';
+import { convertField, validateInputRules } from './validator';
 import type { validatorResultObject } from './validator';
 
 import schema from '../../features/FormValidationSample/schema';
@@ -81,12 +81,12 @@ class FormValidation extends React.Component {
         const converted: validatorResultObject = convertField(nameField, valueField, schema); // конверт значения в нужн формат
 
         data = { ...data, [nameField]: converted.result };
-        inputErrorsFields = {...inputErrorsFields, [nameField]: converted.errors}
+        inputErrorsFields = {...inputErrorsFields, [nameField]: converted.errors};
 
         if (converted.errors.length === 0) { // удачно сконвертили и получили значение
             // валидир введен данные
-            const validateInputErrors: Array<string> = this.validateInputRules(nameField, data[nameField]);
-            inputErrorsFields = { ...inputErrorsFields, [nameField]: validateInputErrors };
+            const inputValidated: validatorResultObject = validateInputRules(nameField, data[nameField], schema);
+            inputErrorsFields = { ...inputErrorsFields, [nameField]: inputValidated.errors };
 
             // валидац созависим полей
             // если все поля заполнены без ошибок
@@ -106,47 +106,27 @@ class FormValidation extends React.Component {
         this.setState({ model: { data, inputErrorsFields, logicErrorsFields } });
     }
 
-    // convertField(nameField: string, valueField: any, inputErrorsFields: ErrorsFields): any { // конвертация поля
-    //     if (valueField !== '' && this.props.schema && this.props.schema[nameField] && this.props.schema[nameField].type) {
-    //         const type = this.props.schema[nameField].type;
-    //         const convertedValue = type.convert(valueField);
+
+    // validateInputRules(nameField: string, valueField: any): Array<string> { // валидация вводимых данных
+    //     const errors = [];
     //
-    //         if (convertedValue === undefined || (typeof convertedValue === 'number' && isNaN(convertedValue))) {
-    //             //eslint-disable-next-line
-    //             inputErrorsFields[nameField] = [type.msg];
-    //             return undefined;
+    //     if (!(this.props.schema && this.props.schema[nameField]))
+    //         return errors;
+    //
+    //     const fieldSchema = this.props.schema[nameField];
+    //
+    //     if (fieldSchema.inputRules) {
+    //         for (let i = 0; i < fieldSchema.inputRules.length; i += 1) {
+    //             const rule = fieldSchema.inputRules[i];
+    //             if (!rule.validate(valueField, this.state.model.data)) {
+    //                 errors.push(rule.msg);
+    //                 return errors;
+    //             }
     //         }
-    //
-    //         //eslint-disable-next-line
-    //         inputErrorsFields[nameField] = [];
-    //         return convertedValue;
     //     }
     //
-    //     //eslint-disable-next-line
-    //     inputErrorsFields[nameField] = [];
-    //     return valueField;
+    //     return errors;
     // }
-
-    validateInputRules(nameField: string, valueField: any): Array<string> { // валидация вводимых данных
-        const errors = [];
-
-        if (!(this.props.schema && this.props.schema[nameField]))
-            return errors;
-
-        const fieldSchema = this.props.schema[nameField];
-
-        if (fieldSchema.inputRules) {
-            for (let i = 0; i < fieldSchema.inputRules.length; i += 1) {
-                const rule = fieldSchema.inputRules[i];
-                if (!rule.validate(valueField, this.state.model.data)) {
-                    errors.push(rule.msg);
-                    return errors;
-                }
-            }
-        }
-
-        return errors;
-    }
 
     // валидация логически зависящих полей, производ после всех валидно введенных полей, по всем полям формы
     validateLogicRules(nameField: string, currentData: DataFields): Array<string> {

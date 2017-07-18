@@ -6,7 +6,7 @@ import sinon from 'sinon';
 
 import { extract } from '../../utilities/number';
 
-import { convertField } from './validator';
+import { convertField, validateInputRules } from './validator';
 
 const schema_fixture = {
     field1: {
@@ -48,14 +48,14 @@ const schema_fixture = {
         //     },
         //     msg: 'Неверный формат данных. Разрешено только число.'
         // },
-        inputRules: [
-            {
-                validate(value) {
-                    return value !== '';
-                },
-                msg: 'Не может быть пустым'
-            },
-        ],
+        // inputRules: [
+        //     {
+        //         validate(value) {
+        //             return value !== '';
+        //         },
+        //         msg: 'Не может быть пустым'
+        //     },
+        // ],
 
         logicRules: [
             {
@@ -73,7 +73,11 @@ const emptyString = '';
 const numberString = '123';
 const mixedString = '123crt';
 
+const notValidNumberValue = 123;
+const validNumberValue = 52;
+
 const fieldWithoutType = 'field2';
+const notSchemeField = 'abrakadabra';
 //
 describe('components/FormValidation/Validator: ConvertField', () => {
     it('default returns "empty" result object', () => {
@@ -99,5 +103,31 @@ describe('components/FormValidation/Validator: ConvertField', () => {
     it('not converted if hasn\'t type for field', () => {
         expect(convertField(fieldWithoutType, mixedString, schema_fixture)).to.eql({ result: mixedString, errors: [] });
     });
+
+    it('not converted if hasn\'t field in scheme', () => {
+        expect(convertField(notSchemeField, mixedString, schema_fixture)).to.eql({ result: mixedString, errors: [] });
+    });
+});
+
+
+describe('components/FormValidation/Validator: validateInputRules', () => {
+    it('not validate if hasn\'t field in scheme', () => {
+        expect(validateInputRules(notSchemeField, notValidNumberValue, schema_fixture)).to.eql({ result: true, errors: [] });
+    });
+
+    it('not validate if hasn\'t inputRules for field', () => {
+        expect(validateInputRules(fieldWithoutType, notValidNumberValue, schema_fixture)).to.eql({ result: true, errors: [] });
+    });
+
+
+    it('validate value by scheme', () => {
+        expect(validateInputRules(nameField, emptyString, schema_fixture).result).to.equal(false);
+        expect(validateInputRules(nameField, emptyString, schema_fixture).errors.length).not.equal(0);
+
+        expect(validateInputRules(nameField, emptyString, schema_fixture)).to.eql({ result: false, errors: [schema_fixture[nameField].inputRules[0].msg] });
+        expect(validateInputRules(nameField, notValidNumberValue, schema_fixture)).to.eql({ result: false, errors: [schema_fixture[nameField].inputRules[1].msg] });
+        expect(validateInputRules(nameField, validNumberValue, schema_fixture)).to.eql({ result: true, errors: [] });
+    });
+
 });
 
