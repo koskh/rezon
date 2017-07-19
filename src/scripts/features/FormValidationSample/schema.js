@@ -2,7 +2,7 @@
 import { extract } from '../../utilities/number';
 
 // types
-import type { Schema } from '../../components/FormValidation';
+import type { Schema } from '../../components/FormValidation/validator/schema';
 
 const schema: Schema = {
     email: {
