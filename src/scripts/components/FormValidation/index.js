@@ -98,36 +98,36 @@ class FormValidation extends React.Component {
         }
 
         this.setState({ model: { data, inputErrorsFields, logicErrorsFields } });
+    };
+
+    _getValidationState(nameField: string, formModel: FormModel): validationStates {
+        if (formModel.inputErrorsFields[nameField] && formModel.inputErrorsFields[nameField].length > 0)
+            return 'error';
+
+        if (formModel.logicErrorsFields[nameField] && formModel.logicErrorsFields[nameField].length > 0)
+            return 'error';
+
+        return 'default';
     }
 
+    _getFeedbackText(nameField: string, formModel: FormModel): string {
+        if (formModel.inputErrorsFields[nameField] && formModel.inputErrorsFields[nameField].length > 0)
+            return formModel.inputErrorsFields[nameField].join(',');
 
-    renderChildren(props: any, model: FormModel) {
-        function getValidationState(nameField: string, formModel: FormModel): validationStates {
-            if (formModel.inputErrorsFields[nameField] && formModel.inputErrorsFields[nameField].length > 0)
-                return 'error';
+        if (formModel.logicErrorsFields[nameField] && formModel.logicErrorsFields[nameField].length > 0)
+            return formModel.logicErrorsFields[nameField].join(',');
 
-            if (formModel.logicErrorsFields[nameField] && formModel.logicErrorsFields[nameField].length > 0)
-                return 'error';
+        return '';
+    }
 
-            return 'info';
-        }
-
-        function getFeedbackText(nameField: string, formModel: FormModel): string {
-            if (formModel.inputErrorsFields[nameField] && formModel.inputErrorsFields[nameField].length > 0)
-                return formModel.inputErrorsFields[nameField].join(',');
-
-            if (formModel.logicErrorsFields[nameField] && formModel.logicErrorsFields[nameField].length > 0)
-                return formModel.logicErrorsFields[nameField].join(',');
-
-            return '';
-        }
-
+    _renderChildren(props: any) {
         return React.Children.map(props.children, child => {
             if (child.type === FormGroup) {
                 const name: string = child.props.name;
+                const model = this.state.model;
 
-                const validationState: validationStates = getValidationState(name, model);
-                const feedbackText: string = getFeedbackText(name, model);
+                const validationState: validationStates = this._getValidationState(name, model);
+                const feedbackText: string = this._getFeedbackText(name, model);
 
                 return React.cloneElement(child, { onChange: this.onFormChange, validationState, feedbackText });
             }
@@ -139,7 +139,7 @@ class FormValidation extends React.Component {
     render() {
         return (
           <form>
-            {this.renderChildren(this.props, this.state.model)}
+            {this._renderChildren(this.props)}
           </form>
         );
     }

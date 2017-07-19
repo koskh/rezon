@@ -5,6 +5,7 @@ import { shallow } from 'enzyme';
 import sinon from 'sinon';
 
 import FormValidation from '.';
+import FormGroup from '../FormGroup';
 
 import schema from './validator/fixtures/test-shema';
 import { extract } from '../../utilities/number';
@@ -75,5 +76,38 @@ describe('components/FormValidation: Validation', () => {
         expect(wrapper.state('model').inputErrorsFields[fieldHasLogic]).to.eql([]);
         expect(wrapper.state('model').logicErrorsFields[firstField]).to.eql([]);
         expect(wrapper.state('model').logicErrorsFields[fieldHasLogic]).to.eql([schema[fieldHasLogic].logicRules[0].msg]);
+    });
+});
+
+describe('components/FormValidation: set validation state and feedback text to children', () => {
+    it('default renders without errors', () => {
+        const wrapper = shallow(
+          <FormValidation schema={schema}>
+            <FormGroup name={firstField} />
+            <FormGroup name={fieldHasLogic} />
+          </FormValidation>);
+
+        const component = wrapper.instance();
+
+        expect(wrapper).to.have.length(1);
+        expect(wrapper.props().schema).to.not.equal({});
+
+        component.onFormChange(firstField, mixedString);
+        expect(wrapper.childAt(0).props().validationState).to.equal('error');
+        expect(wrapper.childAt(0).props().feedbackText).to.equal('Неверный формат данных. Разрешено только число.');
+
+        component.onFormChange(firstField, validNumberValue);
+        component.onFormChange(fieldHasLogic, notValidLogicNumberValue);
+        expect(wrapper.childAt(0).props().validationState).to.equal('default');
+        expect(wrapper.childAt(0).props().feedbackText).to.equal('');
+        expect(wrapper.childAt(1).props().validationState).to.equal('error');
+        expect(wrapper.childAt(1).props().feedbackText).to.equal('Знечения полей field1 и field2 должны быть равны');
+
+        component.onFormChange(firstField, validNumberValue);
+        component.onFormChange(fieldHasLogic, validNumberValue);
+        expect(wrapper.childAt(0).props().validationState).to.equal('default');
+        expect(wrapper.childAt(0).props().feedbackText).to.equal('');
+        expect(wrapper.childAt(1).props().validationState).to.equal('default');
+        expect(wrapper.childAt(1).props().feedbackText).to.equal('');
     });
 });
