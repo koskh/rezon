@@ -40,13 +40,33 @@ class FormValidation extends React.Component {
 
     constructor(props: any) {
         super(props);
-        this.state = {
-            model: {
-                data: {},
-                inputErrorsFields: {},
-                logicErrorsFields: {},
-            }
+
+        const model: FormModel  = this._initializeFormModel(this.props.schema);
+        this.state = { model };
+
+        // this.state = {
+        //     model: {
+        //         data: {},
+        //         inputErrorsFields: {},
+        //         logicErrorsFields: {},
+        //     }
+        // };
+    }
+
+    _initializeFormModel = (schema: Schema): FormModel => {
+        const result =  {
+            data: {},
+            inputErrorsFields: {},
+            logicErrorsFields: {},
         };
+
+        _.each(schema, (v, k) => {
+            result.data[k] = undefined;
+            result.inputErrorsFields[k] = [];
+            result.logicErrorsFields[k] = [];
+        });
+
+        return result;
     }
 
 
@@ -74,7 +94,7 @@ class FormValidation extends React.Component {
                     logicErrorsFields = { ...logicErrorsFields, [nameFld]: logicValidated.errors };
                 });
             } else
-                logicErrorsFields = {}; // приоритет ошибок у невалидного заполнения
+                logicErrorsFields[nameField] = []; // приоритет ошибок у невалидного заполнения
         }
 
         this.setState({ model: { data, inputErrorsFields, logicErrorsFields } });

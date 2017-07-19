@@ -29,10 +29,10 @@ describe('components/FormGroup: Component', () => {
         expect(shallow(<FormGroup validationState={WrongValidationState} />).find(`.form-group.${WrongValidationState}`)).to.have.length(0);
     });
 
-
     it('feedbackText is rendered', () => {
         expect(shallow(<FormGroup feedbackText="feedbackText" />).contains(<div className="form-control-feedback">feedbackText</div>)).to.equal(true);
     });
+
 });
 
 describe('components/FormGroup: children', () => {
