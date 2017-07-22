@@ -15,8 +15,9 @@ export default class Home extends React.Component {
             <h1>Примеры компонентов</h1>
             <div className="row">
               <div className="col-2"> Идикатор загрузки</div>
-              <div className="col-5"><PendingIndicator pending /></div>
-              <div className="col-5"><PendingIndicator pending={false} /> fetching is done.</div>
+              <div className="col-3"><PendingIndicator pending /></div>
+              <div className="col-3"><PendingIndicator pending={false}>Fetching is done.</PendingIndicator></div>
+              <div className="col-3"><PendingIndicator pending={false} errorMessage="Ошибка получения данных">Fetching is done.</PendingIndicator></div>
             </div>
           </article>
         );
