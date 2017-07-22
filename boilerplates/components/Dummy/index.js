@@ -4,6 +4,8 @@ import React from 'react';
 
 import styles from './index.pcss';
 
+//eslint-disable-next-line
+
 // type Props = {
 //     children?: React.Children
 // }

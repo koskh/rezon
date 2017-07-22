@@ -9,10 +9,10 @@ import { Switch, Route } from 'react-router-dom';
 import createHistory from 'history/createBrowserHistory';
 import { ConnectedRouter, routerReducer, routerMiddleware } from 'react-router-redux';
 
-import Reducers from './store/reducers';
-
 import 'bootstrap/dist/css/bootstrap.css';
 import '../styles/global.pcss';
+
+import Reducers from './store/reducers';
 
 import DefaultLayout from './layouts/Default';
 import LoginLayout from './layouts/Login';

@@ -6,6 +6,7 @@ const HtmlWebpackPlugin = require('html-webpack-plugin');
 const extractBootstrap = new ExtractTextPlugin({ filename: 'bootstrap.css', allChunks: true });
 // const extractGlobalApplicationStyles = new ExtractTextPlugin({ filename: 'global.css', allChunks: true });
 
+
 module.exports = {
     entry: {
         index: path.join(__dirname, '../src/scripts/index.js'),
@@ -29,7 +30,7 @@ module.exports = {
                 test: /\.(js|jsx)$/,
                 exclude: /node_modules/,
                 use: 'babel-loader'
-            },
+            }
 
             // {
             //     test: /\.json$/,
@@ -39,79 +40,8 @@ module.exports = {
             //     test: /\.png$/,
             //     use:'file-loader'
             // },
-
-
-            {
-                test: /bootstrap\.css$/,
-                use: extractBootstrap.extract({
-                    fallback: 'style-loader',
-                    use: {
-                        loader: 'css-loader',
-                        options: {
-                            sourceMap: true,
-                            importLoaders: 1,
-                            // minimize: true
-                        }
-                    }
-                })
-            },
-
-            {
-                test: /global\.(css|pcss)$/,
-                use: ExtractTextPlugin.extract({
-                    fallback: 'style-loader',
-                    use: [{
-                        loader: 'css-loader',
-                        options: {
-                            sourceMap: true,
-                            importLoaders: 1,
-                            // minimize: true
-                        }
-                    },
-                        'postcss-loader'
-                    ]
-                })
-            },
-
-            {
-                test: /index\.(css|pcss)$/,
-                // use: [
-                //     'style-loader',
-                //     // 'css-loader'
-                //     {
-                //         loader: 'css-loader',
-                //         options: {
-                //             modules: true,
-                //             localIdentName: '[path][name]__[local]--[hash:base64:5]',
-                //             sourceMap: true,
-                //             importLoaders: 1
-                //         }
-                //     },
-                //     'postcss-loader'
-                //
-                // ]
-                use: ExtractTextPlugin.extract({
-                    fallback: 'style-loader',
-                    use: [{
-                        loader: 'css-loader',
-                        options: {
-                            modules: true,
-                            localIdentName: '[path][name]__[local]--[hash:base64:5]',
-                            sourceMap: true,
-                            importLoaders: 1,
-                            // minimize: true
-                        }
-                    },
-                        'postcss-loader'
-                    ]
-                })
-            },
-
-
         ]
     },
-
-    devtool: 'source-map',
 
     plugins: [
         new HtmlWebpackPlugin({
@@ -124,25 +54,6 @@ module.exports = {
             // children: true,
             // async: true,
         }),
-        // new webpack.optimize.OccurenceOrderPlugin(),
-        // new webpack.optimize.UglifyJsPlugin({
-        //     beautify: false,
-        //     comments: false,
-        //     compress: {
-        //         sequences     : true,
-        //         booleans      : true,
-        //         loops         : true,
-        //         unused      : true,
-        //         warnings    : false,
-        //         drop_console: true,
-        //         unsafe      : true
-        //     }
-        // }),
-        // new webpack.HotModuleReplacementPlugin(),
-        // new webpack.NoErrorsPlugin(),
-        extractBootstrap,
-        new ExtractTextPlugin({ filename: '[name].css', allChunks: true }),
-        new webpack.BannerPlugin(`Copyright ____ 2017.  Released under ____ license. ${(new Date()).toString()}`),
 
     ]
 

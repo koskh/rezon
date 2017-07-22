@@ -4,6 +4,7 @@
   "private": true,
   "devDependencies": {
     "autoprefixer": "^6.7.7",
+    "axios": "^0.16.2",
     "babel-eslint": "^7.2.3",
     "babel-loader": "^6.4.1",
     "babel-plugin-transform-decorators": "^6.24.1",
@@ -33,6 +34,7 @@
     "flow-bin": "^0.51.0",
     "flux": "^2.1.1",
     "history": "^4.6.3",
+    "html-webpack-plugin": "^2.29.0",
     "ignore-styles": "^5.0.1",
     "lodash": "^4.17.4",
     "minifyify": "^7.3.3",
@@ -73,9 +75,10 @@
   },
   "scripts": {
     "test": "mocha --require mocha.setup.js src/**/*.spec.js --reporter progress",
-    "webpack-build": "rimraf build/* && webpack --config webpack/webpack.config.js",
-    "webpack-watch": "rimraf build/* && webpack --watch  --config webpack/webpack.config.js",
-    "server-start": "node server/index.js"
+    "webpack-watch": "rimraf build/* && webpack --watch  --config webpack/webpack.config.debug.js",
+    "server-start": "node server/index.js",
+    "build:debug": "rimraf build/* && webpack --config webpack/webpack.debug.config.js",
+    "build:release": "rimraf build/* && webpack --config webpack/webpack.release.config.js"
   },
   "dependencies": {
     "flexboxgrid": "^6.3.1",

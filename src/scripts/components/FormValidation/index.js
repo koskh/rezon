@@ -67,7 +67,7 @@ class FormValidation extends React.Component {
         });
 
         return result;
-    }
+    };
 
 
     onFormChange = (nameField: string, valueField: any) => {
