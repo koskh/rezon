@@ -1,0 +1,54 @@
+// @flow
+
+import React from 'react';
+
+import styles from './index.pcss';
+
+// type Props = {
+//     children?: React.Children
+// }
+//
+// const defaultProps: Props = {
+//     children: null
+// };
+
+
+// const Dummy = (props: Props) => {
+//     return (
+//       <div>
+//         <div >
+//           { props.children }
+//         </div>
+//       </div>
+//     );
+// };
+//
+// Dummy.defaultProps = defaultProps;
+
+
+// class Dummy extends React.Component {
+//     props: Props;
+//     // state: State;
+//     static defaultProps: Props = {
+//         children: null
+//     };
+//
+//     constructor(props: any) {
+//         super(props);
+//     }
+//
+//
+//     render(): React.Element<any> {
+//         const { children } = this.props;
+//
+//
+//         return (
+//           <div >
+//             { children}
+//           </div>
+//         );
+//     }
+// }
+
+// export default Dummy;
+
