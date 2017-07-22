@@ -26,7 +26,7 @@ const defaultProps: DefaultProps = {
 };
 
 
-const PendingIndicator = (props: Props) => {
+const PendingIndicator = (props: Props): React.Element<any> => {
     const { pending, className, children, errorMessage } = props;
 
     /* eslint-disable no-nested-ternary */
