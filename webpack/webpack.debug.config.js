@@ -81,7 +81,7 @@ baseConfig.plugins.push(
 
 module.exports = Object.assign({}, baseConfig, {
     // entry: {
-    //     index: ['webpack-hot-middleware/client', config.entry.index],
+    //
     // },
 
     devtool: 'source-map',
