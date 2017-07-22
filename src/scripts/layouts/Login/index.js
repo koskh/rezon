@@ -11,10 +11,6 @@ const LoginLayout = props => {
           Login Form
         </main>
 
-        <footer>
-            login footer
-        </footer>
-
       </section>
     );
 };

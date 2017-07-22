@@ -9,6 +9,7 @@ import FormSample from '../../features/FormValidationSample';
 import NotFound from '../../features/NotFound';
 
 import DumpRedux from '../../features/DumpRedux';
+import Samples from '../../features/Samples';
 
 const DefaultLayout = () => {
     return (
@@ -22,13 +23,10 @@ const DefaultLayout = () => {
             <Route path="/home" component={Home} />
             <Route path="/form-sample" component={FormSample} />
             <Route path="/redux" component={DumpRedux} />
+            <Route path="/samples" component={Samples} />
             <Route component={NotFound} />
           </Switch>
         </main>
-
-        <footer>
-                default footer
-        </footer>
 
       </section>
     );
