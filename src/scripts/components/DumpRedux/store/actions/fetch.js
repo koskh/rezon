@@ -8,17 +8,6 @@ export const request: ThunkAction = createAction(FETCH_REQUEST);
 export const success: ThunkAction = createAction(FETCH_SUCCESS);
 export const failure: ThunkAction = createAction(FETCH_FAILURE);
 
-
-// export default (): Function => {
-//     return (dispatch, getState): Promise<Any> => {
-//         dispatch(request());
-//         return common.references()
-//             .then(
-//                 response => { console.log('response: ', response); dispatch(success({ data: response.data })); },
-//                 error => dispatch(failure(error)));
-//     };
-// };
-
 export default function (): Function {
     return async (dispatch: Dispatch): Promise<any> => {
         dispatch(request());
