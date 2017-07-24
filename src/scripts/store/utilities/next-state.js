@@ -1,1 +1,2 @@
-export default (state, payload) => { return { ...state, ...payload }; };
+// @flow
+export default (state: State, payload: {}): State => { return { ...state, ...payload }; };

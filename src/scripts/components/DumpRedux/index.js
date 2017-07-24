@@ -8,7 +8,7 @@ import { Provider, connect } from 'react-redux';
 
 // import * as types from './store/constants';
 
-import reset from './store/actions/reset';
+// import reset from './store/actions/reset';
 import fetch from './store/actions/fetch';
 
 
@@ -18,13 +18,12 @@ import fetch from './store/actions/fetch';
 //
 // const store = createStore(reducer, window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__());
 
-
 // const unsubscribe = store.subscribe(() =>
 //     console.log(store.getState())
 // );
-
 // store.dispatch(fetchAction());
 // store.dispatch(resetAction());
+
 
 class DumpRedux extends React.Component {
 
@@ -35,10 +34,9 @@ class DumpRedux extends React.Component {
 
 
     render() {
-        console.log()
         return (
           <div>
-            <h3>redux here >>></h3>
+
           </div>
         );
     }

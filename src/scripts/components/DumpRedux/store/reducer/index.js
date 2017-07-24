@@ -1,14 +1,15 @@
+// @flow
 import * as types from '../constants';
 import { createReducer, nextState } from '../../../../store/utilities';
 
 
-const initialState = {
+const initialState: State = {
     id: null,
     isFetching: false,
     isUpdating: false
 };
 
-export const actions = {
+export const actions: ReducerActions = {
     [types.FETCH_REQUEST]: state => nextState(state, { isFetching: true }),
     //
     [types.FETCH_SUCCESS]: (state, { payload }) =>  nextState(state, { isFetching: false, data: payload.data }),
