@@ -1,8 +1,8 @@
-import React, {Component} from 'react';
+import React, { Component } from 'react';
 
 // import {createStore, combineReducers} from 'redux';
 
-import {Provider, connect} from 'react-redux';
+import { Provider, connect } from 'react-redux';
 
 // import dumpReducer from './store/reducer';
 
@@ -26,31 +26,26 @@ import fetch from './store/actions/fetch';
 // store.dispatch(fetchAction());
 // store.dispatch(resetAction());
 
-class List extends React.Component {
+class DumpRedux extends React.Component {
+
+    componentDidMount() {
+        this.props.fetch();
+        // debugger;
+    }
+
 
     render() {
+        console.log()
         return (
-            <div>
-                List component >>>
-            </div>
+          <div>
+            <h3>redux here >>></h3>
+          </div>
         );
     }
 }
 
 function mapStateToProps(state) {
-    return {dumpReduxComponent: state.dumpReduxComponent, route: state.route};
+    return { dumpReduxComponent: state.dumpReduxComponent, router: state.router };
 }
 
-List = connect(mapStateToProps, {fetch, reset})(List);
-
-export default class extends React.Component {
-
-    render() {
-        return (
-            <div>
-                <h3>redux here >>></h3>
-                <List/>
-            </div>
-        );
-    }
-}
+export default connect(mapStateToProps, { fetch })(DumpRedux);

@@ -11,9 +11,9 @@ const initialState = {
 export const actions = {
     [types.FETCH_REQUEST]: state => nextState(state, { isFetching: true }),
     //
-    // [types.FETCH_SUCCESS]: (state, { payload }) => nextState(state, { isFetching: false, ...payload }),
+    [types.FETCH_SUCCESS]: (state, { payload }) =>  nextState(state, { isFetching: false, data: payload.data }),
     //
-    // [types.FETCH_FAILURE]: (state, { error }) => nextState(state, { isFetching: false, errors: { ...state.errors, fetching: error.message } }),
+    [types.FETCH_FAILURE]: (state, { payload }) => nextState(state, { isFetching: false, ...payload}),
 
     // [types.UPDATE_REQUEST]: (state, { payload }) => nextState(state, { isUpdating: true, ...payload }),
     //

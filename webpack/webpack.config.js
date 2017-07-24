@@ -15,6 +15,8 @@ module.exports = {
             'redux', 'react-redux','react-router-redux', 'history'
         ],
 
+        polyfill: 'babel-polyfill',
+
         lodash: 'lodash'
     },
 

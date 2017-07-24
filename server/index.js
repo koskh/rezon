@@ -1,7 +1,7 @@
 const express = require('express');
 const path = require('path');
 
-// const api = require('./api/api');
+// const api = require('./api/');
 
 
 // const webpackMiddleware = require('webpack-dev-middleware');
@@ -26,11 +26,19 @@ const publicPath = path.resolve(__dirname, '../build');
 
 // app.use(require("webpack-hot-middleware")(compiler));
 
+app.get('/api/references', (request, response) => {
+    response.writeHead(200, { 'Content-Type': 'application/json' });
+    setTimeout(() => {
+        response.end(JSON.stringify({ test1: ['test1', 'test2', 'test3'], test2: ['test21', 'test22', 'test23'], test3: ['test31', 'test32', 'test33'] }));
+    }, 2000);
+    // response.end(JSON.stringify(['test1', 'test2', 'test3']));
+});
+
 app.use(express.static(publicPath));
 
-app.get('*', function (request, response){
+app.get('*', (request, response) => {
     response.sendFile(path.resolve(publicPath, 'index.html'));
-})
+});
 
 app.listen(port, err => {
     if (err) {
