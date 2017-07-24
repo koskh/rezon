@@ -1,28 +1,28 @@
-// @flow
-
+// // @flow
 // import * as types from '../constants';
-// import { createReducer, nextState } from '....store/utilities';
+// import { createReducer, nextState } from '../../../../store/utilities';
 //
 //
-// const initialState = {
-//
+// const initialState: State = {
+//     id: null,
+//     isFetching: false,
+//     isUpdating: false
 // };
 //
-// export const actions = {
-//     // [types.KEY1]: state => nextState(state, { isFetching: true}),
-//
-//     // [types.KEY2]: (state, { payload }) => nextState(state, { isFetching: false, ...payload }),
+// export const actions: ReducerActions = {
+//     [types.FETCH_REQUEST]: state => nextState(state, { isFetching: true }),
 //     //
-//     // [types.KEY3]: (state, { error }) => nextState(state, { isFetching: false, errors: { ...state.errors, fetching: error.message } }),
-//
-//     // [types.KEY4]: (state, { payload }) => nextState(state, { isUpdating: true, ...payload }),
+//     [types.FETCH_SUCCESS]: (state, { payload }) =>  nextState(state, { isFetching: false, data: payload.data }),
 //     //
-//     // [types.KEY5]: state => nextState(state, { isUpdating: false }),
-//     //
-//     // [types.KEY6]: (state, { error }) => nextState(state, { isUpdating: false, errors: { ...state.errors, updating: error.message } }),
+//     [types.FETCH_FAILURE]: (state, { payload }) => nextState(state, { isFetching: false, ...payload}),
 //
-//     // [types.RESET]: () => ({ ...initialState })
+//     // [types.UPDATE_REQUEST]: (state, { payload }) => nextState(state, { isUpdating: true, ...payload }),
+//     //
+//     // [types.UPDATE_SUCCESS]: state => nextState(state, { isUpdating: false }),
+//     //
+//     // [types.UPDATE_FAILURE]: (state, { error }) => nextState(state, { isUpdating: false, errors: { ...state.errors, updating: error.message } }),
+//
+//     [types.RESET]: () => ({ ...initialState })
 // };
 //
 // export default createReducer(initialState, actions);
-
