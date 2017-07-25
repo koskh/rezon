@@ -12,7 +12,7 @@ module.exports = {
         index: path.join(__dirname, '../src/scripts/index.js'),
         react: [
             'react', 'react-dom', 'react-router', 'react-router-dom',
-            'redux', 'react-redux','react-router-redux', 'history'
+            'redux', 'react-redux', 'react-router-redux', 'history'
         ],
 
         polyfill: 'babel-polyfill',
@@ -32,12 +32,13 @@ module.exports = {
                 test: /\.(js|jsx)$/,
                 exclude: /node_modules/,
                 use: 'babel-loader'
-            }
+            },
 
             // {
             //     test: /\.json$/,
-            //     use:'json-loader'
+            //     use: 'json-loader'
             // },
+
             // {
             //     test: /\.png$/,
             //     use:'file-loader'

@@ -1,12 +1,12 @@
-// import config from './config';
-//
+import config from './config';
+
 //eslint-disable-next-line
-// const modifier = require(`./${PROJECT_ENV}.json`);
+const modifier = require(`./${PROJECT_ENV}`);
 
-// export default { ...config, ...modifier };
+export default { ...config, ...modifier };
 
-export default {
-    serverApi: 'http://localhost:3000',
-    localStorageTokenKey: 'some.token',
-    tokenLifetimeSeconds: 600
-};
+// export default {
+//     serverApi: 'http://localhost:3000',
+//     localStorageTokenKey: 'some.token',
+//     tokenLifetimeSeconds: 600
+// };
