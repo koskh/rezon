@@ -5,8 +5,7 @@ declare type ThunkAction= (...args: Array<any>)=>State;
 declare type ReducerAction= (state: State, action: {type: Type, payload: any}) => State; // действ редюсера
 declare type ReducerActions = {[handler: Type]: ReducerAction};
 
-declare type State= {
-    dumpReduxComponent: {},
-    router: {}
-};
+// declare type State= {};
 
+type $ExtractFunctionReturn = <V>(v: (...args: any) => V) => V;
+declare type State = $ObjMap<Reducers, $ExtractFunctionReturn>;

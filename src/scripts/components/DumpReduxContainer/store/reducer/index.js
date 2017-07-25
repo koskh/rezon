@@ -3,8 +3,9 @@ import * as types from '../constants';
 import { createReducer, nextState } from '../../../../store/utilities';
 
 
-const initialState: State = {
+const initialState: {} = {
     id: null,
+    data: null,
     isFetching: false,
     isUpdating: false
 };
