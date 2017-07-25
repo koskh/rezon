@@ -11,4 +11,4 @@ function mapStateToProps({dumpReduxComponent, router}: State) {
     return { dumpReduxComponent, router};
 }
 
-export default connect(mapStateToProps, { fetch, sd: 'sds' })(Componnent);
+export default connect(mapStateToProps, { fetch })(Componnent);

@@ -15,7 +15,9 @@ export const actions: ReducerActions = {
     //
     [types.FETCH_SUCCESS]: (state, { payload }) =>  nextState(state, { isFetching: false, data: payload.data }),
     //
-    [types.FETCH_FAILURE]: (state, { payload }) => nextState(state, { isFetching: false, ...payload}),
+    [types.FETCH_FAILURE]: (state, { payload }) => nextState(state, { isFetching: false, ...payload }),
+
+    [types.FETCH_CANCEL]: state => nextState(state, { isFetching: false }),
 
     // [types.UPDATE_REQUEST]: (state, { payload }) => nextState(state, { isUpdating: true, ...payload }),
     //

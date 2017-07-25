@@ -1,5 +1,5 @@
 // @flow
-import { FETCH_REQUEST, FETCH_SUCCESS, FETCH_FAILURE } from '../constants';
+import { FETCH_REQUEST, FETCH_SUCCESS, FETCH_FAILURE, FETCH_CANCEL } from '../constants';
 import { createAction } from '../../../../store/utilities';
 
 import { common } from '../../../../services/api';
@@ -7,8 +7,9 @@ import { common } from '../../../../services/api';
 export const request: ThunkAction = createAction(FETCH_REQUEST);
 export const success: ThunkAction = createAction(FETCH_SUCCESS);
 export const failure: ThunkAction = createAction(FETCH_FAILURE);
+export const cancel: ThunkAction = createAction(FETCH_CANCEL);
 
-export default function (): Function {
+export default function fetch(): Function {
     return async (dispatch: Dispatch): Promise<any> => {
         dispatch(request());
         try {
@@ -19,3 +20,4 @@ export default function (): Function {
         }
     };
 }
+

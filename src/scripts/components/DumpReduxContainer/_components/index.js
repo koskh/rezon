@@ -1,4 +1,5 @@
 // @flow
+import _ from 'lodash';
 import React from 'react';
 
 import PendingIndicator from '../../PendingIndicator';
@@ -13,23 +14,23 @@ type Props = {
 }
 //
 // type DefaultProps = {
-//     fetch: Function,
-//     dumpReduxComponent: State,
-//     children: React.Children
+//     data: Object
 // };
 
 class DumpReduxComponent extends React.Component {
     props: Props;
 
     // static defaultProps: DefaultProps = {
-    //     fetch: () => {},
-    //     dumpReduxComponent: {},
-    //     children: null
+    //     data: {}
     // };
 
     componentDidMount() {
         this.props.fetch();
         // debugger;
+    }
+
+    componentWillUnmount() {
+
     }
 
 
@@ -39,7 +40,8 @@ class DumpReduxComponent extends React.Component {
         return (
           <section className="row">
             <PendingIndicator pending={isFetching}>
-                Загруженна информация
+                Загруженна информация:<br />
+              {data && data.test1 && _.join(data.test1)}
             </PendingIndicator>
           </section>
         );
