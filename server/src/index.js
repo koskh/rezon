@@ -1,3 +1,5 @@
+// @flow
+
 const express = require('express');
 const path = require('path');
 
@@ -29,7 +31,7 @@ app.use('/api', api);
 
 app.use(express.static(publicPath));
 
-app.get('*', (request, response) => {
+app.get('*', (request: express$Request, response: express$Response) => {
     response.sendFile(path.resolve(publicPath, 'index.html'));
 });
 
