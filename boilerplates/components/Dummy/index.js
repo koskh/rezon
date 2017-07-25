@@ -1,4 +1,4 @@
-// @flow
+// @flowfetch
 
 import React from 'react';
 

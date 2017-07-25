@@ -1,4 +1,4 @@
-import dumpReducer from '../components/DumpRedux/store/reducer/index';
+import dumpReducer from '../components/DumpReduxContainer/store/reducer/index';
 
 export default {
     dumpReduxComponent: dumpReducer

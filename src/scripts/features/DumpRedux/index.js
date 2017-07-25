@@ -1,7 +1,7 @@
 import React from 'react';
 // import Header from '../../components/page-header';
 
-import DumpRedux from '../../components/DumpRedux';
+import DumpReduxContainer from '../../components/DumpReduxContainer';
 
 export default class Home extends React.Component {
     componentWillMount() {
@@ -12,7 +12,7 @@ export default class Home extends React.Component {
         return (
           <article>
             <h1>DumpRedux страница приложения</h1>
-            <DumpRedux />
+            <DumpReduxContainer />
           </article>
         );
     }
