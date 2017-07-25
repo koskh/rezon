@@ -57,6 +57,7 @@ module.exports = {
             // children: true,
             // async: true,
         }),
+        new webpack.optimize.ModuleConcatenationPlugin(),
 
     ]
 

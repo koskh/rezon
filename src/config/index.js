@@ -1,7 +1,8 @@
 import config from './config';
 
 //eslint-disable-next-line
-const modifier = require(`./${PROJECT_ENV}`);
+const modifier = require(`./${PROJECT_ENV}.json`);
+
 
 export default { ...config, ...modifier };
 

@@ -61,10 +61,9 @@ baseConfig.module.rules.push(
 );
 
 baseConfig.plugins.push(
-    new webpack.NoErrorsPlugin(),
+    new webpack.NoEmitOnErrorsPlugin(),
     extractBootstrap,
     new ExtractTextPlugin({ filename: '[name].css', allChunks: true }),
-    // new webpack.DefinePlugin({ PROJECT_ENV: JSON.stringify('re') }),
     new webpack.optimize.UglifyJsPlugin({
         beautify: false,
         comments: false,
