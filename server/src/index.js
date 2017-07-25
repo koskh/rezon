@@ -11,7 +11,7 @@ const api = require('./api');
 const app = express();
 const port = 3000;
 
-const publicPath = path.resolve(__dirname, '../build');
+const publicPath = path.resolve(__dirname, '../../build');
 
 // const options = {
 //     noInfo: false,
