@@ -1,4 +1,10 @@
 // @flow
+
+
+const get = (index: number) => <TItem>(items: Array<TItem>): TItem  =>  items[index];
+
+const first: number = get(0)([1, 2, 3]);
+const first2: string = get(0)(['1', '2', '3']);
 import * as types from '../constants';
 import { createReducer, nextState } from '../../../../store/utilities';
 

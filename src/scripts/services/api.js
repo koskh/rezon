@@ -15,39 +15,26 @@ const http = axios.create({
 
 // http.interceptors.response.use(undefined, response.failure);
 
-// export const auth = {
-//     login(user) {
-//         return http.post(urls.request('auth/login'), user);
-//     },
-//
-//     fetchPhone(login) {
-//         return http.get(urls.request('auth/phone', login));
-//     },
-//
-//     fetchCode(login) {
-//         return http.post(urls.request('auth/code'), { login });
-//     },
-//
-//     confirmCode({ login, code }) {
-//         return http.post(urls.request('auth/code/confirm'), { login, code });
-//     },
-//
-//     createPassword({ login, code, password }) {
-//         return http.post(urls.request('auth/password'), { login, code, password });
+// axios({
+//     method: 'post',
+//     url: '/user/12345',
+//     data: {
+//         firstName: 'Fred',
+//         lastName: 'Flintstone'
 //     }
-// };
+// });
 
-
-const createAjaxRequest = (url: string): Function => ({ ...args }: Object): AjaxRequest => {
+const createAjaxRequest = (url: string, ...args0: Array<any>): Function => ({...args1}: Object): AjaxRequest => {
     const CancelToken = axios.CancelToken;
     const source = CancelToken.source();
-    const promise = http.get(urls(url), { cancelToken: source.token, ...args });
+    const promise = http({ url: urls(url, ...args0), cancelToken: source.token, ...args1 });
     const cancel = source.cancel;
     return { promise, cancel };
 };
 
-type Api = () => AjaxRequest;
+type Api = (...args: Array<any>) => AjaxRequest;
 
 export const common: {[string]: Api} = {
-        references: () => createAjaxRequest('references')()
+    references: () => createAjaxRequest('references')(),
+    references2: options => createAjaxRequest('references2', options.userId)(options),
 };

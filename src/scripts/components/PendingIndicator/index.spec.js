@@ -32,7 +32,7 @@ describe('components/PendingIndicator', () => {
 
     it('renders error message', () => {
         const errorMessage = 'error Message';
-        const dump = shallow(<PendingIndicator errorMessage={errorMessage}><Dump /></PendingIndicator>);
+        const dump = shallow(<PendingIndicator message={errorMessage}><Dump /></PendingIndicator>);
 
         expect(dump).to.have.length(1);
         expect(dump.find(Dump)).to.have.length(0);

@@ -79,7 +79,7 @@ baseConfig.plugins.push(
     }),
     new webpack.BannerPlugin(`${pkg.name}   ${new Date()}. RELEASE.`),
     new webpack.DefinePlugin({
-        'process.env': { NODE_ENV: JSON.stringify('release') },
+        // 'process.env': { NODE_ENV: JSON.stringify('production') },
         PROJECT_ENV: JSON.stringify('release')
     })
 );

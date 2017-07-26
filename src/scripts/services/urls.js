@@ -1,10 +1,15 @@
 // @flow
+import invariant from 'invariant';
 import config from '../../config';
 
 const apiPatch: string = `${config.serverApi}/api`;
 
 const urls: {[key: string]: any} = {
-    references: () => `${apiPatch}/references`
+    references: () => `${apiPatch}/references`,
+    references2: userId => `${apiPatch}/references2/${userId}`,
 };
 
-export default (name: string, ...args?: Array<any>): string => urls[name] ? urls[name].apply(undefined, args) : '';
+export default (name: string, ...args?: Array<any>): string => {
+    invariant(urls[name], 'The name url must be in urls[]');
+    return urls[name](...args);
+};
