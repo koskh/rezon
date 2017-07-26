@@ -11,7 +11,7 @@ const initialState: {} = {
 };
 
 export const actions: ReducerActions = {
-    [types.FETCH_REQUEST]: state => nextState(state, { isFetching: true }),
+    [types.FETCH_REQUEST]: (state, { payload }) => nextState(state, { isFetching: true, ...payload}),
     //
     [types.FETCH_SUCCESS]: (state, { payload }) =>  nextState(state, { isFetching: false, data: payload.data }),
     //

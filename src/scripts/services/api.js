@@ -37,8 +37,18 @@ const http = axios.create({
 //     }
 // };
 
+
+
+
+
+
 export const common = {
-    references() {
-        return http.get(urls('references'));
+    references(): AjaxRequest {
+        const CancelToken = axios.CancelToken;
+        const source = CancelToken.source();
+        const promise = http.get(urls('references'), { cancelToken: source.token });
+        const cancel = source.cancel;
+
+        return { promise, cancel};
     }
-}
+};

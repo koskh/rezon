@@ -2,13 +2,17 @@
 import _ from 'lodash';
 import React from 'react';
 
+import axios from 'axios';
+
 import PendingIndicator from '../../PendingIndicator';
 
 type Props = {
-    fetch: Function,
+    makeFetch: Function,
+    cancelFetch: Function,
     dumpReduxComponent: {
         isFetching: boolean,
-        data?: any
+        data?: any,
+        error?: any
     }
     // children?: React.Children
 }
@@ -25,23 +29,25 @@ class DumpReduxComponent extends React.Component {
     // };
 
     componentDidMount() {
-        this.props.fetch();
-        // debugger;
+        this.props.makeFetch();
+
+        // setTimeout(() =>{
+        //     this.props.cancelFetch();
+        // }, 2750);
     }
 
     componentWillUnmount() {
-
+        this.props.cancelFetch();
     }
 
 
     render() {
-        const { data, isFetching } = this.props.dumpReduxComponent;
+        const { data, isFetching, error} = this.props.dumpReduxComponent;
 
         return (
           <section className="row">
-            <PendingIndicator pending={isFetching}>
-                Загруженна информация:<br />
-              {data && data.test1 && _.join(data.test1)}
+            <PendingIndicator pending={isFetching} message={error && error.message}>
+                Загруженна информация: {data && data.test1 && _.join(data.test1)}
             </PendingIndicator>
           </section>
         );

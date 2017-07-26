@@ -9,31 +9,31 @@ import styles from './index.pcss';
 type Props = {
     pending: boolean,
     className?: string,
-    errorMessage?: string,
+    message?: string,
     children?: React.Children
 }
 
 type DefaultProps = {
     className: string,
-    errorMessage: string,
+    message: string,
     children: React.Children
 }
 
 const defaultProps: DefaultProps = {
     className: '',
-    errorMessage: '',
+    message: '',
     children: null
 };
 
 
 const PendingIndicator = (props: Props): React.Element<any> => {
-    const { pending, className, children, errorMessage } = props;
+    const { pending, className, children, message } = props;
 
     /* eslint-disable no-nested-ternary */
     return (
       <div className={styles.root}>
         <div>
-          {pending ? <Indicator className={className} /> : (errorMessage || children)}
+          {pending ? <Indicator className={className} /> : (message || children)}
         </div>
       </div>
     );
