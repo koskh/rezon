@@ -38,17 +38,16 @@ const http = axios.create({
 // };
 
 
+const createAjaxRequest = (url: string): Function => ({ ...args }: Object): AjaxRequest => {
+    const CancelToken = axios.CancelToken;
+    const source = CancelToken.source();
+    const promise = http.get(urls(url), { cancelToken: source.token, ...args });
+    const cancel = source.cancel;
+    return { promise, cancel };
+};
 
+type Api = () => AjaxRequest;
 
-
-
-export const common = {
-    references(): AjaxRequest {
-        const CancelToken = axios.CancelToken;
-        const source = CancelToken.source();
-        const promise = http.get(urls('references'), { cancelToken: source.token });
-        const cancel = source.cancel;
-
-        return { promise, cancel};
-    }
+export const common: {[string]: Api} = {
+        references: () => createAjaxRequest('references')()
 };
