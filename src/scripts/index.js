@@ -13,6 +13,8 @@ import { Switch, Route } from 'react-router-dom';
 import createHistory from 'history/createBrowserHistory';
 import { ConnectedRouter, routerReducer, routerMiddleware } from 'react-router-redux';
 
+// import configureStore from
+
 import 'bootstrap/dist/css/bootstrap.css';
 import '../styles/global.pcss';
 
@@ -24,12 +26,15 @@ import LoginLayout from './layouts/Login';
 const history = createHistory();
 const routerMiiddleware = routerMiddleware(history);
 
+const preloadedState = process.env.NODE_ENV !== 'production' ? window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__() : {};
+
+//
 const store = createStore(
     combineReducers({
         ...Reducers,
         router: routerReducer
     }),
-    window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__(),
+    preloadedState,
     applyMiddleware(routerMiiddleware, thunkMiddleware)
 );
 

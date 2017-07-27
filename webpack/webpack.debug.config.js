@@ -73,7 +73,7 @@ baseConfig.plugins.push(
     new ExtractTextPlugin({ filename: '[name].css', allChunks: true }),
     new webpack.BannerPlugin(`${pkg.name}   ${new Date()}. DEBUG.`),
     new webpack.DefinePlugin({
-        // 'process.env': { NODE_ENV: JSON.stringify('debug') },
+        'process.env.NODE_ENV': JSON.stringify('debug'),
         PROJECT_ENV: JSON.stringify('debug')
     })
 );
