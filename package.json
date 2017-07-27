@@ -19,6 +19,7 @@
     "bootstrap": "^4.0.0-alpha.6",
     "chai": "^3.5.0",
     "classnames": "^2.2.5",
+    "copy-webpack-plugin": "^4.0.1",
     "css-loader": "^0.28.0",
     "css-modulesify": "^0.27.2",
     "empty": "^0.10.1",
