@@ -26,7 +26,8 @@ import LoginLayout from './layouts/Login';
 const history = createHistory();
 const routerMiiddleware = routerMiddleware(history);
 
-const preloadedState = process.env.NODE_ENV !== 'production' ? window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__() : {}; // undefined валидн состяоние
+//eslint-disable-next-line
+const preloadedState = process.env.NODE_ENV !== 'production' ? window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__() || {} : {};
 
 //
 const store = createStore(
