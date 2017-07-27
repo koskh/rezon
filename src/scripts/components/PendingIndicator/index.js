@@ -1,8 +1,8 @@
 // @flow
-
 import React from 'react';
 
-import Indicator from './_components/Indicator';
+import DefaultIndicator from './_components/Indicator';
+// import Indicator from '../Indicators/Spiner';
 
 import styles from './index.pcss';
 
@@ -10,31 +10,35 @@ type Props = {
     pending: boolean,
     className?: string,
     message?: string,
+    Indicator?: ReactClass<any>,
     children?: React.Children
 }
 
 type DefaultProps = {
     className: string,
     message: string,
+    Indicator: ReactClass<any>,
     children: React.Children
 }
 
 const defaultProps: DefaultProps = {
     className: '',
     message: '',
+    Indicator: DefaultIndicator,
     children: null
 };
 
 
 const PendingIndicator = (props: Props): React.Element<any> => {
-    const { pending, className, children, message } = props;
+    const { pending, className, children, message, Indicator } = props;
+
+    if (typeof Indicator !== 'function')
+        throw new Error('PendingIndicator need Indicator:ReactClass');
 
     /* eslint-disable no-nested-ternary */
     return (
       <div className={styles.root}>
-        <div>
-          {pending ? <Indicator className={className} /> : (message || children)}
-        </div>
+        {pending ? <Indicator className={className} /> : (message || children)}
       </div>
     );
     /* eslint-enable no-nested-ternary */

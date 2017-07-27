@@ -5,6 +5,7 @@ module.exports = {
         require('precss')({ /* ...options */ }),
         require('postcss-mixins')({ /* ...options */ }),
         require('postcss-simple-vars')({ /* ...options */ }),
+        require('postcss-custom-properties')({ /* ...options */ }),
         require('postcss-nested')({ /* ...options */ }),
         require('postcss-utilities')({ /* ...options */ }),
         require('postcss-inline-svg')({}),

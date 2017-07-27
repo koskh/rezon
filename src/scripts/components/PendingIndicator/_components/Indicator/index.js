@@ -16,9 +16,7 @@ import styles from './index.pcss';
 const Indicator = () => {
     return (
       <div>
-        <div >
           Fetching ....
-        </div>
       </div>
     );
 };

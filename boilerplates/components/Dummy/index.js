@@ -1,6 +1,7 @@
-// @flowfetch
+// @flow
 
 import React from 'react';
+// import cn from 'classnames';
 
 import styles from './index.pcss';
 

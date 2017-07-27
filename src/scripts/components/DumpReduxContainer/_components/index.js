@@ -38,13 +38,15 @@ class DumpReduxComponent extends React.Component {
 
 
     render() {
-        const { data, isFetching, error} = this.props.dumpReduxComponent;
+        const { data, isFetching, error } = this.props.dumpReduxComponent;
 
         return (
           <section className="row">
-            <PendingIndicator pending={isFetching} message={error && error.message}>
-                Загруженна информация: {data && data.test1 && _.join(data.test1)}
-            </PendingIndicator>
+            <div className="col-12">
+              <PendingIndicator pending={isFetching} message={error && error.message}>
+                        Загруженна информация: {data && data.test1 && _.join(data.test1)}
+              </PendingIndicator>
+            </div>
           </section>
         );
     }
