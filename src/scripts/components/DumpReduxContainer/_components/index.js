@@ -30,10 +30,6 @@ class DumpReduxComponent extends React.Component {
 
     componentDidMount() {
         this.props.makeFetch();
-
-        // setTimeout(() =>{
-        //     this.props.cancelFetch();
-        // }, 2750);
     }
 
     componentWillUnmount() {
