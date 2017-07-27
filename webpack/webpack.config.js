@@ -1,7 +1,6 @@
 const path = require('path');
 const webpack = require('webpack');
-const CopyWebpackPlugin = require('copy-webpack-plugin');
-const ExtractTextPlugin = require('extract-text-webpack-plugin');
+// const CopyWebpackPlugin = require('copy-webpack-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 
 // const extractBootstrap = new ExtractTextPlugin({ filename: 'bootstrap.css', allChunks: true });
@@ -59,14 +58,14 @@ module.exports = {
             // async: true,
         }),
         new webpack.optimize.ModuleConcatenationPlugin(),
-        new CopyWebpackPlugin(
-            [
-                { from: 'src/_static_assets', to: 'static_assets' }
-            ], {
-                ignore: [],
-                copyUnmodified: true
-            }
-        )
+        // new CopyWebpackPlugin(
+        //     [
+        //         { from: 'src/static_assets', to: 'static_assets' }
+        //     ], {
+        //         ignore: [],
+        //         copyUnmodified: true
+        //     }
+        // )
 
     ]
 
