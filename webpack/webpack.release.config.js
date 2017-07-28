@@ -2,8 +2,8 @@ const webpack = require('webpack');
 const pkg = require('./../package.json');
 
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
-
-const extractBootstrap = new ExtractTextPlugin({ filename: 'bootstrap.css', allChunks: true });
+const extractApplicationCss = new ExtractTextPlugin({ filename: 'index.css', allChunks: true });
+const extractBootstrapCss = new ExtractTextPlugin({ filename: 'bootstrap.css', allChunks: true });
 
 const baseConfig = require('./webpack.config');
 
@@ -11,7 +11,7 @@ const baseConfig = require('./webpack.config');
 baseConfig.module.rules.push(
     {
         test: /bootstrap\.css$/,
-        use: extractBootstrap.extract({
+        use: extractBootstrapCss.extract({
             fallback: 'style-loader',
             use: {
                 loader: 'css-loader',
@@ -25,7 +25,7 @@ baseConfig.module.rules.push(
 
     {
         test: /global\.(css|pcss)$/,
-        use: ExtractTextPlugin.extract({
+        use: extractApplicationCss.extract({
             fallback: 'style-loader',
             use: [{
                 loader: 'css-loader',
@@ -42,7 +42,7 @@ baseConfig.module.rules.push(
 
     {
         test: /index\.(css|pcss)$/,
-        use: ExtractTextPlugin.extract({
+        use: extractApplicationCss.extract({
             fallback: 'style-loader',
             use: [{
                 loader: 'css-loader',
@@ -62,8 +62,8 @@ baseConfig.module.rules.push(
 
 baseConfig.plugins.push(
     new webpack.NoEmitOnErrorsPlugin(),
-    extractBootstrap,
-    new ExtractTextPlugin({ filename: '[name].css', allChunks: true }),
+    extractBootstrapCss,
+    extractApplicationCss,
     new webpack.optimize.UglifyJsPlugin({
         beautify: false,
         comments: false,

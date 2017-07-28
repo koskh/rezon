@@ -1,29 +1,22 @@
 const webpack = require('webpack');
 
-
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
-const extractBootstrap = new ExtractTextPlugin({ filename: 'bootstrap.css', allChunks: true });
+const extractApplicationCss = new ExtractTextPlugin({ filename: 'index.css', allChunks: true });
+const extractBootstrapCss = new ExtractTextPlugin({ filename: 'bootstrap.css', allChunks: true });
 
 const pkg = require('./../package.json');
 
 const baseConfig = require('./webpack.config');
 
-const modulesCssConfig = {
-    modules: true,
-    localIdentName: '[folder]__[local]--[hash:base64:5]',
-    sourceMap: true,
-    importLoaders: 1,
-};
-
 baseConfig.module.rules.push(
     {
         test: /bootstrap\.css$/,
-        use: extractBootstrap.extract({
+        use: extractBootstrapCss.extract({
             fallback: 'style-loader',
             use: {
                 loader: 'css-loader',
                 options: {
-                    sourceMap: true,
+                    sourceMap: true
                 }
             }
         })
@@ -31,7 +24,7 @@ baseConfig.module.rules.push(
 
     {
         test: /global\.(css|pcss)$/,
-        use: ExtractTextPlugin.extract({
+        use: extractApplicationCss.extract({
             fallback: 'style-loader',
             use: [{
                 loader: 'css-loader',
@@ -47,7 +40,7 @@ baseConfig.module.rules.push(
 
     {
         test: /index\.(css|pcss)$/,
-        use: ExtractTextPlugin.extract({
+        use: extractApplicationCss.extract({
             fallback: 'style-loader',
             use: [{
                 loader: 'css-loader',
@@ -63,14 +56,13 @@ baseConfig.module.rules.push(
             ]
         })
     }
-
 );
 
 // baseConfig.plugins.unshift(new webpack.HotModuleReplacementPlugin());
 
 baseConfig.plugins.push(
-    extractBootstrap,
-    new ExtractTextPlugin({ filename: '[name].css', allChunks: true }),
+    extractBootstrapCss,
+    extractApplicationCss,
     new webpack.BannerPlugin(`${pkg.name}   ${new Date()}. DEBUG.`),
     new webpack.DefinePlugin({
         'process.env.NODE_ENV': JSON.stringify('debug'),
@@ -94,6 +86,6 @@ module.exports = Object.assign({}, baseConfig, {
     //     loaders: config.module.loaders
     // },
 
-    plugins: baseConfig.plugins
+    // plugins: baseConfig.plugins
 });
 

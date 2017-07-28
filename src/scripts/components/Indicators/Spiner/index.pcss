@@ -1,7 +1,5 @@
-:root {
-  --bluejeans-dark: #72a2d4;
-  --page-bg: white;
-}
+$border-color: #72a2d4;
+$border-top-color: color($border-color a(0.1));
 
 @keyframes spin {
   0% {
@@ -15,13 +13,13 @@
 
 .spinner {
   width: 1rem;
-  background-color: var(--bluejeans-dark);
+
   margin: 0 auto;
   border-width: 0.5rem;
   border-style: solid;
   border-radius: 50%;
-  border-color: transparent;
-  border-top-color: var(--page-bg);
+  border-color: $border-color;
+  border-top-color: $border-top-color;
 
   animation: spin 1s infinite linear;
 }
