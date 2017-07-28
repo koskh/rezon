@@ -1,5 +1,7 @@
+// @flow
 import React from 'react';
 // import Header from '../../components/page-header';
+import LoginForm from '../../components/LoginForm';
 
 export default class Home extends React.Component {
     componentWillMount() {
@@ -11,6 +13,9 @@ export default class Home extends React.Component {
           <article>
             <h1>Логин</h1>
             <p>Аутентификация пользователя.</p>
+
+            <LoginForm />
+
           </article>
         );
     }

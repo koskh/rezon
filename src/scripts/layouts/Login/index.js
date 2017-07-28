@@ -1,7 +1,8 @@
 // @flow"
 import React from 'react';
+import Login from '../../features/Login';
 
-const LoginLayout = props => {
+const LoginLayout = () => {
     return (
       <section>
         <header>
@@ -9,7 +10,7 @@ const LoginLayout = props => {
         </header>
 
         <main className="container">
-          Login Form
+          <Login />
         </main>
 
       </section>
