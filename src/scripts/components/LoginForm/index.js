@@ -3,6 +3,8 @@
 import React from 'react';
 // import cn from 'classnames';
 
+import EmailPassword from './_components/EmailPassword';
+
 import styles from './index.pcss';
 
 type Props = {
@@ -31,18 +33,22 @@ class LoginForm extends React.Component {
 
         return (
           <div className={styles.wrapper}>
-            <form className={styles['form-signin']}>
+            <form className={`${styles['form-signin']} rounded`}>
+
               <h2 className={styles['form-signin-heading']}>Please sign in</h2>
-              <label htmlFor="inputEmail" className="sr-only">Email address</label>
-              <input type="email" id="inputEmail" className="form-control" placeholder="Email address" required={true} />
-              <label htmlFor="inputPassword" className="sr-only">Password</label>
-              <input type="password" id="inputPassword" className="form-control" placeholder="Password" required={true} />
-              <div className="checkbox">
-                <label className="checkbox" htmlFor="rememberMe">
-                  <input type="checkbox" value="remember-me" id="rememberMe" name="rememberMe" /> Remember me
-                        </label>
+
+              <EmailPassword />
+
+              <div className="form-group">
+                <div className="form-check">
+                  <label className="form-check-label" htmlFor="rememberMe">
+                    <input className="form-check-input" type="checkbox" value="remember-me" id="rememberMe" name="rememberMe" />
+                    Remember me
+                  </label>
+                </div>
               </div>
-              <button className="btn btn-lg btn-primary btn-block" type="submit">Sign in</button>
+
+              <button className="btn btn-lg btn-primary btn-block" type="submit" disabled={true}>Sign in</button>
             </form>
           </div>
         );

@@ -10,7 +10,7 @@ type Props = {
     makeFetch: Function,
     cancelFetch: Function,
     dumpReduxComponent: {
-        isFetching: boolean,
+        isPending: boolean,
         data?: any,
         error?: any
     }
@@ -38,12 +38,12 @@ class DumpReduxComponent extends React.Component {
 
 
     render() {
-        const { data, isFetching, error } = this.props.dumpReduxComponent;
+        const { data, isPending, error } = this.props.dumpReduxComponent;
 
         return (
           <section className="row">
             <div className="col-12">
-              <PendingIndicator pending={isFetching} message={error && error.message}>
+              <PendingIndicator pending={isPending} message={error && error.message}>
                         Загруженна информация: {data && data.test1 && _.join(data.test1)}
               </PendingIndicator>
             </div>
