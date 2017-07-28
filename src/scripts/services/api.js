@@ -1,5 +1,6 @@
 // @flow
 import axios from 'axios';
+import interceptors from './interceptors';
 import urls from './urls';
 
 const http = axios.create({
@@ -13,7 +14,8 @@ const http = axios.create({
     withCredentials: true
 });
 
-// http.interceptors.response.use(undefined, response.failure);
+// http.interceptors.request.use(undefined, interceptors.before);
+http.interceptors.response.use(undefined, interceptors.failure);
 
 // axios({
 //     method: 'post',
@@ -37,4 +39,8 @@ type Api = (...args: Array<any>) => AjaxRequest;
 export const common: {[string]: Api} = {
     references: () => createAjaxRequest('references')(),
     references2: options => createAjaxRequest('references2', options.userId)(options),
+};
+
+export const auth: {[string]: Api} = {
+    login: options => createAjaxRequest('auth/login', options.user)(options),
 };
