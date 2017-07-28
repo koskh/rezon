@@ -2,7 +2,7 @@
 
 import React from 'react';
 
-import history from '../../../services/createHistory';
+import history from '../../../services/history';
 
 // const history = createHistory();
 

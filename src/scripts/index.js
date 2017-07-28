@@ -12,7 +12,7 @@ import { ConnectedRouter, routerReducer, routerMiddleware } from 'react-router-r
 import 'bootstrap/dist/css/bootstrap.css';
 import '../styles/global.pcss';
 
-import history from './services/createHistory';
+import history from './services/history';
 import Reducers from './store/reducers';
 
 import DefaultLayout from './layouts/Default';
