@@ -13,10 +13,13 @@
     "import",
     "flowtype"
   ],
-  "ecmaFeatures": {
-    "jsx": true,
-    "modules": true
+  "parserOptions": {
+    "ecmaFeatures": {
+      "jsx": true
+    },
+    "sourceType": "module"
   },
+
   "globals": {
     "PROJECT_ENV": true
   },

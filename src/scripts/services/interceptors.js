@@ -22,13 +22,10 @@ const statuses = {
 
 export default {
     failure(error) {
-        // debugger;
-
-        // debugger;
         if (error.response) {
             if (error.response.status === statuses.notFound)
-                history.push(`/`);
-                // history.push(`/login?return=${window.location.pathname}`);
+                history.push('/');
+            // history.push(`/login?return=${window.location.pathname}`);
 
             // if (error.response.status === 404)
             //     history.push(`/login?return=${window.location.pathname}`);
