@@ -11,3 +11,5 @@ Simple infrastructure for react based projects.
 фичи  используют и свои "локальн" и "внешние" css
 
 в postcss (при данных настройках webpack) импортим только переменные, иначе дублирование классов через css-modules.
+
+echo '-w "\n"' >> ~/.curlrc

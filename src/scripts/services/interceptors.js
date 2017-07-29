@@ -25,9 +25,11 @@ export default {
         if (error.response) {
             if (error.response.status === statuses.notFound)
                 history.push('/');
-            // history.push(`/login?return=${window.location.pathname}`);
 
-            // if (error.response.status === 404)
+            if (error.response.status === statuses.unauthorized)
+                history.push(`/login?return=${window.location.pathname}`);
+
+            // if (error.response.status === statuses.badRequest)
             //     history.push(`/login?return=${window.location.pathname}`);
 
         //
