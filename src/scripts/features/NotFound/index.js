@@ -8,10 +8,10 @@ export default class NotFound extends React.Component {
 
     render() {
         return (
-          <article>
-            <h1>Страница не найдена</h1>
-            <p>Вернитесь назад и попробуйте еще раз.</p>
-          </article>
+            <article>
+                <h1>Страница не найдена</h1>
+                <p>Вернитесь назад и попробуйте еще раз.</p>
+            </article>
         );
     }
 }
