@@ -22,7 +22,7 @@ type Props = {
     options?: any,
     defaultValue: {[field: string]: any},
     onChange: Function,
-    validationState: {[field: string]: validationStates}, // css класс раскрашив поля ввода
+    validationState: ?validationStates, // {[field: string]: validationStates}, // css класс раскрашив поля ввода
     feedbackText: {[field: string]: string}, // текст ошибки, подсказки, инфо и тд.
     onChange: Function
     // children?: React.Children
@@ -43,7 +43,7 @@ class FormGroup extends React.Component {
         name: null,
         options: null,
         defaultValue: {},
-        validationState: {},
+        validationState: null,
         feedbackText: {},
         onChange: () => {
         },

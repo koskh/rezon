@@ -15,7 +15,6 @@ const schema: FormWidgetSchema = {
         inputRules: [
             {
                 validate(value) {
-                    debugger;
                     return value.email !== '';
                 },
                 msg: 'Email Не может быть пустым'

@@ -1,10 +1,12 @@
 // @flow
 import React from 'react';
-// import cn from 'classnames';
+import cn from 'classnames';
 
 import FormWidget from '../../../FormWidget';
 
 import styles from './index.pcss';
+
+import { stateClasses } from '../../../FormGroup/shared';
 
 // type Props = {
 //     id?: string,
@@ -60,17 +62,20 @@ class EmailPassword extends FormWidget {
     // }
 
     render(): React.Element<any> {
-        // const { id, type, name, defaultValue, validationState, feedbackText } = this.props;
+        const { id, name, defaultValue, validationState, feedbackText } = this.props;
 
-        // const validationStateClass: string = (validationState && stateClasses[validationState]) || '';
+        const validationStateClass: string = (validationState && stateClasses[validationState]) || '';
 
 
         return (
-            <div className="form-group">
+            <div className={cn('form-group', validationStateClass)}>
                 <label htmlFor="inputEmail" className="sr-only">Email address</label>
                 <input type="text" id="inputEmail" className={`form-control ${styles.text}`} placeholder="Email address" name="email" onChange={this.onChange} />
                 <label htmlFor="inputPassword" className="sr-only">Password</label>
                 <input type="password" id="inputPassword" className={`form-control ${styles.password}`} placeholder="Password" name="password" onChange={this.onChange} />
+
+                <div className="form-control-feedback">{feedbackText}</div>
+                <small className="form-text text-muted">Please login or doing smth.</small>
             </div>
         );
     }
