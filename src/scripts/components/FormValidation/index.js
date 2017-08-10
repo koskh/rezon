@@ -5,10 +5,14 @@ import React from 'react';
 // import classNames from 'classnames';
 
 import FormGroup from '../FormGroup';
+import FormWidget from '../FormWidget';
+
+
 import { convertField, validateInputRules, validateLogicRules } from './validator/validator';
 
 import type { ValidatorResultObject } from './validator/validator';
 import type { Schema } from './validator/schema';
+
 export type validationStates = 'success' | 'warning' | 'error' | 'info' | 'default';
 
 export type DataFields = { [key: string]: any }; // значения полей формы
@@ -20,6 +24,7 @@ export type FormModel = { // содержимое валидационной ф�
 }
 
 type Props = {
+    className: string,
     schema: Schema,
     children: React.Children
 };
@@ -34,6 +39,7 @@ class FormValidation extends React.Component {
     state: State;
 
     static defaultProps: Props = {
+        className: '',
         schema: {},
         children: null
     };
@@ -41,7 +47,7 @@ class FormValidation extends React.Component {
     constructor(props: any) {
         super(props);
 
-        const model: FormModel  = this._initializeFormModel(this.props.schema);
+        const model: FormModel = this._initializeFormModel(this.props.schema);
         this.state = { model };
 
         // this.state = {
@@ -54,7 +60,7 @@ class FormValidation extends React.Component {
     }
 
     _initializeFormModel = (schema: Schema): FormModel => {
-        const result =  {
+        const result = {
             data: {},
             inputErrorsFields: {},
             logicErrorsFields: {},
@@ -70,11 +76,11 @@ class FormValidation extends React.Component {
     };
 
 
-    onFormChange = (nameField: string, valueField: any) => {
+    onFormChange = (nameField: string, value: any) => {
         const schema = this.props.schema;
         let { data, inputErrorsFields, logicErrorsFields } = this.state.model; // текущ сосстояние, обход однонаправленности
 
-        const converted: ValidatorResultObject = convertField(nameField, valueField, schema); // конверт значения в нужн формат
+        const converted: ValidatorResultObject = convertField(nameField, value, schema); // конверт значения в нужн формат
 
         data = { ...data, [nameField]: converted.result };
         inputErrorsFields = { ...inputErrorsFields, [nameField]: converted.errors };
@@ -122,7 +128,7 @@ class FormValidation extends React.Component {
 
     _renderChildren(props: any) {
         return React.Children.map(props.children, child => {
-            if (child.type === FormGroup) {
+            if (child.props.isValidated) {
                 const name: string = child.props.name;
                 const model = this.state.model;
 
@@ -137,10 +143,12 @@ class FormValidation extends React.Component {
     }
 
     render() {
+        const { className } = this.props;
+
         return (
-          <form>
-            {this._renderChildren(this.props)}
-          </form>
+            <form className={className}>
+                {this._renderChildren(this.props)}
+            </form>
         );
     }
 }
