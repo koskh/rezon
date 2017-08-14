@@ -88,20 +88,8 @@ class FormValidation extends React.Component {
 
         if (converted.errors.length === 0) { // удачно сконвертили и получили значение
             // валидир введен данные
-            const inputValidated: ValidatorResultObject = validateInputRules(nameField, data[nameField], schema);
+            const inputValidated: ValidatorResultObject = validateInputRules(nameField, data, schema);
             inputErrorsFields = { ...inputErrorsFields, [nameField]: inputValidated.errors };
-
-            // // валидац созависим полей
-            // // если все поля заполнены без ошибок
-            // if (_.every(inputErrorsFields, val => {
-            //     return val.length === 0;
-            // })) {
-            //     _.each(data, (valueFld, nameFld) => {
-            //         const logicValidated: ValidatorResultObject = validateLogicRules(nameFld, data, schema);
-            //         logicErrorsFields = { ...logicErrorsFields, [nameFld]: logicValidated.errors };
-            //     });
-            // } else
-            //     logicErrorsFields[nameField] = []; // приоритет ошибок у невалидного заполнения
         }
 
         this.setState({ model: { data, inputErrorsFields } });

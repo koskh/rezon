@@ -2,9 +2,9 @@
 // import { extract } from '../../utilities/number';
 
 // types
-import type { FormWidgetSchema } from '../../../../components/FormValidation/validator/schema';
+import type { Schema } from '../../../../components/FormValidation/validator/schema';
 
-const schema: FormWidgetSchema = {
+const schema: Schema = {
     EmailPassword: {
         // type: {
         //     convert(value) {
@@ -18,6 +18,13 @@ const schema: FormWidgetSchema = {
                     return value.email !== '';
                 },
                 msg: 'Email Не может быть пустым'
+            },
+
+            {
+                validate(value) {
+                    return value.password !== '';
+                },
+                msg: 'Password Не может быть пустым'
             },
 
             // {
