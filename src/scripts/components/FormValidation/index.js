@@ -20,7 +20,7 @@ export type ErrorsFields = { [key: string]: Array<string> }; // ошибки ф�
 export type FormModel = { // содержимое валидационной формы
     data: DataFields, // данные полей
     inputErrorsFields: ErrorsFields, // ошибки ввода
-    logicErrorsFields: ErrorsFields // ошибки зависимых полей
+    // logicErrorsFields: ErrorsFields // ошибки зависимых полей
 }
 
 type Props = {
@@ -63,13 +63,13 @@ class FormValidation extends React.Component {
         const result = {
             data: {},
             inputErrorsFields: {},
-            logicErrorsFields: {},
+            // logicErrorsFields: {},
         };
 
         _.each(schema, (v, k) => {
             result.data[k] = undefined;
             result.inputErrorsFields[k] = [];
-            result.logicErrorsFields[k] = [];
+            // result.logicErrorsFields[k] = [];
         });
 
         return result;
@@ -78,40 +78,41 @@ class FormValidation extends React.Component {
 
     onFormChange = (nameField: string, value: any) => {
         const schema = this.props.schema;
-        let { data, inputErrorsFields, logicErrorsFields } = this.state.model; // текущ сосстояние, обход однонаправленности
+        let { data, inputErrorsFields } = this.state.model; // текущ сосстояние, обход однонаправленности
 
         const converted: ValidatorResultObject = convertField(nameField, value, schema); // конверт значения в нужн формат
 
         data = { ...data, [nameField]: converted.result };
         inputErrorsFields = { ...inputErrorsFields, [nameField]: converted.errors };
 
+
         if (converted.errors.length === 0) { // удачно сконвертили и получили значение
             // валидир введен данные
             const inputValidated: ValidatorResultObject = validateInputRules(nameField, data[nameField], schema);
             inputErrorsFields = { ...inputErrorsFields, [nameField]: inputValidated.errors };
 
-            // валидац созависим полей
-            // если все поля заполнены без ошибок
-            if (_.every(inputErrorsFields, val => {
-                return val.length === 0;
-            })) {
-                _.each(data, (valueFld, nameFld) => {
-                    const logicValidated: ValidatorResultObject = validateLogicRules(nameFld, data, schema);
-                    logicErrorsFields = { ...logicErrorsFields, [nameFld]: logicValidated.errors };
-                });
-            } else
-                logicErrorsFields[nameField] = []; // приоритет ошибок у невалидного заполнения
+            // // валидац созависим полей
+            // // если все поля заполнены без ошибок
+            // if (_.every(inputErrorsFields, val => {
+            //     return val.length === 0;
+            // })) {
+            //     _.each(data, (valueFld, nameFld) => {
+            //         const logicValidated: ValidatorResultObject = validateLogicRules(nameFld, data, schema);
+            //         logicErrorsFields = { ...logicErrorsFields, [nameFld]: logicValidated.errors };
+            //     });
+            // } else
+            //     logicErrorsFields[nameField] = []; // приоритет ошибок у невалидного заполнения
         }
 
-        this.setState({ model: { data, inputErrorsFields, logicErrorsFields } });
+        this.setState({ model: { data, inputErrorsFields } });
     };
 
     _getValidationState(nameField: string, formModel: FormModel): validationStates {
         if (formModel.inputErrorsFields[nameField] && formModel.inputErrorsFields[nameField].length > 0)
             return 'error';
 
-        if (formModel.logicErrorsFields[nameField] && formModel.logicErrorsFields[nameField].length > 0)
-            return 'error';
+        // if (formModel.logicErrorsFields[nameField] && formModel.logicErrorsFields[nameField].length > 0)
+        //     return 'error';
 
         return 'default';
     }
@@ -120,8 +121,8 @@ class FormValidation extends React.Component {
         if (formModel.inputErrorsFields[nameField] && formModel.inputErrorsFields[nameField].length > 0)
             return formModel.inputErrorsFields[nameField].join(',');
 
-        if (formModel.logicErrorsFields[nameField] && formModel.logicErrorsFields[nameField].length > 0)
-            return formModel.logicErrorsFields[nameField].join(',');
+        // if (formModel.logicErrorsFields[nameField] && formModel.logicErrorsFields[nameField].length > 0)
+        //     return formModel.logicErrorsFields[nameField].join(',');
 
         return '';
     }

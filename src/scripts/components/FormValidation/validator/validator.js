@@ -55,24 +55,24 @@ export function validateInputRules(nameField: string, valueField: any, schema: S
     return { result, errors };
 }
 
-// валидация созависимых полей
-export function validateLogicRules(nameField: string, attributes: any, schema: Schema): ValidatorResultObject {
-    let result = true;
-    const errors = [];
-
-    if (schema === undefined)
-        throw new Error('Validator.validateLogicRules need schema');
-
-    if (schema[nameField] && schema[nameField].logicRules) {
-        const rules = schema[nameField].logicRules;
-        for (let i = 0; i < rules.length; i += 1) {
-            const rule = rules[i];
-            if (!rule.validate(attributes)) {
-                result = false;
-                errors.push(rule.msg);
-            }
-        }
-    }
-
-    return { result, errors };
-}
+// // валидация созависимых полей
+// export function validateLogicRules(nameField: string, attributes: any, schema: Schema): ValidatorResultObject {
+//     let result = true;
+//     const errors = [];
+//
+//     if (schema === undefined)
+//         throw new Error('Validator.validateLogicRules need schema');
+//
+//     if (schema[nameField] && schema[nameField].logicRules) {
+//         const rules = schema[nameField].logicRules;
+//         for (let i = 0; i < rules.length; i += 1) {
+//             const rule = rules[i];
+//             if (!rule.validate(attributes)) {
+//                 result = false;
+//                 errors.push(rule.msg);
+//             }
+//         }
+//     }
+//
+//     return { result, errors };
+// }

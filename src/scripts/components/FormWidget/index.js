@@ -30,8 +30,8 @@ type Props = {
 
 
 type State = {
-    value: {[field: string]: any}; // значения полей виджета
-}
+    value: {[field: string]: any} // значения полей виджета
+};
 
 
 class FormGroup extends React.Component {
@@ -57,8 +57,8 @@ class FormGroup extends React.Component {
     }
 
     // onChange = ({ target }: SyntheticInputEvent): void => {
-        // this.props.onChange && this.props.onChange(this.props.name, target.value);
-        // this.setState({ value: target.value });
+    // this.props.onChange && this.props.onChange(this.props.name, target.value);
+    // this.setState({ value: target.value });
     // };
 
     // getValue() {

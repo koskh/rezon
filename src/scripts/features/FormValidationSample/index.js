@@ -19,8 +19,8 @@ export default class Home extends React.Component {
 
                 <FormValidation schema={Schema}>
 
-                    <FormGroup defaultValue="testInput" name="email" type="input" />
-                    <FormGroup defaultValue="22222 Input" name="email2" />
+                    <FormGroup defaultValue="testInput" name="email" isValidated={true} type="input" />
+                    <FormGroup defaultValue="22222 Input" isValidated={true} name="email2" />
 
                     <div className="form-control-feedback">feedback FormValidation Text</div>
 
