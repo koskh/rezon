@@ -66,6 +66,7 @@ class EmailPassword extends FormWidget {
 
         const validationStateClass: string = (validationState && stateClasses[validationState]) || '';
 
+
         return (
             <div className="form-group">
                 <div className={validationStateClass}>

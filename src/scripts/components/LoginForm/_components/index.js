@@ -2,10 +2,6 @@
 
 import React from 'react';
 import FormValidation from '../../../components/FormValidation';
-// import FormGroup from '../../../components/FormGroup';
-// import history from '../../../services/history';
-
-// const history = createHistory();
 
 // import cn from 'classnames';
 

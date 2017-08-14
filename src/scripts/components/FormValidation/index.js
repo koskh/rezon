@@ -21,6 +21,7 @@ export type FormModel = { // содержимое валидационной ф�
 }
 
 type Props = {
+    className: string,
     schema: Schema,
     children: React.Children
 };
@@ -35,6 +36,7 @@ class FormValidation extends React.Component {
     state: State;
 
     static defaultProps: Props = {
+        className: '',
         schema: {},
         children: null
     };
@@ -123,7 +125,7 @@ class FormValidation extends React.Component {
 
     _renderChildren(props: any) {
         return React.Children.map(props.children, child => {
-            if (child.type === FormGroup) {
+            if (child.props.isValidated) {
                 const name: string = child.props.name;
                 const model = this.state.model;
 
@@ -139,7 +141,7 @@ class FormValidation extends React.Component {
 
     render() {
         return (
-            <form>
+            <form className={this.props.className}>
                 {this._renderChildren(this.props)}
             </form>
         );
