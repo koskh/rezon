@@ -51,12 +51,7 @@ const schema: Schema = {
                 },
                 msg: 'Не может быть пустым'
             },
-            // {
-            //     validate(value, attrs) {
-            //         return value === attrs.email;
-            //     },
-            //     msg: 'Знечения полей email2 и email должны быть равны'
-            // }
+
             {
                 validate(attrs) {
                     return attrs.email2 >= 0 && attrs.email2 <= 100;
@@ -77,14 +72,14 @@ const schema: Schema = {
             //     }
         ],
 
-        // logicRules: [
-        //     {
-        //         validate(attrs) {
-        //             return attrs.email2 === attrs.email;
-        //         },
-        //         msg: 'Знечения полей email и email2 должны быть равны'
-        //     }
-        // ]
+        logicRules: [
+            {
+                validate(attrs) {
+                    return attrs.email2 === attrs.email;
+                },
+                msg: 'Знечения полей email2 и email1 должны быть равны'
+            }
+        ]
     },
 };
 

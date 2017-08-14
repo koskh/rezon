@@ -5,10 +5,7 @@ import React from 'react';
 // import classNames from 'classnames';
 
 import FormGroup from '../FormGroup';
-import FormWidget from '../FormWidget';
-
-
-import { convertField, validateInputRules } from './validator/validator';
+import { convertField, validateRules } from './validator/validator';
 
 import type { ValidatorResultObject } from './validator/validator';
 import type { Schema } from './validator/schema';
@@ -20,11 +17,10 @@ export type ErrorsFields = { [key: string]: Array<string> }; // ошибки ф�
 export type FormModel = { // содержимое валидационной формы
     data: DataFields, // данные полей
     inputErrorsFields: ErrorsFields, // ошибки ввода
-    // logicErrorsFields: ErrorsFields // ошибки зависимых полей
+    logicErrorsFields: ErrorsFields // ошибки зависимых полей
 }
 
 type Props = {
-    className: string,
     schema: Schema,
     children: React.Children
 };
@@ -39,7 +35,6 @@ class FormValidation extends React.Component {
     state: State;
 
     static defaultProps: Props = {
-        className: '',
         schema: {},
         children: null
     };
@@ -63,44 +58,55 @@ class FormValidation extends React.Component {
         const result = {
             data: {},
             inputErrorsFields: {},
-            // logicErrorsFields: {},
+            logicErrorsFields: {},
         };
 
         _.each(schema, (v, k) => {
             result.data[k] = undefined;
             result.inputErrorsFields[k] = [];
-            // result.logicErrorsFields[k] = [];
+            result.logicErrorsFields[k] = [];
         });
 
         return result;
     };
 
 
-    onFormChange = (nameField: string, value: any) => {
+    onFormChange = (nameField: string, valueField: any) => {
         const schema = this.props.schema;
-        let { data, inputErrorsFields } = this.state.model; // текущ сосстояние, обход однонаправленности
+        let { data, inputErrorsFields, logicErrorsFields } = this.state.model; // текущ сосстояние, обход однонаправленности
 
-        const converted: ValidatorResultObject = convertField(nameField, value, schema); // конверт значения в нужн формат
+        const converted: ValidatorResultObject = convertField(nameField, valueField, schema); // конверт значения в нужн формат
 
         data = { ...data, [nameField]: converted.result };
         inputErrorsFields = { ...inputErrorsFields, [nameField]: converted.errors };
 
-
         if (converted.errors.length === 0) { // удачно сконвертили и получили значение
             // валидир введен данные
-            const inputValidated: ValidatorResultObject = validateInputRules(nameField, data, schema);
+            const inputValidated: ValidatorResultObject = validateRules(nameField, data, 'inputRules', schema);
             inputErrorsFields = { ...inputErrorsFields, [nameField]: inputValidated.errors };
+
+            // валидац созависим полей
+            // если все поля заполнены без ошибок
+            if (_.every(inputErrorsFields, val => {
+                return val.length === 0;
+            })) {
+                _.each(data, (valueFld, nameFld) => {
+                    const logicValidated: ValidatorResultObject = validateRules(nameFld, data, 'logicRules', schema);
+                    logicErrorsFields = { ...logicErrorsFields, [nameFld]: logicValidated.errors };
+                });
+            } else
+                logicErrorsFields[nameField] = []; // приоритет ошибок у невалидного заполнения
         }
 
-        this.setState({ model: { data, inputErrorsFields } });
+        this.setState({ model: { data, inputErrorsFields, logicErrorsFields } });
     };
 
     _getValidationState(nameField: string, formModel: FormModel): validationStates {
         if (formModel.inputErrorsFields[nameField] && formModel.inputErrorsFields[nameField].length > 0)
             return 'error';
 
-        // if (formModel.logicErrorsFields[nameField] && formModel.logicErrorsFields[nameField].length > 0)
-        //     return 'error';
+        if (formModel.logicErrorsFields[nameField] && formModel.logicErrorsFields[nameField].length > 0)
+            return 'error';
 
         return 'default';
     }
@@ -109,15 +115,15 @@ class FormValidation extends React.Component {
         if (formModel.inputErrorsFields[nameField] && formModel.inputErrorsFields[nameField].length > 0)
             return formModel.inputErrorsFields[nameField].join(',');
 
-        // if (formModel.logicErrorsFields[nameField] && formModel.logicErrorsFields[nameField].length > 0)
-        //     return formModel.logicErrorsFields[nameField].join(',');
+        if (formModel.logicErrorsFields[nameField] && formModel.logicErrorsFields[nameField].length > 0)
+            return formModel.logicErrorsFields[nameField].join(',');
 
         return '';
     }
 
     _renderChildren(props: any) {
         return React.Children.map(props.children, child => {
-            if (child.props.isValidated) {
+            if (child.type === FormGroup) {
                 const name: string = child.props.name;
                 const model = this.state.model;
 
@@ -132,10 +138,8 @@ class FormValidation extends React.Component {
     }
 
     render() {
-        const { className } = this.props;
-
         return (
-            <form className={className}>
+            <form>
                 {this._renderChildren(this.props)}
             </form>
         );
