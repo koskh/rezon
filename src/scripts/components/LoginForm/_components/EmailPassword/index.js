@@ -43,10 +43,6 @@ class EmailPassword extends FormWidget {
     // }
 
     onChange = ({ target }: SyntheticInputEvent) => {
-        // this.props.onChange && this.props.onChange(this.props.name, target.value);
-        // this.setState({ value: target.value });
-        // console.log('EmailPAssword onChange: ', target.name, target.value);
-
         this.setState((prevState, props) => {
             const value = prevState.value;
             value[target.name] = target.value;
@@ -65,7 +61,6 @@ class EmailPassword extends FormWidget {
         const { id, name, defaultValue, validationState, feedbackText } = this.props;
 
         const validationStateClass: string = (validationState && stateClasses[validationState]) || '';
-
 
         return (
             <div className="form-group">
