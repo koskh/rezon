@@ -8,7 +8,7 @@ import FormGroup from '../FormGroup';
 import FormWidget from '../FormWidget';
 
 
-import { convertField, validateInputRules, validateLogicRules } from './validator/validator';
+import { convertField, validateInputRules } from './validator/validator';
 
 import type { ValidatorResultObject } from './validator/validator';
 import type { Schema } from './validator/schema';
