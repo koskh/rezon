@@ -3,7 +3,6 @@
 import React from 'react';
 import classNames from 'classnames';
 
-
 type Props = {
     id?: string,
     name?: string,
@@ -39,7 +38,7 @@ class Input extends React.Component {
         const { id, className, name, defaultValue, placeholder, onChange } = this.props;
 
         return (
-          <input id={id} name={name} className={classNames('form-control', className)} defaultValue={defaultValue} placeholder={placeholder} onChange={onChange} />
+            <input id={id} name={name} className={classNames('form-control', className)} defaultValue={defaultValue} placeholder={placeholder} onChange={onChange} />
         );
     }
 }

@@ -32,44 +32,22 @@ export function convertField(nameField: string, valueField: any, schema: Schema)
     return { result, errors };
 }
 
-// валидаця ввода
-export function validateInputRules(nameField: string, valueField: any, schema: Schema): ValidatorResultObject {
-    let result = true;
-    let errors = [];
-
-    if (schema === undefined)
-        throw new Error('Validator.validateInputRules need schema');
-
-    if (schema[nameField] && schema[nameField].inputRules) {
-        const rules = schema[nameField].inputRules;
-        for (let i = 0; i < rules.length; i += 1) {
-            const rule = rules[i];
-            if (!rule.validate(valueField)) {
-                result = false;
-                errors = [rule.msg];
-                break;
-            }
-        }
-    }
-
-    return { result, errors };
-}
-
-// валидация созависимых полей
-export function validateLogicRules(nameField: string, attributes: any, schema: Schema): ValidatorResultObject {
+// // валидация  полей
+export function validateRules(nameField: string, attributes: any, type: 'inputRules' | 'logicRules', schema: Schema): ValidatorResultObject {
     let result = true;
     const errors = [];
 
     if (schema === undefined)
         throw new Error('Validator.validateLogicRules need schema');
 
-    if (schema[nameField] && schema[nameField].logicRules) {
-        const rules = schema[nameField].logicRules;
+    if (schema[nameField] && schema[nameField][type]) {
+        const rules = schema[nameField][type];
         for (let i = 0; i < rules.length; i += 1) {
             const rule = rules[i];
             if (!rule.validate(attributes)) {
                 result = false;
                 errors.push(rule.msg);
+                break;
             }
         }
     }

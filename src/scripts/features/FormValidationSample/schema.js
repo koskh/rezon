@@ -14,30 +14,24 @@ const schema: Schema = {
         },
         inputRules: [
             {
-                validate(value) {
-                    return value !== '';
+                validate(attrs) {
+                    return attrs.email !== '';
                 },
                 msg: 'Не может быть пустым'
             },
 
             {
-                validate(value) {
-                    return value >= 0 && value <= 100;
+                validate(attrs) {
+                    return attrs.email >= 0 && attrs.email <= 100;
                 },
                 msg: 'Число должно находиться в интервале 0-100'
             },
             {
-                validate(value) {
-                    return value >= 50;
+                validate(attrs) {
+                    return attrs.email >= 50;
                 },
                 msg: 'Число должно быть больше 50'
-            },
-            // {
-            //     validate(value, attrs) {
-            //         return value === attrs.email1;
-            //     },
-            //     msg: 'Знечения полей email и email2 должны быть равны'
-            // }
+            }
         ],
 
     },
@@ -52,29 +46,30 @@ const schema: Schema = {
         },
         inputRules: [
             {
-                validate(value) {
-                    return value !== '';
+                validate(attrs) {
+                    return attrs.email2 !== '';
                 },
                 msg: 'Не может быть пустым'
             },
+
+            {
+                validate(attrs) {
+                    return attrs.email2 >= 0 && attrs.email2 <= 100;
+                },
+                msg: 'Число должно находиться в интервале 0-100'
+            },
+            {
+                validate(attrs) {
+                    return attrs.email2 >= 50;
+                },
+                msg: 'Число должно быть больше 50'
+            },
             // {
-            //     validate(value, attrs) {
-            //         return value === attrs.email;
-            //     },
-            //     msg: 'Знечения полей email2 и email должны быть равны'
-            // }
-            // {
-            //     validate(value) {
-            //         return value >= 0 && value <= 100;
-            //     },
-            //     msg: 'Число должно находиться в интервале 0-100'
-            // },
-            // {
-            //     validate(value) {
-            //         return value >= 50;
-            //     },
-            //     msg: 'Число должно быть больше 50'
-            // }
+            //         validate(attrs) {
+            //             return attrs.email2 === attrs.email;
+            //         },
+            //         msg: 'Знечения полей email и email2 должны быть равны'
+            //     }
         ],
 
         logicRules: [
@@ -82,7 +77,7 @@ const schema: Schema = {
                 validate(attrs) {
                     return attrs.email2 === attrs.email;
                 },
-                msg: 'Знечения полей email и email2 должны быть равны'
+                msg: 'Знечения полей email2 и email1 должны быть равны'
             }
         ]
     },

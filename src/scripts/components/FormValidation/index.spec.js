@@ -82,10 +82,10 @@ describe('components/FormValidation: Validation', () => {
 describe('components/FormValidation: set validation state and feedback text to children', () => {
     it('default renders without errors', () => {
         const wrapper = shallow(
-          <FormValidation schema={schema}>
-            <FormGroup name={firstField} />
-            <FormGroup name={fieldHasLogic} />
-          </FormValidation>);
+            <FormValidation schema={schema}>
+                <FormGroup name={firstField} isValidated={true} />
+                <FormGroup name={fieldHasLogic} isValidated={true} />
+            </FormValidation>);
 
         const component = wrapper.instance();
 

@@ -5,10 +5,11 @@ import React from 'react';
 // import classNames from 'classnames';
 
 import FormGroup from '../FormGroup';
-import { convertField, validateInputRules, validateLogicRules } from './validator/validator';
+import { convertField, validateRules } from './validator/validator';
 
 import type { ValidatorResultObject } from './validator/validator';
 import type { Schema } from './validator/schema';
+
 export type validationStates = 'success' | 'warning' | 'error' | 'info' | 'default';
 
 export type DataFields = { [key: string]: any }; // значения полей формы
@@ -20,6 +21,7 @@ export type FormModel = { // содержимое валидационной ф�
 }
 
 type Props = {
+    className: string,
     schema: Schema,
     children: React.Children
 };
@@ -34,6 +36,7 @@ class FormValidation extends React.Component {
     state: State;
 
     static defaultProps: Props = {
+        className: '',
         schema: {},
         children: null
     };
@@ -41,7 +44,7 @@ class FormValidation extends React.Component {
     constructor(props: any) {
         super(props);
 
-        const model: FormModel  = this._initializeFormModel(this.props.schema);
+        const model: FormModel = this._initializeFormModel(this.props.schema);
         this.state = { model };
 
         // this.state = {
@@ -54,7 +57,7 @@ class FormValidation extends React.Component {
     }
 
     _initializeFormModel = (schema: Schema): FormModel => {
-        const result =  {
+        const result = {
             data: {},
             inputErrorsFields: {},
             logicErrorsFields: {},
@@ -81,7 +84,7 @@ class FormValidation extends React.Component {
 
         if (converted.errors.length === 0) { // удачно сконвертили и получили значение
             // валидир введен данные
-            const inputValidated: ValidatorResultObject = validateInputRules(nameField, data[nameField], schema);
+            const inputValidated: ValidatorResultObject = validateRules(nameField, data, 'inputRules', schema);
             inputErrorsFields = { ...inputErrorsFields, [nameField]: inputValidated.errors };
 
             // валидац созависим полей
@@ -90,7 +93,7 @@ class FormValidation extends React.Component {
                 return val.length === 0;
             })) {
                 _.each(data, (valueFld, nameFld) => {
-                    const logicValidated: ValidatorResultObject = validateLogicRules(nameFld, data, schema);
+                    const logicValidated: ValidatorResultObject = validateRules(nameFld, data, 'logicRules', schema);
                     logicErrorsFields = { ...logicErrorsFields, [nameFld]: logicValidated.errors };
                 });
             } else
@@ -122,7 +125,7 @@ class FormValidation extends React.Component {
 
     _renderChildren(props: any) {
         return React.Children.map(props.children, child => {
-            if (child.type === FormGroup) {
+            if (child.props.isValidated) {
                 const name: string = child.props.name;
                 const model = this.state.model;
 
@@ -138,9 +141,9 @@ class FormValidation extends React.Component {
 
     render() {
         return (
-          <form>
-            {this._renderChildren(this.props)}
-          </form>
+            <form className={this.props.className}>
+                {this._renderChildren(this.props)}
+            </form>
         );
     }
 }

@@ -34,6 +34,7 @@
     "extract-text-webpack-plugin": "^3.0.0",
     "file-loader": "^0.11.1",
     "flow-bin": "^0.51.0",
+    "flow-typed": "^2.1.5",
     "flux": "^3.1.2",
     "history": "^4.6.3",
     "html-webpack-plugin": "^2.29.0",
@@ -82,7 +83,8 @@
     "webpack-watch": "rimraf build/* && webpack --watch  --config webpack/webpack.debug.config.js",
     "server-start": "flow-remove-types --pretty --out-dir server/build/ server/src/ && node server/build/index.js",
     "build:debug": "rimraf build/* && webpack --config webpack/webpack.debug.config.js",
-    "build:release": "cross-env NODE_ENV=production && rimraf build/* && webpack --config webpack/webpack.release.config.js"
+    "build:release": "cross-env NODE_ENV=production && rimraf build/* && webpack --config webpack/webpack.release.config.js",
+    "first-step": "flow-typed install && npm run build:debug && npm run server-start"
   },
   "dependencies": {
     "cross-env": "^5.0.1",

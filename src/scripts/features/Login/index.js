@@ -10,20 +10,17 @@ export default class Home extends React.Component {
 
     render() {
         return (
-          <article>
-
-            <LoginForm />
-
-            <div className="row">
-              <div className="col-6 text-right">
-                <a href="">Забыл пароль</a>
-              </div>
-              <div className="col-6 text-left" >
-                <a href="">Регистрация</a>
-              </div>
-            </div>
-
-          </article>
+            <article>
+                <LoginForm />
+                <div className="row">
+                    <div className="col-6 text-right">
+                        <a href="">Забыл пароль</a>
+                    </div>
+                    <div className="col-6 text-left">
+                        <a href="">Регистрация</a>
+                    </div>
+                </div>
+            </article>
         );
     }
 }

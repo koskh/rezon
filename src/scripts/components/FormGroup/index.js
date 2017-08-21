@@ -11,9 +11,9 @@ import React from 'react';
 import classNames from 'classnames';
 
 import {
-        stateClasses, // классы состояния formGroup, в соотв с bs4 :validationStates
-        Components // возможн компоненты ввода данных :InputTypes
-    } from './shared';
+    stateClasses, // классы состояния formGroup, в соотв с bs4 :validationStates
+    Components // возможн компоненты ввода данных :InputTypes
+} from './shared';
 
 import type { validationStates } from '../FormValidation';
 
@@ -27,7 +27,7 @@ type Props = {
     defaultValue?: any,
     onChange: Function,
     validationState?: ?validationStates, // css класс раскрашив поля ввода
-    feedbackText?: ?string,  // текст ошибки, подсказки, инфо и тд.
+    feedbackText?: ?string, // текст ошибки, подсказки, инфо и тд.
     onChange?: Function
     // children?: React.Children
 };
@@ -55,15 +55,15 @@ class FormGroup extends React.Component {
 
     // constructor(props: any) {
     //     super(props);
-        // this.state = {
-        //     value: props.defaultValue
-        // };
+    // this.state = {
+    //     value: props.defaultValue
+    // };
     // }
 
     onChange = ({ target }: SyntheticInputEvent) => {
         this.props.onChange && this.props.onChange(this.props.name, target.value);
         // this.setState({ value: target.value });
-    }
+    };
 
     // getValue() {
     //     return this.state.value;
@@ -79,16 +79,16 @@ class FormGroup extends React.Component {
             throw new Error('FormGroup need known type from InputTypes');
 
         return (
-          <div className={classNames('form-group', 'row', validationStateClass)}>
-            <label htmlFor={id} className="col-sm-2 col-form-label">Email address</label>
-            <div className="col-sm-10">
+            <div className={classNames('form-group', 'row', validationStateClass)}>
+                <label htmlFor={id} className="col-sm-2 col-form-label">Email address</label>
+                <div className="col-sm-10">
 
-              { Comp && <Comp id={id} name={name} defaultValue={defaultValue} placeholder="Placeholder...." onChange={this.onChange} /> }
+                    { Comp && <Comp id={id} name={name} defaultValue={defaultValue} placeholder="Placeholder...." onChange={this.onChange} /> }
 
-              <div className="form-control-feedback">{feedbackText}</div>
-              <small className="form-text text-muted">We will never share your email with anyone else.</small>
+                    <div className="form-control-feedback">{feedbackText}</div>
+                    <small className="form-text text-muted">We will never share your email with anyone else.</small>
+                </div>
             </div>
-          </div>
         );
     }
 }

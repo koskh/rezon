@@ -1,14 +1,12 @@
 // @flow
 
 import React from 'react';
-
-import history from '../../../services/history';
-
-// const history = createHistory();
+import FormValidation from '../../../components/FormValidation';
 
 // import cn from 'classnames';
 
 import EmailPassword from './EmailPassword';
+import EmailPasswordSchema from './_schemes/email_passwd_schema';
 
 import styles from './index.pcss';
 
@@ -42,7 +40,7 @@ class LoginForm extends React.Component {
         // debugger;
         // history.push('/samples');
         // this.props.router.push('/mypath')
-        this.props.makeLogin();
+        // this.props.makeLogin();
     }
 
     componentWillUnmount() {
@@ -54,25 +52,27 @@ class LoginForm extends React.Component {
         // const { children } = this.props;
 
         return (
-          <div className={styles.wrapper}>
-            <form className={`${styles['form-signin']} rounded`}>
+            <div className={styles.wrapper}>
 
-              <h2 className={styles['form-signin-heading']}>Please sign in</h2>
+                <FormValidation className={`${styles['form-signin']} rounded`} schema={EmailPasswordSchema}>
 
-              <EmailPassword />
+                    <h2 className={styles['form-signin-heading']}>Please sign in</h2>
 
-              <div className="form-group">
-                <div className="form-check">
-                  <label className="form-check-label" htmlFor="rememberMe">
-                    <input className="form-check-input" type="checkbox" value="remember-me" id="rememberMe" name="rememberMe" />
-                    Remember me
-                  </label>
-                </div>
-              </div>
+                    <EmailPassword name="EmailPassword" isValidated={true} />
 
-              <button className="btn btn-lg btn-primary btn-block" type="submit" disabled={true}>Sign in</button>
-            </form>
-          </div>
+                    <div className="form-group">
+                        <div className="form-check">
+                            <label className="form-check-label" htmlFor="rememberMe">
+                                <input className="form-check-input" type="checkbox" value="remember-me" id="rememberMe" name="rememberMe" />
+                                Remember me
+                            </label>
+                        </div>
+                    </div>
+
+                    <button className="btn btn-lg btn-primary btn-block" type="submit" disabled={true}>Sign in</button>
+
+                </FormValidation>
+            </div>
         );
     }
 }
