@@ -34,9 +34,9 @@ type State = {
 };
 
 
-class FormGroup extends React.Component {
-    props: Props;
-    state: State;
+class FormGroup extends React.Component <Props, State>{
+    // props: Props;
+    // state: State;
     static defaultProps: Props = {
         id: '',
         // type: 'input',
