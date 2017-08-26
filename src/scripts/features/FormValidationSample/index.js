@@ -7,7 +7,7 @@ import FormGroup from '../../components/FormGroup';
 
 import Schema from './schema';
 
-export default class Home extends React.Component {
+export default class Home extends React.Component<*> {
     componentWillMount() {
         document.title = 'FormValidationSample · Пример валидационной формы';
     }

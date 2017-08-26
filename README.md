@@ -28,3 +28,7 @@ npm update --save-dev && npm update --save
 npm-check-updates
 npm-check-updates -u
 npm install
+
+
+Flow 0.53
+class ... extend React.Component --> type react.createClass // TODO: проверить на след версиях

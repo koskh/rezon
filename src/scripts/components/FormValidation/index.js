@@ -23,7 +23,7 @@ export type FormModel = { // содержимое валидационной ф�
 type Props = {
     className: string,
     schema: Schema,
-    children: React.Children
+    children: React.Node
 };
 
 type State = {
@@ -32,8 +32,8 @@ type State = {
 
 
 class FormValidation extends React.Component<Props, State> {
-    // props: Props;
-    // state: State;
+    props: Props;
+    state: State;
 
     static defaultProps: Props = {
         className: '',

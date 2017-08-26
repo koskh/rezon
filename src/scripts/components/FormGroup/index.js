@@ -49,7 +49,7 @@ type Props = {
 
 
 class FormGroup extends React.Component<Props> {
-    // props: Props;
+    props: Props;
     // state: State;
     static defaultProps: Props = {
         id: '',
