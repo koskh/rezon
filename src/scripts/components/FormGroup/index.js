@@ -1,33 +1,43 @@
 // @flow
 
 /*
- * Компонент стандартной "строчки ввода" в форме
+ * Компонент- фабрика стандартной "строчки ввода" в форме
  * строчки ввода = заголовок + какой то тип инпута
  * validationState - статусы раскрашивания в соответсвии с bootstrap4
  * feedbackText - текст подсказки, ошибки, и т.д.
  */
 
-import React from 'react';
+import * as React from 'react';
 import classNames from 'classnames';
 
-import {
-    stateClasses, // классы состояния formGroup, в соотв с bs4 :validationStates
-    Components // возможн компоненты ввода данных :InputTypes
-} from './shared';
+import Input from './Input';
 
 import type { validationStates } from '../FormValidation';
+export const stateClasses: { [key: validationStates]: string } = { // CSS цветных статусов
+    success: 'has-success',
+    warning: 'has-warning',
+    error: 'has-danger',
+    info: 'has-info'
+};
 
 export type InputTypes = 'date' | 'suggest' | 'text' | 'input';
+export const Components: { [key: InputTypes]: React.createClass } = { // возможн компоненты ввода данных
+    // date: null,
+    // suggest: null,
+    // text: null,
+    input: Input
+};
+
 
 type Props = {
     id?: string,
     type: InputTypes, // тип поля ввода, т.к. есть в defaultProps, Flow позволяет не передав
-    name?: ?string,
+    name?: string,
     options?: any,
     defaultValue?: any,
     onChange: Function,
-    validationState?: ?validationStates, // css класс раскрашив поля ввода
-    feedbackText?: ?string, // текст ошибки, подсказки, инфо и тд.
+    validationState?: validationStates, // css класс раскрашив поля ввода
+    feedbackText?: string, // текст ошибки, подсказки, инфо и тд.
     onChange?: Function
     // children?: React.Children
 };
@@ -38,17 +48,17 @@ type Props = {
 // }
 
 
-class FormGroup extends React.Component {
-    props: Props;
+class FormGroup extends React.Component<Props> {
+    // props: Props;
     // state: State;
     static defaultProps: Props = {
         id: '',
         type: 'input',
-        name: null,
+        name: '',
         options: null,
         defaultValue: null,
-        validationState: null,
-        feedbackText: null,
+        validationState: 'default',
+        feedbackText: '',
         onChange: () => {
         },
     };
@@ -60,7 +70,7 @@ class FormGroup extends React.Component {
     // };
     // }
 
-    onChange = ({ target }: SyntheticInputEvent) => {
+    onChange = ({ target }: SyntheticInputEvent<*>) => {
         this.props.onChange && this.props.onChange(this.props.name, target.value);
         // this.setState({ value: target.value });
     };
@@ -74,7 +84,7 @@ class FormGroup extends React.Component {
 
         const validationStateClass: string = (validationState && stateClasses[validationState]) || '';
 
-        const Comp: ReactClass<any> = Components[type];
+        const Comp: React.createClass = Components[type];
         if (Comp === undefined)
             throw new Error('FormGroup need known type from InputTypes');
 

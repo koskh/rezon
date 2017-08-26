@@ -1,4 +1,4 @@
-import React from 'react';
+import * as React from 'react';
 // import Header from '../../components/page-header';
 
 export default class Home extends React.Component {

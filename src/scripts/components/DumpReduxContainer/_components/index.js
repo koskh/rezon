@@ -1,6 +1,6 @@
 // @flow
 import _ from 'lodash';
-import React from 'react';
+import * as React from 'react';
 
 import axios from 'axios';
 

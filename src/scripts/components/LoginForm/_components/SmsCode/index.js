@@ -1,6 +1,6 @@
 // @flownot_robot
 
-import React from 'react';
+import * as React from 'react';
 // import cn from 'classnames';
 
 import styles from './index.pcss';

@@ -6,7 +6,7 @@
  * feedbackText  {[field: string] : msg: string} - текст подсказки, ошибки, и т.д.
  */
 
-import React from 'react';
+import * as React from 'react';
 // import classNames from 'classnames';
 
 // import {

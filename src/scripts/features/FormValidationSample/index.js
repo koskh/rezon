@@ -1,6 +1,6 @@
 // @flow
 
-import React from 'react';
+import * as React from 'react';
 
 import FormValidation from '../../components/FormValidation';
 import FormGroup from '../../components/FormGroup';

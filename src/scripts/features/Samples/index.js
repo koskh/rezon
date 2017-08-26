@@ -1,5 +1,5 @@
 // @flow
-import React from 'react';
+import * as React from 'react';
 import Spiner from '../../components/Indicators/Spiner';
 
 import PendingIndicator from '../../components/PendingIndicator';

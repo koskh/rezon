@@ -1,7 +1,7 @@
 // @flow
 
 import _ from 'lodash';
-import React from 'react';
+import * as React from 'react';
 // import classNames from 'classnames';
 
 import FormGroup from '../FormGroup';
@@ -31,9 +31,9 @@ type State = {
 };
 
 
-class FormValidation extends React.Component {
-    props: Props;
-    state: State;
+class FormValidation extends React.Component<Props, State> {
+    // props: Props;
+    // state: State;
 
     static defaultProps: Props = {
         className: '',

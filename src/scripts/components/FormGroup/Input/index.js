@@ -1,6 +1,6 @@
 // @flow
 
-import React from 'react';
+import * as React from 'react';
 import classNames from 'classnames';
 
 type Props = {
@@ -12,16 +12,8 @@ type Props = {
     onChange: Function
 };
 
-// type DefaultProps = {
-//     id: string,
-//     className: string,
-//     placeholder: string,
-//     defaultValue: string,
-//     onChange: Function
-// };
 
-
-class Input extends React.Component {
+class Input extends React.Component<Props> {
     props: Props;
 
     static defaultProps: Props = {
@@ -34,7 +26,7 @@ class Input extends React.Component {
         },
     };
 
-    render(): React.Element<any> {
+    render(): React.Element<*> {
         const { id, className, name, defaultValue, placeholder, onChange } = this.props;
 
         return (

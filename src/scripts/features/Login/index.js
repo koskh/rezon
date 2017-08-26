@@ -1,5 +1,5 @@
 // @flow
-import React from 'react';
+import * as React from 'react';
 // import Header from '../../components/page-header';
 import LoginForm from '../../components/LoginForm';
 
