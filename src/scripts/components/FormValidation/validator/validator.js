@@ -5,6 +5,9 @@
 */
 
 import type { Schema } from './schema';
+import type { FormModel } from '../';
+
+export type validationStates = 'success' | 'warning' | 'error' | 'info' | 'default';
 
 export type ValidatorResultObject = { result: any, errors: Array<string> };
 
@@ -32,7 +35,7 @@ export function convertField(nameField: string, valueField: any, schema: Schema)
     return { result, errors };
 }
 
-// // валидация  полей
+// валидация  полей
 export function validateRules(nameField: string, attributes: any, type: 'inputRules' | 'logicRules', schema: Schema): ValidatorResultObject {
     let result = true;
     const errors = [];
@@ -53,4 +56,25 @@ export function validateRules(nameField: string, attributes: any, type: 'inputRu
     }
 
     return { result, errors };
+}
+
+//
+export function getValidationState(nameField: string, formModel: FormModel): validationStates {
+    if (formModel.inputErrorsFields[nameField] && formModel.inputErrorsFields[nameField].length > 0)
+        return 'error';
+
+    if (formModel.logicErrorsFields[nameField] && formModel.logicErrorsFields[nameField].length > 0)
+        return 'error';
+
+    return 'default';
+}
+
+export function getFeedbackText(nameField: string, formModel: FormModel): string {
+    if (formModel.inputErrorsFields[nameField] && formModel.inputErrorsFields[nameField].length > 0)
+        return formModel.inputErrorsFields[nameField].join(',');
+
+    if (formModel.logicErrorsFields[nameField] && formModel.logicErrorsFields[nameField].length > 0)
+        return formModel.logicErrorsFields[nameField].join(',');
+
+    return '';
 }

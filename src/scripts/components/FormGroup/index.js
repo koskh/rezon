@@ -13,7 +13,7 @@ import classNames from 'classnames';
 import Input from './_components/Input';
 import Password from './_components/Password';
 
-import type { validationStates } from '../FormValidation';
+import type { validationStates } from '../FormValidation/validator/validator';
 
 export const stateClasses: { [key: validationStates]: string } = { // CSS классы цветных статусов
     success: 'has-success',

@@ -5,15 +5,15 @@ import * as React from 'react';
 // import classNames from 'classnames';
 
 import FormGroup from '../FormGroup';
-import { convertField, validateRules } from './validator/validator';
+import { convertField, validateRules, getValidationState, getFeedbackText } from './validator/validator';
 
-import type { ValidatorResultObject } from './validator/validator';
+import type { ValidatorResultObject, validationStates } from './validator/validator';
 import type { Schema } from './validator/schema';
 
-export type validationStates = 'success' | 'warning' | 'error' | 'info' | 'default';
 
 export type DataFields = { [key: string]: any }; // значения полей формы
 export type ErrorsFields = { [key: string]: Array<string> }; // ошибки формы
+
 export type FormModel = { // содержимое валидационной формы
     data: DataFields, // данные полей
     inputErrorsFields: ErrorsFields, // ошибки ввода
@@ -46,14 +46,6 @@ class FormValidation extends React.Component<Props, State> {
 
         const model: FormModel = this._initializeFormModel(this.props.schema);
         this.state = { model };
-
-        // this.state = {
-        //     model: {
-        //         data: {},
-        //         inputErrorsFields: {},
-        //         logicErrorsFields: {},
-        //     }
-        // };
     }
 
     _initializeFormModel = (schema: Schema): FormModel => {
@@ -104,34 +96,14 @@ class FormValidation extends React.Component<Props, State> {
         this.setState({ model: { data, inputErrorsFields, logicErrorsFields } });
     };
 
-    _getValidationState(nameField: string, formModel: FormModel): validationStates {
-        if (formModel.inputErrorsFields[nameField] && formModel.inputErrorsFields[nameField].length > 0)
-            return 'error';
-
-        if (formModel.logicErrorsFields[nameField] && formModel.logicErrorsFields[nameField].length > 0)
-            return 'error';
-
-        return 'default';
-    }
-
-    _getFeedbackText(nameField: string, formModel: FormModel): string {
-        if (formModel.inputErrorsFields[nameField] && formModel.inputErrorsFields[nameField].length > 0)
-            return formModel.inputErrorsFields[nameField].join(',');
-
-        if (formModel.logicErrorsFields[nameField] && formModel.logicErrorsFields[nameField].length > 0)
-            return formModel.logicErrorsFields[nameField].join(',');
-
-        return '';
-    }
-
     _renderChildren(props: any) {
         return React.Children.map(props.children, child => {
             if (child.props.isValidated) {
                 const name: string = child.props.name;
                 const model = this.state.model;
 
-                const validationState: validationStates = this._getValidationState(name, model);
-                const feedbackText: string = this._getFeedbackText(name, model);
+                const validationState: validationStates = getValidationState(name, model);
+                const feedbackText: string = getFeedbackText(name, model);
 
                 return React.cloneElement(child, { onChange: this.onFormChange, validationState, feedbackText });
             }
