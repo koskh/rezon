@@ -1,19 +1,19 @@
-// @flow"
+// @flow
 import * as React from 'react';
 import Login from '../../features/Login';
 
 const LoginLayout = () => {
     return (
-      <section>
-        <header>
+        <section>
+            <header>
                 login header
-        </header>
+            </header>
 
-        <main className="container">
-          <Login />
-        </main>
+            <main className="container">
+                <Login />
+            </main>
 
-      </section>
+        </section>
     );
 };
 

@@ -6,7 +6,7 @@ import FormWidget from '../../../FormWidget';
 
 import styles from './index.pcss';
 
-import { stateClasses } from '../../../FormGroup/shared';
+import { stateClasses } from '../../../FormGroup';
 
 // type Props = {
 //     id?: string,
@@ -42,7 +42,7 @@ class EmailPassword extends FormWidget {
     // };
     // }
 
-    onChange = ({ target }: SyntheticInputEvent) => {
+    onChange = ({ target }: SyntheticInputEvent<*>) => {
         this.setState((prevState, props) => {
             const value = prevState.value;
             value[target.name] = target.value;
@@ -71,7 +71,7 @@ class EmailPassword extends FormWidget {
                     <input type="password" id="inputPassword" className={`form-control ${styles.password}`} placeholder="Password" name="password" onChange={this.onChange} />
                 </div>
                 <div className={validationStateClass}>
-                    <div className="form-control-feedback">{feedbackText}</div>
+                    <div className="form-control-feedback"></div>
                     <small className="form-text text-muted">Please login or doing smth.</small>
                 </div>
             </div>

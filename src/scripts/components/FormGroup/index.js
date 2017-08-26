@@ -86,7 +86,7 @@ class FormGroup extends React.Component<Props> {
 
         const Comp: React.createClass = Components[type];
         if (Comp === undefined)
-            throw new Error('FormGroup need known type from InputTypes');
+            throw new Error('FormGroup need known type from type "InputTypes"');
 
         return (
             <div className={classNames('form-group', 'row', validationStateClass)}>
