@@ -3,7 +3,7 @@ import * as React from 'react';
 // import Header from '../../components/page-header';
 import LoginForm from '../../components/LoginForm';
 
-export default class Home extends React.Component {
+export default class Home extends React.Component<*> {
     componentWillMount() {
         document.title = 'Login · Страница логина';
     }

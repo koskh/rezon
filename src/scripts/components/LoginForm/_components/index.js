@@ -25,7 +25,7 @@ type Props = {
 // };
 
 
-class LoginForm extends React.Component {
+class LoginForm extends React.Component<Props> {
     props: Props;
     // state: State;
     // static defaultProps: Props = {

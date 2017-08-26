@@ -7,12 +7,12 @@ import styles from './index.pcss';
 type Props = {
     onClick?: Function,
     name?: string,
-    children?: React.Children
+    children?: React.Node
 }
 
 type DefaultProps = {
     name: ?string,
-    children: React.Children
+    children: React.Node
 };
 
 const defaultProps: DefaultProps = {
@@ -21,14 +21,13 @@ const defaultProps: DefaultProps = {
 };
 
 
-
 const Dump = (props: Props) => {
     return (
-      <div className="outerClass" data-name={props.name} onClick={props.onClick}>
-        <div className={styles.dump} >
-          { props.children }
+        <div className="outerClass" data-name={props.name} onClick={props.onClick}>
+            <div className={styles.dump} >
+                { props.children }
+            </div>
         </div>
-      </div>
     );
 };
 

@@ -10,10 +10,10 @@ export default class Home extends React.Component {
 
     render() {
         return (
-          <article>
-            <h1>DumpRedux страница приложения</h1>
-            <DumpReduxContainer />
-          </article>
+            <article>
+                <h1>DumpRedux страница приложения</h1>
+                <DumpReduxContainer />
+            </article>
         );
     }
 }

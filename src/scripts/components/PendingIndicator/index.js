@@ -10,15 +10,15 @@ type Props = {
     pending: boolean,
     className?: string,
     message?: string,
-    Indicator?: ReactClass<any>,
-    children?: React.Children
+    Indicator?: React.createElement,
+    children?: React.Node
 }
 
 type DefaultProps = {
     className: string,
     message: string,
-    Indicator: ReactClass<any>,
-    children: React.Children
+    Indicator: React.createElement,
+    children: React.Node
 }
 
 const defaultProps: DefaultProps = {
@@ -37,9 +37,9 @@ const PendingIndicator = (props: Props): React.Element<any> => {
 
     /* eslint-disable no-nested-ternary */
     return (
-      <div className={styles.root}>
-        {pending ? <Indicator className={className} /> : (message || children)}
-      </div>
+        <div className={styles.root}>
+            {pending ? <Indicator className={className} /> : (message || children)}
+        </div>
     );
     /* eslint-enable no-nested-ternary */
 };

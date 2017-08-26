@@ -21,7 +21,7 @@ type Props = {
 //     data: Object
 // };
 
-class DumpReduxComponent extends React.Component {
+class DumpReduxComponent extends React.Component<Props> {
     props: Props;
 
     // static defaultProps: DefaultProps = {
@@ -41,13 +41,13 @@ class DumpReduxComponent extends React.Component {
         const { data, isPending, error } = this.props.dumpReduxComponent;
 
         return (
-          <section className="row">
-            <div className="col-12">
-              <PendingIndicator pending={isPending} message={error && error.message}>
+            <section className="row">
+                <div className="col-12">
+                    <PendingIndicator pending={isPending} message={error && error.message}>
                         Загруженна информация: {data && data.test1 && _.join(data.test1)}
-              </PendingIndicator>
-            </div>
-          </section>
+                    </PendingIndicator>
+                </div>
+            </section>
         );
     }
 }
