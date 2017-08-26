@@ -18,7 +18,7 @@ const defaultProps: Props = {
 
 const Spinner = (props: Props) => {
     return (
-      <div className={cn(styles.spinner, props.className)} />
+        <div className={cn(styles.spinner, props.className)} />
     );
 };
 
