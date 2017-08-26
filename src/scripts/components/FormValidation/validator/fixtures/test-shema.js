@@ -10,21 +10,21 @@ export default {
         },
         inputRules: [
             {
-                validate(value) {
-                    return value !== '';
+                validate(attrs) {
+                    return attrs.field1 !== '';
                 },
                 msg: 'Не может быть пустым'
             },
 
             {
-                validate(value) {
-                    return value >= 0 && value <= 100;
+                validate(attrs) {
+                    return attrs.field1 >= 0 && attrs.field1 <= 100;
                 },
                 msg: 'Число должно находиться в интервале 0-100'
             },
             {
-                validate(value) {
-                    return value >= 50;
+                validate(attrs) {
+                    return attrs.field1 >= 50;
                 },
                 msg: 'Число должно быть больше 50'
             },
