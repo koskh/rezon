@@ -4,9 +4,8 @@ import { expect } from 'chai';
 import { shallow } from 'enzyme';
 import sinon from 'sinon';
 
-import { stateClasses, Components, FormGroup } from '.';
-
 // import FormGroup from '.';
+import { FormGroup, stateClasses, Components } from '.';
 
 const NodeName = 'NodeName';
 const ComponentValue = 'Value';
@@ -32,7 +31,6 @@ describe('components/FormGroup: Component', () => {
     it('feedbackText is rendered', () => {
         expect(shallow(<FormGroup feedbackText="feedbackText" />).contains(<div className="form-control-feedback">feedbackText</div>)).to.equal(true);
     });
-
 });
 
 describe('components/FormGroup: children', () => {
@@ -55,14 +53,16 @@ describe('components/FormGroup: children', () => {
 
     it('simulates onChange events on default Input', () => {
         const onChange = sinon.spy();
-        shallow(<FormGroup onChange={onChange} />).find(DefaultComponent).simulate('change',  { target: { value: ComponentValue } });
-        expect(onChange.calledWith(null, ComponentValue)).to.equal(true);
+        shallow(<FormGroup onChange={onChange} />).find(DefaultComponent).simulate('change', { target: { value: ComponentValue } });
+
+        expect(onChange.calledOnce).to.equal(true);
+        expect(onChange.calledWith('', ComponentValue)).to.equal(true);
     });
 
     it('simulates onChange events on all type  Components', () => {
         const onChange = sinon.spy();
         _.each(Components, (v, k) => {
-            shallow(<FormGroup type={k} onChange={onChange} name={NodeName} />).find(Components[k]).simulate('change',  { target: { value: ComponentValue } });
+            shallow(<FormGroup type={k} onChange={onChange} name={NodeName} />).find(Components[k]).simulate('change', { target: { value: ComponentValue } });
             expect(onChange.calledWith(NodeName, ComponentValue)).to.equal(true);
         });
     });

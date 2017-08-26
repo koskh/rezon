@@ -74,6 +74,7 @@ class FormValidation extends React.Component<Props, State> {
 
 
     onFormChange = (nameField: string, valueField: any) => {
+
         const schema = this.props.schema;
         let { data, inputErrorsFields, logicErrorsFields } = this.state.model; // текущ сосстояние, обход однонаправленности
 

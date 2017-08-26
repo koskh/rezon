@@ -1,8 +1,8 @@
 // @flow
 
 /*
- * Компонент- фабрика стандартной "строчки ввода" в форме
- * строчки ввода = заголовок + какой то тип инпута
+ * Компонент- фабрика "строчки ввода" в форме
+ * строчка ввода = заголовок + какой то тип инпута + вывод ошибки-подсказки
  * validationState - статусы раскрашивания в соответсвии с bootstrap4
  * feedbackText - текст подсказки, ошибки, и т.д.
  */
@@ -10,24 +10,26 @@
 import * as React from 'react';
 import classNames from 'classnames';
 
-import Input from './Input';
+import Input from './_components/Input';
+import Password from './_components/Password';
 
 import type { validationStates } from '../FormValidation';
-export const stateClasses: { [key: validationStates]: string } = { // CSS цветных статусов
+
+export const stateClasses: { [key: validationStates]: string } = { // CSS классы цветных статусов
     success: 'has-success',
     warning: 'has-warning',
     error: 'has-danger',
     info: 'has-info'
 };
 
-export type InputTypes = 'date' | 'suggest' | 'text' | 'input';
+export type InputTypes = 'date' | 'suggest' | 'text' | 'input' | 'password';
 export const Components: { [key: InputTypes]: React.createClass } = { // возможн компоненты ввода данных
     // date: null,
     // suggest: null,
     // text: null,
+    password: Password,
     input: Input
 };
-
 
 type Props = {
     id?: string,
@@ -39,7 +41,6 @@ type Props = {
     validationState?: validationStates, // css класс раскрашив поля ввода
     feedbackText?: string, // текст ошибки, подсказки, инфо и тд.
     onChange?: Function
-    // children?: React.Children
 };
 
 
@@ -47,8 +48,7 @@ type Props = {
 //     value: string
 // }
 
-
-class FormGroup extends React.Component<Props> {
+export class FormGroup extends React.Component<Props> {
     props: Props;
     // state: State;
     static defaultProps: Props = {
@@ -93,7 +93,7 @@ class FormGroup extends React.Component<Props> {
                 <label htmlFor={id} className="col-sm-2 col-form-label">Email address</label>
                 <div className="col-sm-10">
 
-                    { Comp && <Comp id={id} name={name} defaultValue={defaultValue} placeholder="Placeholder...." onChange={this.onChange} /> }
+                    { Comp && <Comp id={id} name={name} defaultValue={defaultValue} placeholder="Placeholder..." onChange={this.onChange} /> }
 
                     <div className="form-control-feedback">{feedbackText}</div>
                     <small className="form-text text-muted">We will never share your email with anyone else.</small>

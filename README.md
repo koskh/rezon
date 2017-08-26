@@ -32,3 +32,7 @@ npm install
 
 Flow 0.53
 class ... extend React.Component --> type react.createClass // TODO: проверить на след версиях
+
+sinon onChange на одном компоненте, с нескольк полями
+const event = {target: {name: "pollName", value: "spam"}};
+.simulate('change', event);
