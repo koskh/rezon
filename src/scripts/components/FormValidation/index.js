@@ -5,7 +5,7 @@ import * as React from 'react';
 // import classNames from 'classnames';
 
 import FormStateFeedback from './_components/FormStateFeedback';
-import { convertField, validateRules, getValidationState, getFeedbackText, isValid } from './validator/validator';
+import * as validator from './validator/validator';
 
 import type { ValidatorResultObject, validationStates } from './validator/validator';
 import type { Schema } from './validator/schema';
@@ -72,14 +72,14 @@ class FormValidation extends React.Component<Props, State> {
         const schema = this.props.schema;
         let { data, inputErrorsFields, logicErrorsFields } = this.state.model; // текущ сосстояние, обход однонаправленности
 
-        const converted: ValidatorResultObject = convertField(nameField, valueField, schema); // конверт значения в нужн формат
+        const converted: ValidatorResultObject = validator.convertField(nameField, valueField, schema); // конверт значения в нужн формат
 
         data = { ...data, [nameField]: converted.result };
         inputErrorsFields = { ...inputErrorsFields, [nameField]: converted.errors };
 
         if (converted.errors.length === 0) { // удачно сконвертили и получили значение
             // валидир введен данные
-            const inputValidated: ValidatorResultObject = validateRules(nameField, data, 'inputRules', schema);
+            const inputValidated: ValidatorResultObject = validator.validateRules(nameField, data, 'inputRules', schema);
             inputErrorsFields = { ...inputErrorsFields, [nameField]: inputValidated.errors };
 
             // валидац созависим полей, если все поля заполнены без ошибок
@@ -87,7 +87,7 @@ class FormValidation extends React.Component<Props, State> {
                 return val.length === 0;
             })) {
                 _.each(data, (valueFld, nameFld) => {
-                    const logicValidated: ValidatorResultObject = validateRules(nameFld, data, 'logicRules', schema);
+                    const logicValidated: ValidatorResultObject = validator.validateRules(nameFld, data, 'logicRules', schema);
                     logicErrorsFields = { ...logicErrorsFields, [nameFld]: logicValidated.errors };
                 });
             } else
@@ -97,9 +97,13 @@ class FormValidation extends React.Component<Props, State> {
         // this.setState({ model: { data, inputErrorsFields, logicErrorsFields }}, this.props.onChange(this.state.model, isValid(this.state.model, schema)));
         this.setState({ model: { data, inputErrorsFields, logicErrorsFields } }, () => {
             // логика уведомления родительской формы
-            this.props.onChange && this.props.onChange(this.state.model, isValid(this.state.model, schema));
+            this.props.onChange && this.props.onChange(this.state.model, validator.isValid(this.state.model, schema));
         });
     };
+
+    isValid(): boolean {
+        return validator.isValid(this.state.model, this.props.schema);
+    }
 
     _renderChildren(props: any) {
         return React.Children.map(props.children, child => {
@@ -109,8 +113,8 @@ class FormValidation extends React.Component<Props, State> {
                 const name: string = child.props.name;
                 const model = this.state.model;
 
-                const validationState: validationStates = getValidationState(name, model);
-                const feedbackText: string = getFeedbackText(name, model);
+                const validationState: validationStates = validator.getValidationState(name, model);
+                const feedbackText: string = validator.getFeedbackText(name, model);
 
                 return React.cloneElement(child, { id, onChange: this.onFormChange, validationState, feedbackText });
             }
@@ -121,7 +125,7 @@ class FormValidation extends React.Component<Props, State> {
 
     render() {
         return (
-            <form id={this.props.id} className={this.props.className}>
+            <form id={this.props.id} className={this.props.className} autoComplete="off">
 
                 {this._renderChildren(this.props)}
 
