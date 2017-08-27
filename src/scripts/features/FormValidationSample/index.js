@@ -17,16 +17,14 @@ export default class Home extends React.Component<*> {
             <article>
                 <h1>FormValidationSample · Пример валидационной формы</h1>
 
-                <FormValidation schema={Schema}>
+                <FormValidation id='testform' schema={Schema}>
 
                     <FormGroup defaultValue="testInput" isValidated={true} type="input" name="email" />
                     <FormGroup defaultValue="22222 Input" isValidated={true} name="email2" />
 
-                    <div className="form-control-feedback">feedback FormValidation Text</div>
-
-                    <button type="submit" className="btn btn-primary">Submit</button>
-
                 </FormValidation>
+
+                <button type="submit" form="testform" className="btn btn-primary">Submit</button>
 
             </article>
         );

@@ -21,6 +21,7 @@ export type FormModel = { // содержимое валидационной ф�
 }
 
 type Props = {
+    id: string,
     className: string,
     schema: Schema,
     children: React.Node
@@ -36,6 +37,7 @@ class FormValidation extends React.Component<Props, State> {
     state: State;
 
     static defaultProps: Props = {
+        id:'',
         className: '',
         schema: {},
         children: null
@@ -79,8 +81,7 @@ class FormValidation extends React.Component<Props, State> {
             const inputValidated: ValidatorResultObject = validateRules(nameField, data, 'inputRules', schema);
             inputErrorsFields = { ...inputErrorsFields, [nameField]: inputValidated.errors };
 
-            // валидац созависим полей
-            // если все поля заполнены без ошибок
+            // валидац созависим полей, если все поля заполнены без ошибок
             if (_.every(inputErrorsFields, val => {
                 return val.length === 0;
             })) {
@@ -114,10 +115,8 @@ class FormValidation extends React.Component<Props, State> {
     }
 
     render() {
-        // const FormErrors = this._getFormErrors();
-
         return (
-            <form className={this.props.className}>
+            <form id={this.props.id} className={this.props.className}>
 
                 {this._renderChildren(this.props)}
 

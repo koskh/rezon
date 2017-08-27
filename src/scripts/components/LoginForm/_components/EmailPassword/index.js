@@ -73,8 +73,6 @@ class EmailPassword extends React.Component<Props> {
                 <CustomFormGroup className={`${styles.text}`} isValidated={true} type="input" name="email" />
                 <CustomFormGroup className={`${styles.password}`} isValidated={true} type="password" name="password" />
 
-
-
             </FormValidation>
 
         );

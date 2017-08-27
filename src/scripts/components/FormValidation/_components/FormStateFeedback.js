@@ -33,11 +33,11 @@ const getFormErrors = (formModel): string => { // переопределить, 
 };
 
 const FormStateFeedback = (props: Props) => {
-    const text: string = getFormErrors(props.formModel);
+    const feedbackText: string = getFormErrors(props.formModel);
 
     return (
-        <div className={cn('form-group', props.className)}>
-            { text }
+        <div className={cn('form-group has-danger', props.className)}>
+            <div className="form-control-feedback">{feedbackText}</div>
         </div>
     );
 };
