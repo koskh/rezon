@@ -6,7 +6,7 @@ import FormValidation from '../../../components/FormValidation';
 // import cn from 'classnames';
 
 import EmailPassword from './EmailPassword';
-import EmailPasswordSchema from './_schemes/email_passwd_schema';
+// import EmailPasswordSchema from './EmailPassword/_schema';
 
 import styles from './index.pcss';
 
@@ -54,7 +54,7 @@ class LoginForm extends React.Component<Props> {
         return (
             <div className={styles.wrapper}>
 
-                <FormValidation className={`${styles['form-signin']} rounded`} schema={EmailPasswordSchema}>
+                <div className={`${styles['form-signin']} rounded`}>
 
                     <h2 className={styles['form-signin-heading']}>Please sign in</h2>
 
@@ -71,7 +71,8 @@ class LoginForm extends React.Component<Props> {
 
                     <button className="btn btn-lg btn-primary btn-block" type="submit" disabled={true}>Sign in</button>
 
-                </FormValidation>
+                </div>
+
             </div>
         );
     }

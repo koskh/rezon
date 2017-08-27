@@ -35,6 +35,7 @@ type Props = {
     id?: string,
     type: InputTypes, // тип поля ввода, т.к. есть в defaultProps, Flow позволяет не передав
     name?: string,
+    className?: string,
     options?: any,
     defaultValue?: any,
     onChange: Function,
@@ -55,6 +56,7 @@ export class FormGroup extends React.Component<Props> {
         id: '',
         type: 'input',
         name: '',
+        className: '',
         options: null,
         defaultValue: null,
         validationState: 'default',

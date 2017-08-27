@@ -1,29 +1,33 @@
 // @flow
 import * as React from 'react';
-import cn from 'classnames';
+// import cn from 'classnames';
 
-import FormWidget from '../../../FormWidget';
+import FormValidation from '../../../../components/FormValidation';
+import SchemaValidation from './_schema';
+
+// import FormGroup from '../../../../components/FormGroup';
+import CustomFormGroup from './_components/CustomFormGroup';
 
 import styles from './index.pcss';
 
 import { stateClasses } from '../../../FormGroup';
 
-// type Props = {
-//     id?: string,
-//     name?: ?string,
-//     options?: any,
-//     defaultValue?: any,
-//     onChange: Function,
-//     // validationState?: ?validationStates, // css класс раскрашив поля ввода
-//     // feedbackText?: ?string, // текст ошибки, подсказки, инфо и тд.
-//     onChange?: Function
-//     // children?: React.Children
-// };
+type Props = {
+    // id?: string,
+    // name?: ?string,
+    // options?: any,
+    // defaultValue?: any,
+    // onChange: Function,
+    // // validationState?: ?validationStates, // css класс раскрашив поля ввода
+    // // feedbackText?: ?string, // текст ошибки, подсказки, инфо и тд.
+    // onChange?: Function
+    // children?: React.Children
+};
 
 
-class EmailPassword extends FormWidget {
-    // props: Props;
-    // state: State;
+class EmailPassword extends React.Component<Props> {
+    props: Props;
+    // // state: State;
     // static defaultProps: Props = {
     //     id: '',
     //     name: null,
@@ -42,39 +46,40 @@ class EmailPassword extends FormWidget {
     // };
     // }
 
-    onChange = ({ target }: SyntheticInputEvent<*>) => {
-        this.setState((prevState, props) => {
-            const value = prevState.value;
-            value[target.name] = target.value;
-            return { value };
-        },
-        () => { // логика уведомления родительской формы
-            this.props.onChange(this.props.name, this.state.value);
-        });
-    };
+    // onChange = ({ target }: SyntheticInputEvent<*>) => {
+    //     this.setState((prevState, props) => {
+    //         const value = prevState.value;
+    //         value[target.name] = target.value;
+    //         return { value };
+    //     },
+    //     () => { // логика уведомления родительской формы
+    //         this.props.onChange && this.props.onChange(this.props.name, this.state.value);
+    //     });
+    // };
 
     // getValue() {
     //     return this.state.value;
     // }
 
     render(): React.Element<any> {
-        const { id, name, defaultValue, validationState, feedbackText } = this.props;
+        // const { id, name, defaultValue, validationState, feedbackText } = this.props;
 
-        const validationStateClass: string = (validationState && stateClasses[validationState]) || '';
+        // const validationStateClass: string = (validationState && stateClasses[validationState]) || '';
 
         return (
-            <div className="form-group">
-                <div className={validationStateClass}>
-                    <label htmlFor="inputEmail" className="sr-only">Email address</label>
-                    <input type="text" id="inputEmail" className={`form-control ${styles.text}`} placeholder="Email address" name="email" onChange={this.onChange} />
-                    <label htmlFor="inputPassword" className="sr-only">Password</label>
-                    <input type="password" id="inputPassword" className={`form-control ${styles.password}`} placeholder="Password" name="password" onChange={this.onChange} />
+            <FormValidation schema={SchemaValidation}>
+
+                <div className="form-group" >
+                    <CustomFormGroup className={`form-control ${styles.text}`} isValidated={true} type="input" name="email" />
+                    <CustomFormGroup className={`form-control ${styles.password}`} isValidated={true} type="password" name="password" />
                 </div>
-                <div className={validationStateClass}>
-                    <div className="form-control-feedback"></div>
+
+                <div className={'default'}>
+                    <div className="form-control-feedback" />
                     <small className="form-text text-muted">Please login or doing smth.</small>
                 </div>
-            </div>
+
+            </FormValidation>
 
         );
     }

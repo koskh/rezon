@@ -2,21 +2,24 @@
 // import { extract } from '../../utilities/number';
 
 // types
-import type { Schema } from '../../../../components/FormValidation/validator/schema';
+import type { Schema } from '../../../FormValidation/validator/schema';
 
 const schema: Schema = {
-    EmailPassword: {
+    email: {
         inputRules: [
             {
-                validate(value) {
-                    return value.EmailPassword.email !== '';
+                validate(attr) {
+                    return attr.email !== '';
                 },
                 msg: 'Email Не может быть пустым'
             },
-
+        ],
+    },
+    password: {
+        inputRules: [
             {
-                validate(value) {
-                    return value.EmailPassword.password !== '';
+                validate(attr) {
+                    return attr.password !== '';
                 },
                 msg: 'Password Не может быть пустым'
             },
