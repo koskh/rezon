@@ -8,6 +8,7 @@ import SchemaValidation from './_schema';
 // import FormGroup from '../../../../components/FormGroup';
 import CustomFormGroup from './_components/CustomFormGroup';
 
+
 import styles from './index.pcss';
 
 import { stateClasses } from '../../../FormGroup';
@@ -72,10 +73,7 @@ class EmailPassword extends React.Component<Props> {
                 <CustomFormGroup className={`${styles.text}`} isValidated={true} type="input" name="email" />
                 <CustomFormGroup className={`${styles.password}`} isValidated={true} type="password" name="password" />
 
-                <div className={'default'}>
-                    <div className="form-control-feedback" />
-                    <small className="form-text text-muted">Please login or doing smth.</small>
-                </div>
+
 
             </FormValidation>
 

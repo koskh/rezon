@@ -4,7 +4,7 @@ import _ from 'lodash';
 import * as React from 'react';
 // import classNames from 'classnames';
 
-import FormGroup from '../FormGroup';
+import FormStateFeedback from './_components/FormStateFeedback';
 import { convertField, validateRules, getValidationState, getFeedbackText } from './validator/validator';
 
 import type { ValidatorResultObject, validationStates } from './validator/validator';
@@ -114,9 +114,14 @@ class FormValidation extends React.Component<Props, State> {
     }
 
     render() {
+        // const FormErrors = this._getFormErrors();
+
         return (
             <form className={this.props.className}>
+
                 {this._renderChildren(this.props)}
+
+                <FormStateFeedback formModel={this.state.model} />
             </form>
         );
     }
