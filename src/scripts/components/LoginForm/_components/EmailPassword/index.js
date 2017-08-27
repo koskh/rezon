@@ -70,8 +70,8 @@ class EmailPassword extends React.Component<Props> {
             <FormValidation schema={SchemaValidation}>
 
                 <div className="form-group" >
-                    <CustomFormGroup className={`form-control ${styles.text}`} isValidated={true} type="input" name="email" />
-                    <CustomFormGroup className={`form-control ${styles.password}`} isValidated={true} type="password" name="password" />
+                    <CustomFormGroup className={`${styles.text}`} isValidated={true} type="input" name="email" />
+                    <CustomFormGroup className={`${styles.password}`} isValidated={true} type="password" name="password" />
                 </div>
 
                 <div className={'default'}>
