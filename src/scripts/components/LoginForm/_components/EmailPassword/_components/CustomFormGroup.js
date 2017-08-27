@@ -8,7 +8,7 @@ import {FormGroup, stateClasses} from '../../../../../components/FormGroup';
 
 class CustomFormGroup extends FormGroup {
     render(): React.Element<any> {
-        const { id, type, name, defaultValue, className, validationState, feedbackText } = this.props;
+        const { id, type, name, defaultValue, className, validationState } = this.props;
 
         const validationStateClass: string = (validationState && stateClasses[validationState]) || '';
 
