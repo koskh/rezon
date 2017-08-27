@@ -3,6 +3,7 @@
 /* Валидатор.
 *  Получает на вход имя поля, значение, валидирует по переданной схеме.
 */
+import _ from 'lodash';
 
 import type { Schema } from './schema';
 import type { FormModel } from '../';
@@ -77,4 +78,19 @@ export function getFeedbackText(nameField: string, formModel: FormModel): string
         return formModel.logicErrorsFields[nameField].join(',');
 
     return '';
+}
+
+export function isValid(formModel: FormModel, schema: Schema): boolean { // прогоняем все правила на текущих данных модели, вовзращаем ее валидность.
+    const model = _.cloneDeep(formModel); // не будем раскрашивать форму
+
+    let valid = true;
+
+    _.forEach(schema, (v, k) => {
+        if (!valid) return false;
+
+        if (!((convertField(k, model.data[k], schema)).result !== undefined && (validateRules(k, model.data, 'inputRules', schema)).result && (validateRules(k, model.data, 'logicRules', schema)).result))
+            valid = false;
+    });
+
+    return valid;
 }

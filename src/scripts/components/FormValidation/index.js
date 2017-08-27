@@ -5,7 +5,7 @@ import * as React from 'react';
 // import classNames from 'classnames';
 
 import FormStateFeedback from './_components/FormStateFeedback';
-import { convertField, validateRules, getValidationState, getFeedbackText } from './validator/validator';
+import { convertField, validateRules, getValidationState, getFeedbackText, isValid } from './validator/validator';
 
 import type { ValidatorResultObject, validationStates } from './validator/validator';
 import type { Schema } from './validator/schema';
@@ -24,6 +24,7 @@ type Props = {
     id: string,
     className: string,
     schema: Schema,
+    onChange: Function,
     children: React.Node
 };
 
@@ -37,9 +38,10 @@ class FormValidation extends React.Component<Props, State> {
     state: State;
 
     static defaultProps: Props = {
-        id:'',
+        id: '',
         className: '',
         schema: {},
+        onChange: () => {},
         children: null
     };
 
@@ -65,7 +67,6 @@ class FormValidation extends React.Component<Props, State> {
 
         return result;
     };
-
 
     onFormChange = (nameField: string, valueField: any) => {
         const schema = this.props.schema;
@@ -93,7 +94,11 @@ class FormValidation extends React.Component<Props, State> {
                 logicErrorsFields[nameField] = []; // приоритет ошибок у невалидного заполнения
         }
 
-        this.setState({ model: { data, inputErrorsFields, logicErrorsFields } });
+        // this.setState({ model: { data, inputErrorsFields, logicErrorsFields }}, this.props.onChange(this.state.model, isValid(this.state.model, schema)));
+        this.setState({ model: { data, inputErrorsFields, logicErrorsFields } }, () => {
+            // логика уведомления родительской формы
+            this.props.onChange && this.props.onChange(this.state.model, isValid(this.state.model, schema));
+        });
     };
 
     _renderChildren(props: any) {
