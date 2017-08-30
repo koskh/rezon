@@ -16,7 +16,7 @@ module.exports = {
         ],
 
         polyfill: 'babel-polyfill',
-
+        moment: 'moment',
         lodash: 'lodash'
     },
 
@@ -53,7 +53,7 @@ module.exports = {
             hash: true,
         }),
         new webpack.optimize.CommonsChunkPlugin({
-            name: ['react', 'lodash']
+            name: ['react', 'lodash', 'polyfill', 'moment']
             // children: true,
             // async: true,
         }),

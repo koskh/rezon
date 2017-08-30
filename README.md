@@ -36,3 +36,11 @@ class ... extend React.Component --> type react.createClass // TODO: прове�
 sinon onChange на одном компоненте, с нескольк полями
 const event = {target: {name: "pollName", value: "spam"}};
 .simulate('change', event);
+
+прошл месяц
+from = moment().subtract(1,'months').startOf('month').format('YYYY-MM-DD');
+to = moment().subtract(1,'months').endOf('month').format('YYYY-MM-DD');
+
+прошл год
+from = moment().subtract(1,'year').startOf('year').format('YYYY-MM-DD');
+to = moment().subtract(1,'year').endOf('year').format('YYYY-MM-DD');

@@ -44,6 +44,7 @@
     "minifyify": "^7.3.5",
     "mocha": "^3.5.0",
     "mock-css-modules": "^1.0.0",
+    "moment": "^2.18.1",
     "morgan": "^1.8.2",
     "postcss": "^6.0.9",
     "postcss-color-function": "^4.0.0",
@@ -85,7 +86,6 @@
     "build:debug": "rimraf build/* && webpack --config webpack/webpack.debug.config.js",
     "build:release": "cross-env NODE_ENV=production && rimraf build/* && webpack --config webpack/webpack.release.config.js",
     "first-step": "flow-typed install && npm run build:debug && npm run server-start"
-
   },
   "dependencies": {
     "cross-env": "^5.0.5",
