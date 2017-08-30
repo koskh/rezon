@@ -86,17 +86,52 @@ export function getFeedbackText(nameField: string, formModel: FormModel): string
     return '';
 }
 
-export function isValid(formModel: FormModel, schema: Schema, isShowErrors: boolean = false): boolean { // прогоняем все правила на текущих данных модели, вовзращаем ее валидность.
-    const model = isShowErrors ? formModel : _.cloneDeep(formModel); // будем, не будем раскрашивать форму
+export function validateField(nameField: string, valueField: any, formModel: FormModel, schema: Schema): FormModel {
+    let { data, inputErrorsFields, logicErrorsFields } = _.cloneDeep(formModel); // текущ сосстояние модели формы
 
+    const converted: ValidatorResultObject = convertField(nameField, valueField, schema); // конверт значения в нужн формат
+    data = { ...data, [nameField]: converted.result };
+    inputErrorsFields = { ...inputErrorsFields, [nameField]: converted.errors };
+
+    if (converted.errors.length === 0) { // удачно сконвертили и получили значение
+        // валидир введен данные
+        const inputValidated: ValidatorResultObject = validateRules(nameField, data, 'inputRules', schema);
+        inputErrorsFields = { ...inputErrorsFields, [nameField]: inputValidated.errors };
+
+        // валидац созависим полей, если все поля заполнены без ошибок
+        if (_.every(inputErrorsFields, val => {
+            return val.length === 0;
+        })) {
+            _.each(data, (valueFld, nameFld) => {
+                const logicValidated: ValidatorResultObject = validateRules(nameFld, data, 'logicRules', schema);
+                logicErrorsFields = { ...logicErrorsFields, [nameFld]: logicValidated.errors };
+            });
+        } else
+            logicErrorsFields[nameField] = []; // приоритет ошибок у невалидного заполнения
+    }
+
+    return { data, inputErrorsFields, logicErrorsFields };
+}
+
+export function isValid(formModel: FormModel, schema: Schema): boolean { // прогоняем все правила на текущих данных модели, вовзращаем ее валидность.
     let valid = true;
 
     _.forEach(schema, (v, k) => {
         if (!valid) return false;
 
-        if (!((convertField(k, model.data[k], schema)).result !== undefined && (validateRules(k, model.data, 'inputRules', schema)).result && (validateRules(k, model.data, 'logicRules', schema)).result))
+        if (!((convertField(k, formModel.data[k], schema)).result !== undefined && (validateRules(k, formModel.data, 'inputRules', schema)).result && (validateRules(k, formModel.data, 'logicRules', schema)).result))
             valid = false;
     });
 
     return valid;
+}
+
+export function validateModel(formModel: FormModel, schema: Schema): FormModel {
+    let model = _.cloneDeep(formModel);
+
+    _.forEach(schema, (v, k) => {
+        model = validateField(k, model.data[k], model, schema);
+    });
+
+    return model;
 }

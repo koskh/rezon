@@ -32,7 +32,7 @@ export default class Home extends React.Component<*, State> {
 
     onClick = () => {
         const isValid: boolean = this.formValidation ? this.formValidation.isValid() : true;
-        console.log('Form isValid: ', isValid);
+        // console.log('Form isValid: ', isValid);
 
         this.setState({ sendEnabled: isValid });
     };
@@ -45,8 +45,8 @@ export default class Home extends React.Component<*, State> {
 
                 <FormValidation id="testform" ref={formValidation => { this.formValidation = formValidation; }} schema={Schema} onChange={this.onFormValidationChange} >
 
-                    <FormGroup defaultValue="testInput" isValidated={true} type="input" name="email" />
-                    <FormGroup defaultValue="22222 Input" isValidated={true} name="email2" />
+                    <FormGroup defaultValue="88" isValidated={true} type="input" name="email" />
+                    <FormGroup defaultValue="88" isValidated={true} name="email2" />
 
                 </FormValidation>
 

@@ -113,3 +113,9 @@ describe('components/FormValidation/Validator: validateLogicRules', () => {
     });
 });
 
+// describe('components/FormValidation/Validator: validateField', () => {
+//     it('not validate if hasn\'t field in scheme', () => {
+//         expect(validateRules(notSchemeField, { [notSchemeField]: notValidNumberValue }, 'logicRules', schema)).to.eql({ result: true, errors: [] });
+//     });
+//
+// });

@@ -70,41 +70,22 @@ class FormValidation extends React.Component<Props, State> {
 
     onFormChange = (nameField: string, valueField: any) => {
         const schema = this.props.schema;
-        let { data, inputErrorsFields, logicErrorsFields } = this.state.model; // текущ сосстояние, обход однонаправленности
 
-        const converted: ValidatorResultObject = validator.convertField(nameField, valueField, schema); // конверт значения в нужн формат
-
-        data = { ...data, [nameField]: converted.result };
-        inputErrorsFields = { ...inputErrorsFields, [nameField]: converted.errors };
-
-        if (converted.errors.length === 0) { // удачно сконвертили и получили значение
-            // валидир введен данные
-            const inputValidated: ValidatorResultObject = validator.validateRules(nameField, data, 'inputRules', schema);
-            inputErrorsFields = { ...inputErrorsFields, [nameField]: inputValidated.errors };
-
-            // валидац созависим полей, если все поля заполнены без ошибок
-            if (_.every(inputErrorsFields, val => {
-                return val.length === 0;
-            })) {
-                _.each(data, (valueFld, nameFld) => {
-                    const logicValidated: ValidatorResultObject = validator.validateRules(nameFld, data, 'logicRules', schema);
-                    logicErrorsFields = { ...logicErrorsFields, [nameFld]: logicValidated.errors };
-                });
-            } else
-                logicErrorsFields[nameField] = []; // приоритет ошибок у невалидного заполнения
-        }
+        const { data, inputErrorsFields, logicErrorsFields } = validator.validateField(nameField, valueField, this.state.model, schema);
 
         this.setState({ model: { data, inputErrorsFields, logicErrorsFields } }, () => {
-            // логика уведомления родительской формы
-            this.props.onChange && this.props.onChange(this.state.model, validator.isValid(this.state.model, schema));
+            this.props.onChange && this.props.onChange(this.state.model, validator.isValid(this.state.model, schema)); // уведомление родительской формы
         });
     };
 
-    isValid(): boolean {
-        validator.isValid(this.state.model, this.props.schema, true);
-        debugger;
+    showFormErrors(): void { // раскрашив всех ошибок формы
+        const validatedModel = validator.validateModel(this.state.model, this.props.schema);
+        this.setState({ model: validatedModel });
+    }
 
-        return validator.isValid(this.state.model, this.props.schema, true);
+    isValid(): boolean {
+        this.showFormErrors();
+        return validator.isValid(this.state.model, this.props.schema);
     }
 
     _renderChildren(props: any) {
