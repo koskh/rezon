@@ -29,12 +29,16 @@ describe('components/FormValidation/Validator: ConvertField', () => {
         expect(() => convertField(firstField, mixedString)).to.throw();
     });
 
-    it('default returns not converted value in resul tobject', () => {
+    it('default returns not converted value in result tobject', () => {
         expect(convertField(firstField, mixedString, {})).to.eql({ result: mixedString, errors: [] });
     });
 
     it('empty string not converted', () => {
         expect(convertField(firstField, emptyString, schema)).to.eql({ result: emptyString, errors: [] });
+    });
+
+    it('undefined not converted and returm error', () => {
+        expect(convertField(firstField, undefined, schema)).to.eql({ result: undefined, errors: [schema[firstField].type.msg] });
     });
 
     it('can converts by schema.type.convert', () => {

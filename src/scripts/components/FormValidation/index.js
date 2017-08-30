@@ -94,7 +94,6 @@ class FormValidation extends React.Component<Props, State> {
                 logicErrorsFields[nameField] = []; // приоритет ошибок у невалидного заполнения
         }
 
-        // this.setState({ model: { data, inputErrorsFields, logicErrorsFields }}, this.props.onChange(this.state.model, isValid(this.state.model, schema)));
         this.setState({ model: { data, inputErrorsFields, logicErrorsFields } }, () => {
             // логика уведомления родительской формы
             this.props.onChange && this.props.onChange(this.state.model, validator.isValid(this.state.model, schema));
@@ -102,17 +101,26 @@ class FormValidation extends React.Component<Props, State> {
     };
 
     isValid(): boolean {
-        return validator.isValid(this.state.model, this.props.schema);
+        validator.isValid(this.state.model, this.props.schema, true);
+        debugger;
+
+        return validator.isValid(this.state.model, this.props.schema, true);
     }
 
     _renderChildren(props: any) {
         return React.Children.map(props.children, child => {
             const id = child.props.id || _.uniqueId('frm-vldtn_');
 
-            if (child.props.isValidated) {
-                const name: string = child.props.name;
-                const model = this.state.model;
+            const name: string = child.props.name;
+            const model = this.state.model;
 
+            const modelValue = model.data[name];
+            const defaultValue = child.props.defaultValue;
+
+            if (!_.isNil(name) && _.isNil(modelValue) && !_.isNil(defaultValue)) // заполняем модель формы внешними данными
+                model.data[name] = defaultValue;
+
+            if (child.props.isValidated) {
                 const validationState: validationStates = validator.getValidationState(name, model);
                 const feedbackText: string = validator.getFeedbackText(name, model);
 

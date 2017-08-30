@@ -15,23 +15,29 @@ export type ValidatorResultObject = { result: any, errors: Array<string> };
 // конвертация поля
 export function convertField(nameField: string, valueField: any, schema: Schema): ValidatorResultObject {
     //eslint-disable-next-line
-    let result = undefined;
+    let result = valueField;
     let errors = [];
 
     if (schema === undefined)
         throw new Error('Validator.convertField need schema');
 
-    if (valueField !== '' && schema[nameField] && schema[nameField].type) {
+    if (schema[nameField] && schema[nameField].type) {
         const type = schema[nameField].type;
-        const convertedValue = schema[nameField].type.convert(valueField);
 
-        if (convertedValue === undefined || (typeof convertedValue === 'number' && isNaN(convertedValue))) {
+        if (valueField === undefined) {
             result = undefined;
             errors = [type.msg];
-        } else
-            result = convertedValue;
-    } else
-        result = valueField;
+        }
+
+        if (valueField !== '') {
+            const convertedValue = schema[nameField].type.convert(valueField);
+            if (convertedValue === undefined || (typeof convertedValue === 'number' && isNaN(convertedValue))) {
+                result = undefined;
+                errors = [type.msg];
+            } else
+                result = convertedValue;
+        }
+    }
 
     return { result, errors };
 }
@@ -80,8 +86,8 @@ export function getFeedbackText(nameField: string, formModel: FormModel): string
     return '';
 }
 
-export function isValid(formModel: FormModel, schema: Schema): boolean { // прогоняем все правила на текущих данных модели, вовзращаем ее валидность.
-    const model = _.cloneDeep(formModel); // не будем раскрашивать форму
+export function isValid(formModel: FormModel, schema: Schema, isShowErrors: boolean = false): boolean { // прогоняем все правила на текущих данных модели, вовзращаем ее валидность.
+    const model = isShowErrors ? formModel : _.cloneDeep(formModel); // будем, не будем раскрашивать форму
 
     let valid = true;
 
