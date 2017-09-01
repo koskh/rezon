@@ -46,7 +46,7 @@ export default class Home extends React.Component<*, State> {
                 <FormValidation id="testform" ref={formValidation => { this.formValidation = formValidation; }} schema={Schema} onChange={this.onFormValidationChange} >
 
                     <FormGroup defaultValue="88" isValidated={true} type="input" name="email" />
-                    <FormGroup defaultValue="150" isValidated={true} name="email2" />
+                    <FormGroup defaultValue="fghfgfghf" isValidated={true} name="email2" />
 
                 </FormValidation>
 

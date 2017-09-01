@@ -117,9 +117,7 @@ export function isValid(formModel: FormModel, schema: Schema): boolean { // пр
     let valid = true;
 
     _.forEach(schema, (v, k) => {
-        if (!valid) return false;
-
-        if (!((convertField(k, formModel.data[k], schema)).result !== undefined && (validateRules(k, formModel.data, 'inputRules', schema)).result && (validateRules(k, formModel.data, 'logicRules', schema)).result))
+        if (!valid || !((convertField(k, formModel.data[k], schema)).result !== undefined && (validateRules(k, formModel.data, 'inputRules', schema)).result && (validateRules(k, formModel.data, 'logicRules', schema)).result))
             valid = false;
     });
 
@@ -127,7 +125,13 @@ export function isValid(formModel: FormModel, schema: Schema): boolean { // пр
 }
 
 export function validateModel(formModel: FormModel, schema: Schema): FormModel {
-    let model = _.cloneDeep(formModel);
+    let model: FormModel = _.cloneDeep(formModel);
+
+    _.forEach(schema, (v, k) => { // должны убедиться, что значения вообще обрабатываемые ( например, модель заполнена третьей стороной)
+        const converted: ValidatorResultObject = convertField(k, model.data[k], schema);
+        model.data = { ...model.data, [k]: converted.result };
+        model.inputErrorsFields = { ...model.inputErrorsFields, [k]: converted.errors };
+    });
 
     _.forEach(schema, (v, k) => {
         model = validateField(k, model.data[k], model, schema);
