@@ -9,6 +9,8 @@ const urls: {[key: string]: any} = {
     references2: userId => `${apiPatch}/references2/${userId}`,
 
     'auth/login': () => `${apiPatch}/auth/login`,
+    'utils/random': (min, max) => `${apiPatch}/utils/random/${min}/${max}`,
+
 };
 
 export default (name: string, ...args?: Array<any>): string => {

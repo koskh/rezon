@@ -26,7 +26,7 @@ http.interceptors.response.use(undefined, interceptors.failure);
 //     }
 // });
 
-const createAjaxRequest = (url: string, ...args0: Array<any>): Function => ({...args1}: Object): AjaxRequest => {
+const createAjaxRequest = (url: string, ...args0: Array<any>): Function => ({ ...args1 }: Object): AjaxRequest => {
     const CancelToken = axios.CancelToken;
     const source = CancelToken.source();
     const promise = http({ url: urls(url, ...args0), cancelToken: source.token, ...args1 });
@@ -39,6 +39,10 @@ type Api = (...args: Array<any>) => AjaxRequest;
 export const common: {[string]: Api} = {
     references: () => createAjaxRequest('references')(),
     references2: options => createAjaxRequest('references2', options.userId)(options),
+};
+
+export const utils: {[string]: Api} = {
+    random: options => createAjaxRequest('utils/random', options.min, options.max)(options),
 };
 
 export const auth: {[string]: Api} = {

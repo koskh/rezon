@@ -1,58 +1,12 @@
 // @flow
+import { connect } from 'react-redux';
 
-import * as React from 'react';
+import { makeFetch, cancelFetch } from './store/actions/fetch';
 
-import FormValidation from '../../components/FormValidation';
-import { FormGroup } from '../../components/FormGroup';
+import Component from './_components';
 
-import Schema from './schema';
-
-import type {FormModel} from '../../components/FormValidation';
-
-type State = {
-    sendEnabled: boolean
+function mapStateToProps({ formSampleComponent, router }: State) {
+    return { formSampleComponent, router };
 }
 
-export default class Home extends React.Component<*, State> {
-    state: State = {
-        sendEnabled: true
-    };
-
-    formValidation = null;
-
-    componentWillMount() {
-        document.title = 'FormValidationSample · Пример валидационной формы';
-    }
-
-    onFormValidationChange = (model: FormModel, isValid: boolean) => {
-        // debugger;
-        // console.log('Form isValid: ', isValid);
-        this.setState({ sendEnabled: isValid });
-    };
-
-    onClick = () => {
-        const isValid: boolean = this.formValidation ? this.formValidation.isValid() : true;
-        // console.log('Form isValid: ', isValid);
-
-        this.setState({ sendEnabled: isValid });
-    };
-
-    render() {
-        const sendEnabled = this.state.sendEnabled;
-        return (
-            <article>
-                <h1>FormValidationSample · Пример валидационной формы</h1>
-
-                <FormValidation id="testform" ref={formValidation => { this.formValidation = formValidation; }} schema={Schema} onChange={this.onFormValidationChange} >
-
-                    <FormGroup defaultValue="" isValidated={true} name="min" label="Min" />
-                    <FormGroup defaultValue="" isValidated={true} name="max" label="Max" />
-
-                </FormValidation>
-
-                <button type="submit" form="testform" className="btn btn-primary" disabled={!sendEnabled} onClick={this.onClick} >Submit</button>
-
-            </article>
-        );
-    }
-}
+export default connect(mapStateToProps, { makeFetch, cancelFetch })(Component);

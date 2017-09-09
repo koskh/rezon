@@ -52,6 +52,7 @@ class FormValidation extends React.Component<Props, State> {
         this.state = { model };
     }
 
+
     _initializeFormModel = (schema: Schema): FormModel => {
         const result = {
             data: {},
@@ -86,6 +87,10 @@ class FormValidation extends React.Component<Props, State> {
     isValid(): boolean {
         this.showFormErrors();
         return validator.isValid(this.state.model, this.props.schema);
+    }
+
+    getModel(): FormModel {
+        return _.cloneDeep(this.state.model);
     }
 
     _renderChildren(props: any) {

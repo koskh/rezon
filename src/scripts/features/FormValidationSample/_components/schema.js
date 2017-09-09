@@ -1,8 +1,8 @@
 // @flow
-import { extract } from '../../utilities/number';
+import { extract } from '../../../utilities/number/index';
 
 // types
-import type { Schema } from '../../components/FormValidation/validator/schema';
+import type { Schema } from '../../../components/FormValidation/validator/schema';
 
 const schema: Schema = {
     min: {

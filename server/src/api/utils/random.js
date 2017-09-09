@@ -22,7 +22,12 @@ router.get('/:min/:max', (req: express$Request, res: express$Response) => {
     }
 
     const result = Math.round((Math.random() * (max - min)) + min);
-    res.json(result);
+
+    setTimeout(() => {
+        respond.data = result;
+        res.json(respond);
+    }, 1500);
+
 });
 
 
