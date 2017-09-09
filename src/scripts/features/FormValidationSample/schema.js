@@ -28,7 +28,7 @@ const schema: Schema = {
             },
             {
                 validate(attrs) {
-                    return attrs.min >= 5;
+                    return attrs.min > 5;
                 },
                 msg: 'Min: Число должно быть больше 5'
             }
@@ -60,7 +60,7 @@ const schema: Schema = {
             },
             {
                 validate(attrs) {
-                    return attrs.max >= 10;
+                    return attrs.max > 10;
                 },
                 msg: 'Max: Число должно быть больше 10'
             },
