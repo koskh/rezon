@@ -5,64 +5,64 @@ import { extract } from '../../utilities/number';
 import type { Schema } from '../../components/FormValidation/validator/schema';
 
 const schema: Schema = {
-    email: {
+    min: {
         type: {
             convert(value) {
                 return extract(value);
             },
-            msg: 'Email: Неверный формат данных. Разрешено только число'
+            msg: 'Min: Неверный формат данных. Разрешено только число'
         },
         inputRules: [
             {
                 validate(attrs) {
-                    return attrs.email !== '';
+                    return attrs.min !== '';
                 },
-                msg: 'Email: Не может быть пустым'
+                msg: 'Min: Не может быть пустым'
             },
 
             {
                 validate(attrs) {
-                    return attrs.email >= 0 && attrs.email <= 100;
+                    return attrs.min >= 0 && attrs.min <= 100;
                 },
-                msg: 'Email: Число должно находиться в интервале 0-100'
+                msg: 'Min: Число должно находиться в интервале 0-100'
             },
             {
                 validate(attrs) {
-                    return attrs.email >= 50;
+                    return attrs.min >= 5;
                 },
-                msg: 'Email: Число должно быть больше 50'
+                msg: 'Min: Число должно быть больше 5'
             }
         ],
 
     },
 
-    email2: {
+    max: {
 
         type: {
             convert(value) {
                 return extract(value);
             },
-            msg: 'Email2: Неверный формат данных. Разрешено только число'
+            msg: 'Max: Неверный формат данных. Разрешено только число'
         },
         inputRules: [
             {
                 validate(attrs) {
-                    return attrs.email2 !== '';
+                    return attrs.max !== '';
                 },
-                msg: 'Email2: Не может быть пустым'
+                msg: 'Max: Не может быть пустым'
             },
 
             {
                 validate(attrs) {
-                    return attrs.email2 >= 0 && attrs.email2 <= 100;
+                    return attrs.max >= 0 && attrs.max <= 100;
                 },
-                msg: 'Email2: Число должно находиться в интервале 0-100'
+                msg: 'Max: Число должно находиться в интервале 0-100'
             },
             {
                 validate(attrs) {
-                    return attrs.email2 >= 50;
+                    return attrs.max >= 10;
                 },
-                msg: 'Email2: Число должно быть больше 50'
+                msg: 'Max: Число должно быть больше 10'
             },
             // {
             //         validate(attrs) {
@@ -75,9 +75,9 @@ const schema: Schema = {
         logicRules: [
             {
                 validate(attrs) {
-                    return attrs.email2 === attrs.email;
+                    return attrs.max > attrs.min;
                 },
-                msg: 'Email2: Знечения полей email2 и email1 должны быть равны'
+                msg: 'Max: Знечение поля Max должно быть больше значения поля Min'
             }
         ]
     },

@@ -6,7 +6,7 @@ module.exports = {
         // require('postcss-mixins')({ /* ...options */ }),
         // require('postcss-simple-vars')({ /* ...options */ }),
         // require('postcss-custom-properties')({ /* ...options */ }),
-        require('postcss-color-function')({ /* ...options */ }),
+        // require('postcss-color-function')({ /* ...options */ }),
         // require('postcss-nested')({ /* ...options */ }),
         require('postcss-utilities')({ /* ...options */ }),
         require('postcss-inline-svg')({}),

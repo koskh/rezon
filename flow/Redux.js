@@ -8,4 +8,5 @@ declare type ReducerActions = {[handler: Type]: ReducerAction};
 // declare type State= {};
 
 type $ExtractFunctionReturn = <V>(v: (...args: any) => V) => V;
+
 declare type State = $ObjMap<Reducers, $ExtractFunctionReturn>;

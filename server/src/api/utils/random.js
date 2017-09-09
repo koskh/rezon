@@ -4,14 +4,20 @@ const express = require('express');
 
 const router = express.Router();
 
-
 router.get('/:min/:max', (req: express$Request, res: express$Response) => {
     const min = Number.parseInt(req.params.min, 10);
     const max = Number.parseInt(req.params.max, 10);
 
+    const respond: ServerRespond = {
+        data: null,
+        error: null
+    };
+
     if (Number.isNaN(min) || Number.isNaN(max)) {
         res.status(400);
-        res.json({ error: 'Bad request' });
+
+        respond.error = 'Неверные входные данные';
+        res.json(respond);
         return;
     }
 

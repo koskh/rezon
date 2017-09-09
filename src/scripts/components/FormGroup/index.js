@@ -16,10 +16,10 @@ import Password from './_components/Password';
 import type { validationStates } from '../FormValidation/validator/validator';
 
 export const stateClasses: { [key: validationStates]: string } = { // CSS классы цветных статусов
-    success: 'has-success',
-    warning: 'has-warning',
-    error: 'has-danger',
-    info: 'has-info'
+    success: 'is-valid',
+    warning: 'is-warning',
+    error: 'is-invalid',
+    default: ''
 };
 
 export type InputTypes = 'date' | 'suggest' | 'text' | 'input' | 'password';
@@ -35,6 +35,7 @@ type Props = {
     id?: string,
     type: InputTypes, // тип поля ввода, т.к. есть в defaultProps, Flow позволяет не передав
     name?: string,
+    label: string,
     className?: string,
     options?: any,
     defaultValue?: any,
@@ -56,6 +57,7 @@ export class FormGroup extends React.Component<Props> {
         id: '',
         type: 'input',
         name: '',
+        label: '',
         className: '',
         options: null,
         defaultValue: null,
@@ -82,7 +84,7 @@ export class FormGroup extends React.Component<Props> {
     // }
 
     render(): React.Element<any> {
-        const { id, type, name, defaultValue, validationState, feedbackText } = this.props;
+        const { id, type, name, label, defaultValue, validationState, feedbackText } = this.props;
 
         const validationStateClass: string = (validationState && stateClasses[validationState]) || '';
 
@@ -92,12 +94,12 @@ export class FormGroup extends React.Component<Props> {
 
         return (
             <div className={classNames('form-group', 'row', validationStateClass)}>
-                <label htmlFor={id} className="col-sm-2 col-form-label">Email address</label>
+                <label htmlFor={id} className="col-sm-2 col-form-label">{label}</label>
                 <div className="col-sm-10">
 
-                    { Comp && <Comp id={id} name={name} defaultValue={defaultValue} placeholder="Placeholder..." onChange={this.onChange} /> }
+                    { Comp && <Comp id={id} name={name} defaultValue={defaultValue} className={validationStateClass} onChange={this.onChange} /> }
 
-                    <div className="form-control-feedback">{feedbackText}</div>
+                    <div className="invalid-feedback">{feedbackText}</div>
                     <small className="form-text text-muted">We will never share your email with anyone else.</small>
                 </div>
             </div>

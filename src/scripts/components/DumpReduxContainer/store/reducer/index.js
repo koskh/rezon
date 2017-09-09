@@ -10,9 +10,9 @@ const initialState: {} = {
 };
 
 export const actions: ReducerActions = {
-    [types.FETCH_REQUEST]: (state, { payload }) => nextState(state, { isPending: true, ...payload}),
+    [types.FETCH_REQUEST]: (state, { payload }) => nextState(state, { isPending: true, ...payload }),
     //
-    [types.FETCH_SUCCESS]: (state, { payload }) =>  nextState(state, { isPending: false, data: payload.data }),
+    [types.FETCH_SUCCESS]: (state, { payload }) => nextState(state, { isPending: false, data: payload.data }),
     //
     [types.FETCH_FAILURE]: (state, { payload }) => nextState(state, { isPending: false, ...payload }),
 
