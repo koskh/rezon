@@ -20,6 +20,7 @@ export function makeFetch({ min, max }: {[filed: string]: any}): Function {
 
         try {
             const request1 = utils.random({ min, max });
+            Requests.push(request1);
             const response = await request1.promise;
             dispatch(success({ ...response.data }));
         } catch (response) {
