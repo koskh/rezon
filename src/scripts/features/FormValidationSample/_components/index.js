@@ -61,7 +61,6 @@ export default class FormValidationSample extends React.Component<Props, State> 
     _toggleSendButton(state: boolean) {
         this.sendButton && (this.sendButton.disabled = !state);
     }
-
     render() {
         const { isPending, isUpdated, data, error, errors } = this.props.formSampleComponent;
         return (
@@ -74,8 +73,8 @@ export default class FormValidationSample extends React.Component<Props, State> 
                     serverErrors={errors}
                     onChange={this.onFormChange}
                 >
-                    <FormGroup defaultValue="" isValidated={true} name="min" label="Min" />
-                    <FormGroup defaultValue="" isValidated={true} name="max" label="Max" />
+                    <FormGroup defaultValue="" isValidated={true} name="min" label="Min" helperText="Миним цифра рандома. 42 не пройдет серверн валидацию" />
+                    <FormGroup defaultValue="" isValidated={true} name="max" label="Max" helperText="Максим цифра рандома. 84 не пройдет серверн валидацию" />
                 </FormValidation>
 
                 <button type="button" className="btn btn-primary" ref={button => { this.sendButton = button; }} disabled={isPending} onClick={this.onClick}>Submit</button>

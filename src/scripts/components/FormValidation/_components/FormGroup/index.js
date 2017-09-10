@@ -32,17 +32,18 @@ export const Components: { [key: InputTypes]: React.createClass } = { // воз�
 };
 
 type Props = {
-    id?: string,
+    id: string,
     type: InputTypes, // тип поля ввода, т.к. есть в defaultProps, Flow позволяет не передав
-    name?: string,
+    name: string,
     label: string,
-    className?: string,
-    options?: any,
-    defaultValue?: any,
+    className: string,
+    options: any,
+    defaultValue: any,
+    helperText: string,
     onChange: Function,
-    validationState?: validationStates, // css класс раскрашив поля ввода
-    feedbackText?: string, // текст ошибки, подсказки, инфо и тд.
-    onChange?: Function
+    validationState: validationStates, // css класс раскрашив поля ввода
+    feedbackText: string, // текст ошибки, подсказки, инфо и тд.
+    onChange: Function
 };
 
 
@@ -61,6 +62,7 @@ export class FormGroup extends React.Component<Props> {
         className: '',
         options: null,
         defaultValue: null,
+        helperText: '',
         validationState: 'default',
         feedbackText: '',
         onChange: () => {
@@ -84,7 +86,7 @@ export class FormGroup extends React.Component<Props> {
     // }
 
     render(): React.Element<any> {
-        const { id, type, name, label, defaultValue, validationState, feedbackText } = this.props;
+        const { id, type, name, label, defaultValue, helperText, validationState, feedbackText } = this.props;
 
         const validationStateClass: string = (validationState && stateClasses[validationState]) || '';
 
@@ -100,7 +102,7 @@ export class FormGroup extends React.Component<Props> {
                     { Comp && <Comp id={id} name={name} defaultValue={defaultValue} className={validationStateClass} onChange={this.onChange} /> }
 
                     <div className="invalid-feedback">{feedbackText}</div>
-                    <small className="form-text text-muted">We will never share your email with anyone else.</small>
+                    <small className="form-text text-muted">{helperText}</small>
                 </div>
             </div>
         );

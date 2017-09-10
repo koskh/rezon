@@ -42,7 +42,7 @@ router.get('/:min/:max', (req: express$Request, res: express$Response) => {
     setTimeout(() => {
         respond.data = result;
         res.json(respond);
-    }, 5500);
+    }, 1500);
 });
 
 
