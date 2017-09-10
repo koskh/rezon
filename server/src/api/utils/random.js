@@ -10,7 +10,8 @@ router.get('/:min/:max', (req: express$Request, res: express$Response) => {
 
     const respond: ServerRespond = {
         data: null,
-        error: null
+        error: null,
+        errors: {}
     };
 
     if (Number.isNaN(min) || Number.isNaN(max)) {
@@ -21,13 +22,27 @@ router.get('/:min/:max', (req: express$Request, res: express$Response) => {
         return;
     }
 
-    const result = Math.round((Math.random() * (max - min)) + min);
+    if (min === 42) {
+        res.status(400);
+        respond.error = 'Неверные входные данные';
+        respond.errors = { min: 'Min не может быть равно 42' };
+        res.json(respond);
+        return;
+    }
 
+    if (max === 84) {
+        res.status(400);
+        respond.error = 'Неверные входные данные';
+        respond.errors = { max: 'Max не может быть равно 84' };
+        res.json(respond);
+        return;
+    }
+
+    const result = Math.round((Math.random() * (max - min)) + min);
     setTimeout(() => {
         respond.data = result;
         res.json(respond);
     }, 1500);
-
 });
 
 

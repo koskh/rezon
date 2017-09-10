@@ -22,15 +22,17 @@ const statuses = {
 
 export default {
     failure(error) {
+        // debugger;
+
         if (error.response) {
             if (error.response.status === statuses.notFound)
-                history.push('/');
+                history.push('/404');
 
             if (error.response.status === statuses.unauthorized)
                 history.push(`/login?return=${window.location.pathname}`);
 
-            // if (error.response.status === statuses.badRequest)
-            //     history.push(`/login?return=${window.location.pathname}`);
+            if (error.response.status === statuses.badRequest)
+                return Promise.reject(error.response);
 
         //
         //     let name = error.response.statusText;

@@ -21,10 +21,9 @@ export function makeFetch({ min, max }: {[filed: string]: any}): Function {
         try {
             const request1 = utils.random({ min, max });
             const response = await request1.promise;
-
-            dispatch(success({ data: response.data.data }));
-        } catch (error) {
-            dispatch(failure({ error }));
+            dispatch(success({ ...response.data }));
+        } catch (response) {
+            dispatch(failure({ ...response.data }));
         }
     };
 }
