@@ -22,8 +22,6 @@ const statuses = {
 
 export default {
     failure(error) {
-        // debugger;
-
         if (error.response) {
             if (error.response.status === statuses.notFound)
                 history.push('/404');
@@ -33,18 +31,6 @@ export default {
 
             if (error.response.status === statuses.badRequest)
                 return Promise.reject(error.response);
-
-        //
-        //     let name = error.response.statusText;
-        //
-        //     if (error.message === 'Network Error') {
-        //         name = error.message;
-        //     }
-        //
-        //     const type = getErrorType(name);
-        //     const message = error.response.data;
-        //
-        //     return Promise.reject({ name, type, message: message.length ? message : (errorMessages[type] || '') });
         }
 
         return Promise.reject(error);
