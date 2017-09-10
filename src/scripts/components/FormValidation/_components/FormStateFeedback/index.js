@@ -3,9 +3,10 @@
 import _ from 'lodash';
 import * as React from 'react';
 import cn from 'classnames';
-// import styles from './index.pcss';
 
-import type { FormModel } from '../';
+import styles from './index.pcss';
+
+import type { FormModel } from '../../index';
 
 type Props = {
     formModel: FormModel,
@@ -36,8 +37,8 @@ const FormStateFeedback = (props: Props) => {
     const feedbackText: string = getFormErrors(props.formModel);
 
     return (
-        <div className={cn('form-group has-danger', props.className)}>
-            <div className="form-control-feedback">{feedbackText}</div>
+        <div className={cn('form-group is-invalid', styles['form-feedback'], props.className)}>
+            <div className="invalid-feedback">{feedbackText}</div>
         </div>
     );
 };

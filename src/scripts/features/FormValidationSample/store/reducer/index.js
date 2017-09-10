@@ -2,18 +2,31 @@
 import * as types from '../constants';
 import { createReducer, nextState } from '../../../../store/utilities';
 
-const initialState: {} = {
+
+export type ComponentReduxState = { //
+    data: any,
+    error: any,
+    errors: any,
+    meta: any,
+    isPending: boolean,
+    isUpdated: boolean
+}
+
+const initialState: ComponentReduxState = {
     data: null,
-    isFetching: false,
-    isUpdating: false
+    error: null,
+    errors: null,
+    meta: null,
+    isPending: false,
+    isUpdated: false
 };
 
 export const actions: ReducerActions = {
-    [types.FETCH_REQUEST]: (state, { payload }) => nextState(state, { isPending: true, ...payload }),
+    [types.FETCH_REQUEST]: (state, { payload }) => nextState(state, { isPending: true, isUpdated: false, ...payload }),
     //
-    [types.FETCH_SUCCESS]: (state, { payload }) => nextState(state, { isPending: false, data: payload.data }),
+    [types.FETCH_SUCCESS]: (state, { payload }) => nextState(state, { isPending: false, isUpdated: true, ...payload }),
     //
-    [types.FETCH_FAILURE]: (state, { payload }) => nextState(state, { isPending: false, ...payload }),
+    [types.FETCH_FAILURE]: (state, { payload }) => nextState(state, { isPending: false, isUpdated: false, ...payload }),
 
     [types.FETCH_CANCEL]: state => nextState(state, { isPending: false }),
 

@@ -4,10 +4,10 @@ import _ from 'lodash';
 import * as React from 'react';
 // import classNames from 'classnames';
 
-import FormStateFeedback from './_components/FormStateFeedback';
+import FormStateFeedback from './_components/FormStateFeedback/';
 import * as validator from './validator/validator';
 
-import type { ValidatorResultObject, validationStates } from './validator/validator';
+import type { validationStates } from './validator/validator';
 import type { Schema } from './validator/schema';
 
 
@@ -25,6 +25,7 @@ type Props = {
     className: string,
     schema: Schema,
     onChange: Function,
+    serverErrors: ErrorsFields,
     children: React.Node
 };
 
@@ -42,6 +43,7 @@ class FormValidation extends React.Component<Props, State> {
         className: '',
         schema: {},
         onChange: () => {},
+        serverErrors: {},
         children: null
     };
 
@@ -52,6 +54,10 @@ class FormValidation extends React.Component<Props, State> {
         this.state = { model };
     }
 
+    componentWillReceiveProps(nextProps: Props) {
+        if (nextProps.serverErrors)
+            this._setServerErrors(nextProps.serverErrors);
+    }
 
     _initializeFormModel = (schema: Schema): FormModel => {
         const result = {
@@ -65,7 +71,6 @@ class FormValidation extends React.Component<Props, State> {
             result.inputErrorsFields[k] = [];
             result.logicErrorsFields[k] = [];
         });
-
         return result;
     };
 
@@ -91,6 +96,13 @@ class FormValidation extends React.Component<Props, State> {
 
     getModel(): FormModel {
         return _.cloneDeep(this.state.model);
+    }
+
+    _setServerErrors(errors: ErrorsFields) {
+        // установка ошибок серверной валидации. серверн ошибки- это ошибки логики
+        const model = this.state.model;
+        model.logicErrorsFields = { ...model.logicErrorsFields, ...errors };
+        this.setState({ model });
     }
 
     _renderChildren(props: any) {

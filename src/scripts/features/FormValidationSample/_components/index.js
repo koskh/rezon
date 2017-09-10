@@ -1,5 +1,6 @@
 // @flow
 
+import _ from 'lodash';
 import * as React from 'react';
 
 import FormValidation from '../../../components/FormValidation/index';
@@ -11,25 +12,27 @@ import Spiner from '../../../components/Indicators/Spiner';
 import Schema from './schema';
 
 import type { FormModel } from '../../../components/FormValidation/index';
+import type { ComponentReduxState } from '../store/reducer';
 
-type State = {
-    sendEnabled: boolean
-}
+// type State = {
+
+// }
 
 type Props = {
     makeFetch: Function,
     cancelFetch: Function,
-    formSampleComponent: any
+    formSampleComponent: ComponentReduxState // errors уходят <FormValidation />, error уходит  текущему компоненту
 }
 
 export default class FormValidationSample extends React.Component<Props, State> {
     props: Props;
 
-    state: State = {
-        sendEnabled: true
-    };
+    // state: State = {
+    //
+    // };
 
-    formValidation = null;
+    formValidation = null; // обращаемся за валидностью данных формы
+    sendButton = null; // дизейбли-енейблим кнопку отправки, не через state, т.к. ошибки сервреной валидации начинают перебивать обновление данных формы
 
     componentWillMount() {
         document.title = 'FormValidationSample · Пример валидационной формы';
@@ -39,37 +42,48 @@ export default class FormValidationSample extends React.Component<Props, State> 
         this.props.cancelFetch();
     }
 
-    onFormValidationChange = (model: FormModel, isValid: boolean) => {
-        // debugger;
+
+    onFormChange = (model: FormModel, isValid: boolean) => {
         // console.log('Form isValid: ', isValid);
-        this.setState({ sendEnabled: isValid });
+        this._toggleSendButton(isValid);
     };
 
-    onClick = ({ target }: SyntheticInputEvent<*>) => {
-        const isValid: boolean = this.formValidation ? this.formValidation.isValid() : true;
-        // console.log('Form isValid: ', isValid);
+    onClick = () => {
+        const form = this.formValidation || {};
+        const isValid: boolean = _.isFunction(form.isValid) ? form.isValid() : true;
+        if (!isValid)
+            return;
 
-        this.setState({ sendEnabled: isValid });
-
-        const { data } = this.formValidation && this.formValidation.getModel() || {};
-        isValid && this.props.makeFetch({ min: data.min, max: data.max });
+        const { data } = _.isFunction(form.getModel) && form.getModel();
+        this.props.makeFetch({ min: data.min, max: data.max });
     };
+
+    _toggleSendButton(state: boolean) {
+        this.sendButton && (this.sendButton.disabled = !state);
+    }
 
     render() {
-        const sendEnabled = this.state.sendEnabled;
-        const {isPending, data} = this.props.formSampleComponent;
+        const { isPending, isUpdated, data, error, errors } = this.props.formSampleComponent;
         return (
             <article>
                 <h1>FormValidationSample · Пример валидационной формы</h1>
 
-                <FormValidation id="testform" ref={formValidation => { this.formValidation = formValidation; }} schema={Schema} onChange={this.onFormValidationChange} >
+                <FormValidation
+                    ref={formValidation => {this.formValidation = formValidation;}}
+                    schema={Schema}
+                    serverErrors={errors}
+                    onChange={this.onFormChange}
+                >
                     <FormGroup defaultValue="" isValidated={true} name="min" label="Min" />
                     <FormGroup defaultValue="" isValidated={true} name="max" label="Max" />
                 </FormValidation>
 
-                <button type="button" form="testform" className="btn btn-primary" disabled={!sendEnabled} onClick={this.onClick} >Submit</button>
+                <button type="button" className="btn btn-primary" ref={button => { this.sendButton = button; }} disabled={isPending} onClick={this.onClick}>Submit</button>
 
-                <PendingIndicator pending={isPending}> Answer: {data}</PendingIndicator>
+                <PendingIndicator pending={isPending} />
+                {isUpdated ? `Answer: ${data}` : ''}
+                {error ? `Error: ${error}` : ''}
+
             </article>
         );
     }

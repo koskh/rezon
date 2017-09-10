@@ -16,7 +16,7 @@ const Requests: Array<AjaxRequest> = [];
 
 export function makeFetch({ min, max }: {[filed: string]: any}): Function {
     return async (dispatch: Dispatch): Promise<any> => {
-        dispatch(request({ error: null }));
+        dispatch(request({ error: null, errors: null }));
 
         try {
             const request1 = utils.random({ min, max });

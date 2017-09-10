@@ -77,7 +77,7 @@ const schema: Schema = {
                 validate(attrs) {
                     return attrs.max > attrs.min;
                 },
-                msg: 'Max: Знечение поля Max должно быть больше значения поля Min'
+                msg: 'Max: Значение поля Max должно быть больше значения поля Min'
             }
         ]
     },
