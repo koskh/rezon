@@ -5,7 +5,7 @@ import { shallow } from 'enzyme';
 import sinon from 'sinon';
 
 import FormValidation from '.';
-import FormGroup from '../FormGroup';
+import FormGroup from './_components/FormGroup';
 
 import schema from './validator/fixtures/test-shema';
 import { extract } from '../../utilities/number';

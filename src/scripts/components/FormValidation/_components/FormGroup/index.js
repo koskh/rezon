@@ -10,10 +10,10 @@
 import * as React from 'react';
 import classNames from 'classnames';
 
-import Input from './_components/Input';
-import Password from './_components/Password';
+import Input from './_components/Input/index';
+import Password from './_components/Password/index';
 
-import type { validationStates } from '../FormValidation/validator/validator';
+import type { validationStates } from '../../validator/validator';
 
 export const stateClasses: { [key: validationStates]: string } = { // CSS классы цветных статусов
     success: 'is-valid',

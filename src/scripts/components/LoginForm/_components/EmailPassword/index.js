@@ -11,7 +11,7 @@ import CustomFormGroup from './_components/CustomFormGroup';
 
 import styles from './index.pcss';
 
-import { stateClasses } from '../../../FormGroup';
+import { stateClasses } from '../../../FormValidation/_components/FormGroup';
 
 type Props = {
     // id?: string,

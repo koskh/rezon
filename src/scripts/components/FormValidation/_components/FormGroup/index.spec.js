@@ -5,7 +5,7 @@ import { shallow } from 'enzyme';
 import sinon from 'sinon';
 
 // import FormGroup from '.';
-import { FormGroup, stateClasses, Components } from '.';
+import { FormGroup, stateClasses, Components } from './index';
 
 const NodeName = 'NodeName';
 const ComponentValue = 'Value';

@@ -3,7 +3,7 @@ import * as React from 'react';
 import cn from 'classnames';
 
 
-import {FormGroup, stateClasses} from '../../../../../components/FormGroup';
+import {FormGroup, stateClasses} from '../../../../FormValidation/_components/FormGroup';
 
 
 class CustomFormGroup extends FormGroup {

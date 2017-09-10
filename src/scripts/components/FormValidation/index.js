@@ -4,7 +4,7 @@ import _ from 'lodash';
 import * as React from 'react';
 // import classNames from 'classnames';
 
-import FormStateFeedback from './_components/FormStateFeedback/';
+import FormStateFeedback from './_components/FormInvalidFeedback/';
 import * as validator from './validator/validator';
 
 import type { validationStates } from './validator/validator';

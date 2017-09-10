@@ -3,7 +3,7 @@ import { expect } from 'chai';
 import { shallow } from 'enzyme';
 import sinon from 'sinon';
 
-import Spiner from '.';
+import Spiner from './index';
 
 describe('components/Spiner', () => {
     it('renders without errors', () => {

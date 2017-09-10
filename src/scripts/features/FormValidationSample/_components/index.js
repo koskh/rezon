@@ -4,10 +4,10 @@ import _ from 'lodash';
 import * as React from 'react';
 
 import FormValidation from '../../../components/FormValidation/index';
-import { FormGroup } from '../../../components/FormGroup/index';
+import { FormGroup } from '../../../components/FormValidation/_components/FormGroup/index';
 
 import PendingIndicator from '../../../components/PendingIndicator';
-import Spiner from '../../../components/Indicators/Spiner';
+import Spiner from '../../../components/PendingIndicator/_components/Spiner';
 
 import Schema from './schema';
 
