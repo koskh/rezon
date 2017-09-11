@@ -74,7 +74,7 @@ export default class FormValidationSample extends React.Component<Props, State> 
                     onChange={this.onFormChange}
                 >
                     <FormGroup defaultValue="" isValidated={true} name="min" label="Min" helperText="Миним цифра рандома. 42 не пройдет серверн валидацию" />
-                    <FormGroup defaultValue="" isValidated={true} name="max" label="Max" helperText="Максим цифра рандома. 84 не пройдет серверн валидацию" />
+                    <FormGroup defaultValue="" isValidated={true} name="max" label="Max" helperText="Максим цифра рандома. 84 не пройдет серверн валидац. 99 вызывает 500 Internal Server Error" />
                 </FormValidation>
 
                 <button type="button" className="btn btn-primary" ref={button => { this.sendButton = button; }} disabled={isPending} onClick={this.onClick}>Submit</button>

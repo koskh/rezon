@@ -14,15 +14,14 @@ type Props = {
 }
 
 class InternalServerError extends React.Component <Props, *> {
-
     componentWillMount() {
         setTimeout(() => this.onClose(), Timeout);
-    };
+    }
 
-    componentWillUnmount() {
-        // если добавляется сам, расскоментироваь удаление добавленого узла
-        // document.body && document.body.removeChild(this.props.container);
-    };
+    // componentWillUnmount() {
+    // если добавляется сам, расскоментироваь удаление добавленого узла
+    // document.body && document.body.removeChild(this.props.container);
+    // };
 
     onClose = () => {
         ReactDOM.unmountComponentAtNode(this.props.container);
