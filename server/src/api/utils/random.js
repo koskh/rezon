@@ -14,35 +14,41 @@ router.get('/:min/:max', (req: express$Request, res: express$Response) => {
         errors: null
     };
 
-    if (Number.isNaN(min) || Number.isNaN(max)) {
-        res.status(400);
+    res.status(500);
+    respond.error = 'Internal server error';
+    res.json(respond);
+    return;
 
-        respond.error = 'Неверные входные данные';
-        res.json(respond);
-        return;
-    }
 
-    if (min === 42) {
-        res.status(400);
-        respond.error = 'Неверные входные данные';
-        respond.errors = { min: ['Min не может быть равно 42'] };
-        res.json(respond);
-        return;
-    }
-
-    if (max === 84) {
-        res.status(400);
-        respond.error = 'Неверные входные данные';
-        respond.errors = { max: ['Max не может быть равно 84'] };
-        res.json(respond);
-        return;
-    }
-
-    const result = Math.round((Math.random() * (max - min)) + min);
-    setTimeout(() => {
-        respond.data = result;
-        res.json(respond);
-    }, 1500);
+    // if (Number.isNaN(min) || Number.isNaN(max)) {
+    //     res.status(400);
+    //
+    //     respond.error = 'Неверные входные данные';
+    //     res.json(respond);
+    //     return;
+    // }
+    //
+    // if (min === 42) {
+    //     res.status(400);
+    //     respond.error = 'Неверные входные данные';
+    //     respond.errors = { min: ['Min не может быть равно 42'] };
+    //     res.json(respond);
+    //     return;
+    // }
+    //
+    // if (max === 84) {
+    //     res.status(400);
+    //     respond.error = 'Неверные входные данные';
+    //     respond.errors = { max: ['Max не может быть равно 84'] };
+    //     res.json(respond);
+    //     return;
+    // }
+    //
+    // const result = Math.round((Math.random() * (max - min)) + min);
+    // setTimeout(() => {
+    //     respond.data = result;
+    //     res.json(respond);
+    // }, 1500);
 });
 
 

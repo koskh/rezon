@@ -18,7 +18,6 @@ import Reducers from './store/reducers';
 import DefaultLayout from './layouts/Default';
 import LoginLayout from './layouts/Login';
 
-
 const routerMiiddleware = routerMiddleware(history);
 
 //eslint-disable-next-line

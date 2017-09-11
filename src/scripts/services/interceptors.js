@@ -8,6 +8,10 @@
 // };
 //
 
+import * as React from 'react';
+import ReactDOM from 'react-dom';
+import InernalServerError from '../components/500';
+
 import history from './history';
 
 const statuses = {
@@ -31,6 +35,19 @@ export default {
 
             if (error.response.status === statuses.badRequest)
                 return Promise.reject(error.response);
+
+            if (error.response.status === statuses.internalServerError) {
+                // // модальн окно с "500" само добавляется в body
+                // const div = document.createElement('div');
+                // div.className = 'internal-server-error';
+                // const element = document.body.insertBefore(div, document.body.firstChild);
+                // ReactDOM.render(<InernalServerError container={div} />, element);
+
+                // модальное окно с 500 добавляется в предопределенное место
+                const container = document.getElementById('internal-server-error');
+                ReactDOM.render(<InernalServerError container={container} />, container);
+            }
+
         }
 
         return Promise.reject(error);
