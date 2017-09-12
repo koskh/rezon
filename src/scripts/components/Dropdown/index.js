@@ -30,7 +30,7 @@ class Dropdown extends React.Component <Props, State> {
         className: '',
     };
 
-    dropDownMenu = null;
+    dropDownMenu: ?HTMLElement = null;
 
     componentWillMount() {
         window && window.addEventListener('resize', this.onCloseMenu);
@@ -45,7 +45,7 @@ class Dropdown extends React.Component <Props, State> {
         this.setState({ isShowedMenu: true }, this._calculateMenuPosition);
     };
     onCloseMenu = () => {
-        this.setState((prev, props) => { return { isShowedMenu: false, menuPosition: '' }; });
+        this.setState({ isShowedMenu: false, menuPosition: '' });
     };
 
     _calculateMenuPosition() { // "разумное" расположение менюшки
@@ -68,9 +68,10 @@ class Dropdown extends React.Component <Props, State> {
     render(): React.Element<any> {
         const { isShowedMenu, menuPosition } = this.state;
         const { title, className } = this.props;
+
         return (
             <div className="dropdown">
-                <button className={cn('btn dropdown-toggle relative', className)} type="button" id="dropdownMenuButton" onClick={this.onOpenMenu} data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                <button className={cn('btn dropdown-toggle relative', className)} type="button" onClick={this.onOpenMenu}>
 
                     {title}
 
