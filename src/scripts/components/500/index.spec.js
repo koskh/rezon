@@ -1,13 +1,13 @@
-// import * as React from 'react';
-// import { expect } from 'chai';
-// import { shallow } from 'enzyme';
-// import sinon from 'sinon';
-//
-// import Dummy from '.';
-//
-// describe('components/dump', () => {
-//     it('renders without errors', () => {
-//         const dump = shallow(<Dummy />);
-//         expect(dump).to.have.length(1);
-//     });
-// });
+import * as React from 'react';
+import { expect } from 'chai';
+import { shallow } from 'enzyme';
+import sinon from 'sinon';
+
+import InternalServerErrorModal from '.';
+
+describe('components/dump', () => {
+    it('renders without errors', () => {
+        const dump = shallow(<InternalServerErrorModal />);
+        expect(dump).to.have.length(1);
+    });
+});
