@@ -3,6 +3,7 @@ import * as React from 'react';
 import Spiner from '../../components/PendingIndicator/_components/Spiner';
 
 import PendingIndicator from '../../components/PendingIndicator';
+import DropDown from '../../components/Dropdown';
 
 export default class Home extends React.Component<*> {
     componentWillMount() {
@@ -22,6 +23,11 @@ export default class Home extends React.Component<*> {
                 <div className="row align-items-center">
                     <div className="col-2"> Идикатор загрузки в действии</div>
                     <div className="col-3"><PendingIndicator Indicator={Spiner} pending={true} /></div>
+                </div>
+                <div className="row">
+                    <div className="col-2">Dropdown button</div>
+                    <div className="col"><DropDown /></div>
+                    <div className="col"><DropDown /></div>
                 </div>
             </article>
         );
