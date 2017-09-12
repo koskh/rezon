@@ -3,6 +3,8 @@ import * as React from 'react';
 import { NavLink } from 'react-router-dom';
 // import cn from 'classnames';
 
+import DropDown from '../Dropdown';
+
 // import style from './index.pcss';
 
 const Navigation = ({ match }) => (
@@ -13,6 +15,8 @@ const Navigation = ({ match }) => (
         <NavLink to={`${match.url}samples`} className="nav-link">Sample components</NavLink>
 
         <NavLink to={`${match.url}login`} className="nav-link">Login</NavLink>
+        <DropDown />
+
     </nav>
 );
 

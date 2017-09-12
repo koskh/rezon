@@ -25,7 +25,7 @@ export default class Home extends React.Component<*> {
                     <div className="col-3"><PendingIndicator Indicator={Spiner} pending={true} /></div>
                 </div>
                 <div className="row">
-                    <div className="col-2">Dropdown button</div>
+                    <div className="col-2">Dropdown buttons</div>
                     <div className="col"><DropDown /></div>
                     <div className="col"><DropDown /></div>
                 </div>

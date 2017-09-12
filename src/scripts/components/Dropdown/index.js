@@ -26,6 +26,7 @@ class InternalServerError extends React.Component <Props, State> {
     dropDownMenu = null;
 
     componentWillMount() {
+        window && window.addEventListener('resize', this.onCloseMenu);
         document.body && document.addEventListener('mousedown', this.onCloseMenu, true);
     }
 
@@ -48,11 +49,11 @@ class InternalServerError extends React.Component <Props, State> {
 
         let className = '';
 
-        if ((rect.top + rect.height) < 0)
-            className = 'dropdown-bottom';
-
-        if ((rect.top + rect.height) > window.innerHeight)
+        if ((rect.top + rect.height) > window.innerHeight) // меню не умещается в "нижн часть" окна
             className = 'dropdown-top';
+
+        if ((rect.top - rect.height) < 0) // меню не умещается в "верхн часть окна", у "нижн"- приоритет
+            className = 'dropdown-bottom';
 
         this.setState({ menuPosition: className });
     }
@@ -61,13 +62,15 @@ class InternalServerError extends React.Component <Props, State> {
         const { isShowedMenu, menuPosition } = this.state;
         return (
             <div className="dropdown">
-                <button className="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" onClick={this.onOpenMenu} data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                <button className="btn btn-secondary dropdown-toggle relative" type="button" id="dropdownMenuButton" onClick={this.onOpenMenu} data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                     Dropdown button
 
                     <div className={cn('dropdown-menu', { show: isShowedMenu }, styles[menuPosition])} ref={dropDownMenu => { this.dropDownMenu = dropDownMenu; }}>
                         <a className="dropdown-item" href="#">Action</a>
                         <a className="dropdown-item" href="#">Another action</a>
                         <a className="dropdown-item" href="#">Something else here</a>
+                        <div className="dropdown-divider"/>
+                        <a className="dropdown-item" href="#">Separated link</a>
                     </div>
 
                 </button>
