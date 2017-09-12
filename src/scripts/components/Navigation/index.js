@@ -15,7 +15,7 @@ const Navigation = ({ match }) => (
         <NavLink to={`${match.url}samples`} className="nav-link">Sample components</NavLink>
 
         <NavLink to={`${match.url}login`} className="nav-link">Login</NavLink>
-        <DropDown />
+        <DropDown title="User name" className="btn-link" />
 
     </nav>
 );

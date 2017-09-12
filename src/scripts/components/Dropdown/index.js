@@ -8,6 +8,8 @@ import styles from './index.pcss';
 
 
 type Props = {
+    title: string,
+    className?: string
     // container: HTMLElement,
     // removeChild: Function
 }
@@ -17,10 +19,15 @@ type State = {
     menuPosition: string
 }
 
-class InternalServerError extends React.Component <Props, State> {
+class Dropdown extends React.Component <Props, State> {
+    props: Props;
     state = {
         isShowedMenu: false,
         menuPosition: ''
+    };
+    static defaultProps: Props = {
+        title: 'Dropdown button',
+        className: '',
     };
 
     dropDownMenu = null;
@@ -60,16 +67,19 @@ class InternalServerError extends React.Component <Props, State> {
 
     render(): React.Element<any> {
         const { isShowedMenu, menuPosition } = this.state;
+        const { title, className } = this.props;
         return (
             <div className="dropdown">
-                <button className="btn btn-secondary dropdown-toggle relative" type="button" id="dropdownMenuButton" onClick={this.onOpenMenu} data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                    Dropdown button
+                <button className={cn('btn dropdown-toggle relative', className)} type="button" id="dropdownMenuButton" onClick={this.onOpenMenu} data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+
+                    {title}
 
                     <div className={cn('dropdown-menu', { show: isShowedMenu }, styles[menuPosition])} ref={dropDownMenu => { this.dropDownMenu = dropDownMenu; }}>
+                        <h6 className="dropdown-header">Dropdown header</h6>
                         <a className="dropdown-item" href="#">Action</a>
-                        <a className="dropdown-item" href="#">Another action</a>
+                        <a className="dropdown-item disabled" href="#">Disabled action</a>
                         <a className="dropdown-item" href="#">Something else here</a>
-                        <div className="dropdown-divider"/>
+                        <div className="dropdown-divider" />
                         <a className="dropdown-item" href="#">Separated link</a>
                     </div>
 
@@ -79,5 +89,5 @@ class InternalServerError extends React.Component <Props, State> {
     }
 }
 
-export default InternalServerError;
+export default Dropdown;
 

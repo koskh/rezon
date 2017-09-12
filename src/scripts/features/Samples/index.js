@@ -26,8 +26,7 @@ export default class Home extends React.Component<*> {
                 </div>
                 <div className="row">
                     <div className="col-2">Dropdown buttons</div>
-                    <div className="col"><DropDown /></div>
-                    <div className="col"><DropDown /></div>
+                    <div className="col"><DropDown title="Dropdown" className="btn-light" /></div>
                 </div>
             </article>
         );
