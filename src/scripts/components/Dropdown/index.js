@@ -1,11 +1,12 @@
 // @flow
 
 import * as React from 'react';
-import ReactDOM from 'react-dom';
+// import ReactDOM from 'react-dom';
+
 import cn from 'classnames';
+import getPositionClasses from '../../utilities/dom/getPositionClasses';
 
 import styles from './index.pcss';
-
 
 type Props = {
     title: string,
@@ -42,27 +43,19 @@ class Dropdown extends React.Component <Props, State> {
     }
 
     onOpenMenu = () => {
-        this.setState({ isShowedMenu: true }, this._calculateMenuPosition);
+        this.setState({ isShowedMenu: true }, this._setMenuPosition);
     };
     onCloseMenu = () => {
         this.setState({ isShowedMenu: false, menuPosition: '' });
     };
 
-    _calculateMenuPosition() { // "разумное" расположение менюшки
+    _setMenuPosition() { // "разумное" расположение менюшки
         if (!this.dropDownMenu)
             return;
 
-        const rect = this.dropDownMenu && this.dropDownMenu.getBoundingClientRect();
+        const { verticalClass, horizontalClass } = getPositionClasses(this.dropDownMenu, 'dropdown--');
 
-        let className = '';
-
-        if ((rect.top + rect.height) > window.innerHeight) // меню не умещается в "нижн часть" окна
-            className = 'dropdown-top';
-
-        if ((rect.top - rect.height) < 0) // меню не умещается в "верхн часть окна", у "нижн"- приоритет
-            className = 'dropdown-bottom';
-
-        this.setState({ menuPosition: className });
+        this.setState({ menuPosition: cn(styles[verticalClass], styles[horizontalClass]) });
     }
 
     render(): React.Element<any> {
@@ -75,7 +68,7 @@ class Dropdown extends React.Component <Props, State> {
 
                     {title}
 
-                    <div className={cn('dropdown-menu', { show: isShowedMenu }, styles[menuPosition])} ref={dropDownMenu => { this.dropDownMenu = dropDownMenu; }}>
+                    <div className={cn('dropdown-menu', { show: isShowedMenu }, menuPosition)} ref={dropDownMenu => { this.dropDownMenu = dropDownMenu; }}>
                         <h6 className="dropdown-header">Dropdown header</h6>
                         <a className="dropdown-item" href="#">Action</a>
                         <a className="dropdown-item disabled" href="#">Disabled action</a>

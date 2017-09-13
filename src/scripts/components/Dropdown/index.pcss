@@ -1,9 +1,21 @@
-.dropdown-top {
-  top: inherit;
-  bottom: 100%;
-}
+.dropdown {
+  &--top {
+    top: inherit;
+    bottom: 100%;
+  }
 
-.dropdown-bottom {
-  top: 100%;
-  bottom: inherit;
+  &--bottom {
+    top: 100%;
+    bottom: inherit;
+  }
+
+  &--right {
+    left: inherit;
+    right: 0;
+  }
+
+  &--left {
+    right: inherit;
+    left: 0;
+  }
 }
