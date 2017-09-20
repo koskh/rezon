@@ -44,3 +44,6 @@ to = moment().subtract(1,'months').endOf('month').format('YYYY-MM-DD');
 прошл год
 from = moment().subtract(1,'year').startOf('year').format('YYYY-MM-DD');
 to = moment().subtract(1,'year').endOf('year').format('YYYY-MM-DD');
+
+6 node не умеет spread operation на неитерируемых ( т.е. умеет на массивоподобн, но не умеет на  объектах)
+ const testLesson = _.assign({}, lesson, { shuffle });
